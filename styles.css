@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+
+    font-family: "Montserrat", "Barlow", "Arial";
+}
+
+
+nav.main-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.75rem 1.5rem;
+
+    box-shadow: 0 2px 4px black;
+
+    font-family: "Barlow Condensed";
+    font-size: 1.2rem;
+
+    background-color: rgb(35, 50, 114);
+
+    > div {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        > a.jogar-btn {
+            background-color: orange;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: -2px 3px 4px black;
+        }
+        > a.jogar-btn:hover, a.jogar-btn:focus{
+            background-color: rgb(255, 171, 14);
+        } 
+    }
+    & a {
+        text-decoration: none;
+        color: #f5f5f5;
+    }
+
+} 
+main.index-content{
+    
+    padding: 1rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+
+    > header {
+        border-radius: 4px;
+        padding: 2rem;
+
+        border: 1px solid #f5f5f5;
+        background-color: rgb(35, 50, 114);
+        color: #f5f5f5;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 2rem;
+        > a {
+            border-radius: 4px;
+            padding: 1.5rem;
+            border: 1px solid #f5f5f5;
+            background-color: rgb(41, 56, 122);
+            color: #f5f5f5;
+            flex-grow: 1;
+        }
+       
+    }
+
+
+    > section.results{
+        border-radius: 4px;
+        padding: 2rem;
+        border: 1px solid #f5f5f5;
+        background-color: rgb(35, 50, 114);
+        color: #f5f5f5;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 2rem;
+
+        > div {
+            border-radius: 4px;
+            padding: 1rem;
+            border: 1px solid #f5f5f5;
+            background-color: rgb(41, 56, 122);
+            color: #f5f5f5;
+            flex-grow: 1;
+            aspect-ratio: 4/5;
+        }
+    }
+}
