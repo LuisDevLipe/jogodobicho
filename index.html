@@ -1,45 +1,134 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo do Bicho</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Jogo do Bicho</title>
 
-    <!-- Development version -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js">
+		<!-- Development version -->
+		<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
-</script>
+		<!-- Production version -->
+		<!-- <script src="https://unpkg.com/lucide@latest"></script> -->
+		<link rel="stylesheet" href="./styles.css" />
+	</head>
+	<body>
+		<nav class="main-navigation">
+			<a href="#">Jogo Do Bicho Online</a>
+			<div>
+				<a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
+				<a href="#">Meus Jogos</a>
+			</div>
+		</nav>
+		<main class="index-content">
+			<section class="hero">
+				<div class="about-the-game">
+					<h1>Bem Vindo ao Jogo Do Bicho <span>Online</span>.</h1>
+					<p>
+						Se vocẽ ainda não sabe o que é o jogo bicho,<a
+							href="https://pt.wikipedia.org/wiki/Jogo_do_bicho"
+						>
+							Wikipedia</a
+						>
+						leia a história por trás.
+					</p>
+					<figure>
+						<!-- <img
+							src="https://pbs.twimg.com/media/EZbzPErWAAM0dNd?format=jpg&name=large"
+							alt="Bichos do jogo do bicho"
+						/> -->
+                        <img src="https://lottocap.com.br/blog/wp-content/uploads/2021/06/iStock-915871398-1-1024x382.jpg" alt="Gato jogando jogo com fichas de apostas">
+						<!-- <figcaption>Quadro com os Bichos e os números associados.</figcaption> -->
+                        <figcaption>Você sabe porquê os gatos não podem jogar o Jogo Do Bicho? Porque eles não...</figcaption>
+                    </figure>
+				</div>
+				<div class="how-to-play">
+                    <div>
 
-<!-- Production version -->
-<!-- <script src="https://unpkg.com/lucide@latest"></script> -->
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-    
-    <nav class="main-navigation">
-        <a href="#">Jogo Do Bicho Online</a>
-        <div>
-            <a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
-            <a href="#">Meus Jogos</a>
-        </div>
-    </nav>
-    <main class="index-content">
-        <header>
-            <a to="#">10:00</a>
-            <a to="#">15:00</a>
-            <a to="#">18:00</a>
-        </header>
+                        <h2>Como Jogar o Jogo Do Bicho?</h2>
+                        <p>Se você ainda não conhece, ou conhece mas não sabe como jogar o Jogo. Verá como é simples e fácil.</p>
+                        <p>É tão simples quanto escolher 4 números e o valor da sua aposta. E então esperar o resultado.</p>
+                    </div>
 
-        <section class="results">
-            <div>results</div>
-            <div>TBD</div>
-            <div>TBD</div>
-        </section>
-    </main>
-    <footer></footer>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-      lucide.createIcons();
-    </script>
-</body>
+                    <span>
+
+                        <p>Se você quer saber um pouco mais dos tipos de aposta. Clique aqui.</p>
+                        
+                        <a href="#how-to-play">
+                            Como Jogar
+                        </a>
+                    </span>
+				</div>
+			</section>
+			<section class="results">
+				<header>
+					<h1>Horários</h1>
+
+					<div>
+						<a to="#">10:00</a>
+						<a to="#">15:00</a>
+						<a to="#">18:00</a>
+					</div>
+				</header>
+
+				<main>
+					<h1>Resultados</h1>
+					<div>
+						<article>results</article>
+						<article>TBD</article>
+						<article>TBD</article>
+					</div>
+				</main>
+			</section>
+            <section class="how-to-play" id="how-to-play">
+                <div class="actions">
+                    <span><i data-lucide="home"></i><a href="#">Voltar ao Início</a></span>
+                </div>
+                <div class="text">
+
+                    <h3>Como jogar ?</h3>
+                    <ul>
+                    <li>Clique em jogar</li>
+                    <li>
+                        Se identifique com o CPF
+                        <small> (Seu CPF só será usado para verificação do ganhando ao final.) </small>
+                    </li>
+                    <li>
+                        Escolha o tipo de aposta
+                    </li>
+                    <ul>
+                        <li>Milhar 1º x4000</li>
+                        <li>Dezena 1º x800</li>
+                        <li>Centena 1º x50</li>
+                    </ul>
+                    <li>
+                        Escolha o tipo de jogo
+                        <ul>
+                            <li>Grupo 1º x10</li>
+                            <li>Duque até x95</li>
+                            <li>Terno até x700</li>
+                            <li>Quadra até x4000</li>
+                            <li>Quina até x17000</li>
+                        </ul>
+                    </li>
+                    <li>Escolha o valor da aposta</li>
+                    <li>Clique em Jogar</li>
+                    <li>Aguarde o resultado</li>
+                </ul>
+                <small>
+                    *Os jogos feitos contarão somente para os resultados que forem sorteados no mesmo dia e após o
+                    horário em que foi feita aposta.*
+                </small>
+            </div>
+            </section>
+		</main>
+		<footer>
+            <a href="https://github.com/LuisDevLipe/repositories">LuisDevLipe</a>
+            <p>2024</p>
+        </footer>
+		<script src="https://unpkg.com/lucide@latest"></script>
+		<script>
+			lucide.createIcons();
+		</script>
+	</body>
 </html>
