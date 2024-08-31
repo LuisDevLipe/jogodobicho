@@ -22,12 +22,21 @@
     <main>
         <form action="#" method="post">
             <h1>Login</h1>
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required>
-            <label for="password">Senha</label>
-            <input type="password" name="password" id="password" required>
-            <button type="submit">Entrar</button>
-            <a href="#">Esqueci minha senha</a>
+            <fieldset>
+                <label for="email">Email</label>
+                
+                <input type="email" name="email" id="email" required>
+            </fieldset>
+            <fieldset>
+
+                <label for="password">Senha</label>
+                <input type="password" name="password" id="password" required>
+            </fieldset>
+            <fieldset>
+
+                <button type="submit">Entrar</button>
+            </fieldset>
+                <a href="/pages/auth-util/recuperar-senha.html">Esqueci minha senha</a>
             <a href="/pages/cadastro/cadastro.html">Cadastrar</a>
         </form>
     </main>
