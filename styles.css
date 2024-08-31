@@ -30,6 +30,7 @@ nav.main-navigation {
 
 	background-color: var(--primary-color);
 
+
 	> div {
 		display: flex;
 		gap: 1rem;
@@ -56,10 +57,13 @@ nav.main-navigation {
 	}
 }
 main.index-content {
+	background-color: var(--primary-color);
 	padding: 1rem 3rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.375rem;
+
+	scroll-behavior: smooth;
 
 	> section.results {
 		display: grid;
@@ -126,10 +130,15 @@ main.index-content {
 
 		> div.about-the-game {
 			padding: 4rem;
+
+			border: 1px solid #f5f5f5;
+			border-radius: 4px;
+			line-height: 1.5rem;
 			a {
-				padding: 0.25rem;
+				padding: 0.125rem;
 				background-color: #f5f5f5;
 				color: blue;
+				margin:0 0.5rem;
 			}
 			> figure {
 				padding: 2rem 0;
@@ -151,6 +160,8 @@ main.index-content {
 			display: flex;
 			flex-direction: column;
 			gap: 2rem;
+			border: 1px solid #f5f5f5;
+			border-radius: 4px;
 
 			> div {
 				p {
