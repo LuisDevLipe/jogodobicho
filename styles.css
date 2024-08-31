@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 :root {
-	--primary-color: #233272;
-    --secondary-color:#0020af;
+	--primary-color: #192143;
+    --secondary-color:#2e355c;
 	--text-color: #f5f5f5;
 	--cta-button: #ffa500;
 
@@ -131,9 +131,10 @@ main.index-content {
 		> div.about-the-game {
 			padding: 4rem;
 
-			border: 1px solid #f5f5f5;
+			/* border: 1px solid #f5f5f5; */
 			border-radius: 4px;
 			line-height: 1.5rem;
+			background-color: var(--secondary-color);
 			a {
 				padding: 0.125rem;
 				background-color: #f5f5f5;
@@ -141,7 +142,7 @@ main.index-content {
 				margin:0 0.5rem;
 			}
 			> figure {
-				padding: 2rem 0;
+				margin-top: 2rem;
 
 				img {
 					display: block;
@@ -160,7 +161,10 @@ main.index-content {
 			display: flex;
 			flex-direction: column;
 			gap: 2rem;
-			border: 1px solid #f5f5f5;
+			/* border: 1px solid #f5f5f5;
+			 */
+			 justify-content: space-between;
+			 background-color: var(--secondary-color);
 			border-radius: 4px;
 
 			> div {
@@ -174,22 +178,28 @@ main.index-content {
 				gap: 1rem;
 
 				a {
-					padding: 2rem;
+					padding: 2rem 4rem;
 					background: var(--cta-button);
 					border-radius: 4px;
 					font-size: 1.5rem;
 					color: #000;
 					text-decoration: none;
+					/* width: 100%; */
 					width: fit-content;
 					height: fit-content;
+					text-align: center;
+					display: flex; 
+					gap: 1rem;
+					align-items: center;
 				}
+
 			}
 		}
 	}
 
 	> section.how-to-play {
 		padding: 2rem;
-		background: linear-gradient(to right, var(--primary-color), rgb(11, 11, 92), var(--primary-color));
+		/* background: linear-gradient(to right, var(--primary-color), rgb(11, 11, 92), var(--primary-color)); */
 		color: var(--text-color);
         display: flex;
         flex-direction: column;
