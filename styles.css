@@ -4,6 +4,8 @@
 	--secondary-color: #2e355c;
 	--text-color: #f5f5f5;
 	--cta-button: #ffa500;
+
+	--accent-color-1: #ffa500;
 }
 * {
 	padding: 0;
@@ -200,7 +202,7 @@ main.index-content {
 
 	> section.how-to-play {
 		padding: 2rem;
-		/* background: linear-gradient(to right, var(--primary-color), rgb(11, 11, 92), var(--primary-color)); */
+		background:var(--secondary-color);
 		color: var(--text-color);
 		display: flex;
 		flex-direction: column;
@@ -347,7 +349,7 @@ footer {
 
 	height: 350px;
 
-	background: var(--primary-color);
+	background: var(--accent-color-1);
 
 	a {
 		text-decoration: none;
