@@ -16,7 +16,7 @@
         * {
             padding: 0;
             margin: 0;
-            box-sizing: border-box;    
+            box-sizing: border-box;
         }
         body {
             padding: 4rem;
@@ -40,7 +40,7 @@
                 font-family: "Barlow Semi Condensed";
                 color: inherit;
             }
-            
+
             > p {
                 font-size: 1.2rem;
                 line-height:2.4rem ;
@@ -58,16 +58,17 @@
                 padding: 0.25rem;
             }
         }
-        
+
     </style>
 </head>
 <body>
-    <h1>Erro: <span>404</span></h1>
+    <h1>Erro: <span><?php echo $erro.statusCode ?></span></h1>
+    <p><?php echo $erro.message ?></p>
     <h2>Este página encontra-se temporariamente indisponível.</h2>
     <p>Entre em contato com o suporte ou tente novamente mais tarde.
         <p>Pedimos desculpas pelo inconveniente</p>
         <a href="/">Voltar ao início do site.</a>
     </p>
-    
+
 </body>
 </html>
