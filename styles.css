@@ -4,6 +4,7 @@
 	--secondary-color: #2e355c;
 	--text-color: #f5f5f5;
 	--cta-button: #ffa500;
+	--cta-button-hover: #ff8c00;
 
 	--accent-color-1: #ffa500;
 }
@@ -15,70 +16,25 @@
 
 	font-family: "Montserrat", "Barlow", "Arial";
 }
-
-nav.main-navigation {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-	padding: 0.75rem 1.5rem;
-
-	box-shadow: 0 2px 4px black;
-
-	font-family: "Barlow Condensed";
-	font-size: 1.2rem;
-
-	background-color: var(--primary-color);
-
-	> div {
-		display: flex;
-		gap: 1rem;
-		align-items: center;
-
-		> a.jogar-btn {
-			background-color: var(--cta-button);
-			padding: 0.5rem 1rem;
-			border-radius: 4px;
-			display: flex;
-			align-items: center;
-			gap: 0.5rem;
-			box-shadow: -2px 3px 4px black;
-			color: #000;
-		}
-		> a.jogar-btn:hover,
-		a.jogar-btn:focus {
-			background-color: rgb(255, 153, 0);
-		}
-	}
-	& a {
-		text-decoration: none;
-		color: #f5f5f5;
-	}
-	& a.login-btn {
-		display: flex;
-		align-items: center;
-		gap: 0.25rem;
-	}
+html {
+	scroll-behavior: smooth;
 }
 main.index-content {
 	background-color: var(--primary-color);
 	padding: 1rem 3rem;
 	display: flex;
 	flex-direction: column;
-	gap: 0.375rem;
+	gap: 2rem;
 
 	scroll-behavior: smooth;
 
 	@media screen and (max-width: 756px) {
-		
 		> section.results {
-
-			> header  {
+			> header {
 				> div {
 					display: flex !important;
 					flex-direction: column;
 					gap: 1rem !important;
-					
 				}
 			}
 			> main {
@@ -89,58 +45,57 @@ main.index-content {
 				}
 			}
 		}
-		
 	}
 
 	> section.results {
 		display: grid;
 		gap: 1rem;
 		> header {
-			padding: 2rem;
+			padding: 1rem;
 
-			background-color: var(--primary-color);
+			background-color: var(--secondary-color);
 			color: #f5f5f5;
 			display: grid;
-			gap: 2rem;
+			gap: 1rem;
 			border-radius: 4px;
 
 			> div {
 				border-radius: 4px;
 				display: grid;
 				grid-template-columns: repeat(3, 1fr);
-				gap: 2rem;
+				gap: 1rem;
 				> a {
 					border-radius: 4px;
 					padding: 1.5rem;
-					border: 1px solid #f5f5f5;
-					background-color: rgb(41, 56, 122);
+					background-color: var(--primary-color);
 					color: #f5f5f5;
 					flex-grow: 1;
+					box-shadow: 0 5px 10px black;
 				}
 			}
 		}
 
 		> main {
-			background-color: rgb(35, 50, 114);
+			background-color: var(--secondary-color);
 			color: #f5f5f5;
-			padding: 2rem;
+			padding: 1rem;
 			display: grid;
-			gap: 2rem;
+			gap: 1rem;
 			border-radius: 4px;
 			> div {
 				border-radius: 4px;
 
 				display: grid;
 				grid-template-columns: repeat(3, 1fr);
-				gap: 2rem;
+				gap: 1rem;
 				> article {
 					border-radius: 4px;
 					padding: 1rem;
-					border: 1px solid #f5f5f5;
-					background-color: rgb(41, 56, 122);
+					background-color: var(--primary-color);
 					color: #f5f5f5;
 					flex-grow: 1;
-					aspect-ratio: 4/5;
+					aspect-ratio: 4/3;
+					box-shadow: 0 5px 10px black;
 				}
 			}
 		}
@@ -148,9 +103,7 @@ main.index-content {
 }
 
 main.index-content {
-
 	@media screen and (max-width: 756px) {
-
 		section.hero {
 			display: flex !important;
 			flex-flow: row wrap !important	;
@@ -167,20 +120,18 @@ main.index-content {
 				padding: 2rem !important;
 			}
 		}
-		
 	}
 	@media screen and (max-width: 1024px) {
 		section.hero {
 			grid-template-columns: 2fr 2fr !important;
 		}
-		
 	}
 	section.hero {
 		background-color: var(--primary-color);
 		color: #f5f5f5;
 		display: grid;
 		grid-template-columns: 2fr 4fr;
-		gap: 2rem;
+		gap: 1rem;
 
 		> div.about-the-game {
 			padding: 2rem;
@@ -192,7 +143,7 @@ main.index-content {
 			display: flex;
 			flex-direction: column;
 			gap: 1rem;
-			
+
 			a {
 				padding: 0.125rem;
 				background-color: #f5f5f5;
@@ -247,8 +198,7 @@ main.index-content {
 
 				color: #000;
 				text-decoration: none;
-				
-				
+
 				p {
 					text-transform: uppercase;
 					font-family: "Barlow Semi Condensed";
@@ -261,29 +211,31 @@ main.index-content {
 					height: 1.75rem;
 					stroke-width: 2;
 				}
-
-				
 			}
 		}
 	}
 
 	> section.how-to-play {
-		padding: 2rem;
+		padding: 1rem;
 		background: var(--secondary-color);
 		color: var(--text-color);
 		display: flex;
 		flex-direction: column;
 		gap: 2rem;
+		border-radius: 4px;
 
 		> div.actions {
+			align-self: end;
 			span {
 				display: flex;
 				align-items: center;
 				gap: 0.5rem;
 				padding: 0.5rem;
 				width: fit-content;
-				background-color: var(--secondary-color);
+				background-color: var(--primary-color);
 				box-shadow: -2px 3px 4px black;
+				cursor: pointer;
+				border:1px solid transparent;
 				svg {
 					width: 1rem;
 					height: 1rem;
@@ -294,7 +246,12 @@ main.index-content {
 					font-size: 1rem;
 					color: var(--text-color);
 					text-decoration: none;
+					scroll-behavior: smooth;
 				}
+			}
+			span:hover,span:focus{
+				background: var(--secondary-color);
+				border:1px solid var(--primary-color);
 			}
 		}
 		& ul {
@@ -309,8 +266,10 @@ main.index-content {
 }
 
 main.index-content {
-	 section.hero-products {
-		padding: 1rem 0;
+	section.hero-products {
+		/* padding: 1rem 0; */
+		display: grid;
+		gap: 1rem;
 
 		@media screen and (max-width: 1024px) {
 			div.wrapper {
@@ -320,7 +279,7 @@ main.index-content {
 				justify-content: start !important;
 
 				/* scrollbar-width: thin; */
-				scrollbar-color: var(--accent-color-1) var(--primary-color);	
+				scrollbar-color: var(--accent-color-1) var(--primary-color);
 				scroll-behavior: smooth;
 
 				article {
@@ -328,6 +287,13 @@ main.index-content {
 					min-height: 375px !important;
 				}
 			}
+		}
+		> div.title-wrapper {
+			padding: 1rem;
+			border: 2px solid var(--secondary-color);
+			color: var(--text-color);
+			background: var(--secondary-color);
+			border-radius: 4px;
 		}
 		& div.wrapper {
 			display: flex;
@@ -382,7 +348,6 @@ main.index-content {
 
 					> div.image {
 						display: flex;
-						
 					}
 					> div.info {
 						padding: 0.5rem;
@@ -441,21 +406,20 @@ main.index-content {
 }
 
 footer {
-	height: 25px;
-	display: grid;
-	place-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 250px;
 
-	height: 350px;
-
-	background: var(--accent-color-1);
+	background: var(--secondary-color);
+	padding: 1rem;
 
 	a {
-		text-decoration: none;
-		color: grey;
+		color: var(--text-color);
+		font-size: 1rem;
+		line-height: 1.5rem;
+		font-family: 'Montserrat','Barlow','Arial';
 	}
-	p {
-		color: grey;
-	}
+
 }
 
 .gato {
@@ -482,7 +446,6 @@ footer {
 .nulo {
 	background: grey !important;
 }
-
 
 div.svh-80 {
 	height: 80vh;

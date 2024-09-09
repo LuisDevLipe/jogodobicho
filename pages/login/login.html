@@ -6,18 +6,23 @@
     <title>Login Jogo do Bicho Online</title>
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="/components/navbar/navbar.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
     <nav class="main-navigation">
         <a href="/">Jogo Do Bicho Online</a>
         <div>
+            <a href="/pages/placar-de-lideres/">Placar de Líderes</a>
+        </div>
+        <div>
             <a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
             <a href="#">Meus Jogos</a>
-            <a href="/pages/login/login.html" class="login-btn">Login/Cadastro <i data-lucide="circle-user-round"></i></a>
+            <a href="/pages/login/login.html" class="login-btn"
+                >Login/Cadastro <i data-lucide="circle-user-round"></i
+            ></a>
         </div>
     </nav>
-
 
     <main>
         <form action="#" method="post">
@@ -40,6 +45,6 @@
             <a href="/pages/cadastro/cadastro.html">Cadastrar</a>
         </form>
     </main>
-    
+    <script>lucide.createIcons()</script>
 </body>
 </html>
