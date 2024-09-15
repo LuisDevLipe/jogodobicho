@@ -1,12 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 :root {
 	--primary-color: #233272;
-    --secondary-color:#0020af;
+	--secondary-color: #0020af;
 	--text-color: #f5f5f5;
 	--cta-button: #ffa500;
 	--cta-button-hover: #ff8c00;
-
-
 }
 * {
 	padding: 0;
@@ -58,5 +56,80 @@ nav.main-navigation {
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
+	}
+}
+
+nav.main-navigation.mobile.closed {
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	>a {
+
+	}
+	span {
+		position: absolute;
+		left: 1rem;
+		top: 0.75rem;
+		width: 24px;
+		height: 24px;
+		svg {
+			stroke-width: 2;
+			color: var(--cta-button);
+		}
+	}
+
+	> div.menu-items {
+		display: none;
+	}
+	> div.sub-menu-items {
+		display: none;
+	}
+}
+
+nav.main-navigation.mobile.opened {
+	position: relative;
+	padding: calc(0.75rem  + 32px) 1.5rem 0.75rem 1.5rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 2fr;
+	grid-template-areas:
+		"header sub-menu"
+		"menu sub-menu";
+
+	gap: 0.5rem;
+	span {
+		position: absolute;
+		left: 1rem;
+		top: 0.75rem;
+		width: 24px;
+		height: 24px;
+		svg {
+			stroke-width: 2;
+			color: var(--cta-button);
+		}
+	}
+	> a {
+		grid-area: header;
+		
+	}
+	> div.menu-items {
+		grid-area: menu;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+			align-items: start;
+			flex-direction:column-reverse;
+	}
+	div.sub-menu-items {
+		grid-area: sub-menu;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		justify-content: start;
+		align-items: center;
+		height: 100%;
+		border-left: 1px solid var(--cta-button);
+		padding: 0.25rem;
+		
 	}
 }

@@ -14,12 +14,13 @@
 		<link rel="stylesheet" href="./styles.css" />
 	</head>
 	<body>
-		<nav class="main-navigation">
+		<nav class="main-navigation closed">
+			<span class="toggle"><i data-lucide="menu"></i></span>
 			<a href="/">Jogo Do Bicho Online</a>
-			<div>
+			<div class="sub-menu-items">
 				<a href="/pages/placar-de-lideres/">Placar de Líderes</a>
 			</div>
-			<div>
+			<div class="menu-items">
 				<a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
 				<a href="#">Meus Jogos</a>
 				<a href="/pages/login/login.html" class="login-btn"
@@ -27,6 +28,7 @@
 				></a>
 			</div>
 		</nav>
+		<script src="/components/navbar/scripts.js" defer></script>
 		<main class="index-content">
 			<section class="hero">
 				<div class="about-the-game">
