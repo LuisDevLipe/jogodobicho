@@ -9,8 +9,8 @@
 	</head>
 	<body>
 		<nav class="private-nav">
-			<a href="./consulta_usuarios.html">Consulta Usuarios</a>
-			<a href="./system_log.html">Log do Sistema</a>
+			<a href="./consulta_usuarios.php">Consulta Usuarios</a>
+			<a href="./system_log.php">Log do Sistema</a>
 		</nav>
 		<main class="consulta-usuario">
 			<h1>Consulta</h1>

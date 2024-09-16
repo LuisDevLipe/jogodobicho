@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DER - Jogo Do Bicho</title>
+    <title>Placar de líderes - Jogo Do Bicho</title>
     <link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
-    <link rel="stylesheet" href="modeloBD.css">
+    <link rel="stylesheet" href="placar.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-
 </head>
 <body>
-    <nav class="main-navigation closed">
+<nav class="main-navigation closed">
 		<span class="toggle"><i data-lucide="menu"></i></span>
 		<a href="/jogodobicho/">Jogo Do Bicho Online</a>
 		<div class="sub-menu-items">
@@ -23,15 +22,6 @@
 		</div>
 	</nav>
 	<script src="/jogodobicho/components/navbar/scripts.js" defer></script>
-    <header>
-        <h1>Diagrama de entidade Relacionamento</h1>
-        <p>O modelo de banco de dados utilizado no atual desenvolvimento desse aplicativo.</p>
-        
-        
-    </header>
-    <main>
-        <iframe width="560" height="315" src='https://dbdiagram.io/e/66d00939cf8e2d1d1c32424f/66df7c97550cd927eaad39f7'> </iframe>
-    </main>
     <script>lucide.createIcons()</script>
 </body>
 </html>

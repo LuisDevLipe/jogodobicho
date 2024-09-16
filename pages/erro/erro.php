@@ -67,7 +67,7 @@
     <h2>Este página encontra-se temporariamente indisponível.</h2>
     <p>Entre em contato com o suporte ou tente novamente mais tarde.
         <p>Pedimos desculpas pelo inconveniente</p>
-        <a href="/">Voltar ao início do site.</a>
+        <a href="/jogodobicho/">Voltar ao início do site.</a>
     </p>
 
 </body>
