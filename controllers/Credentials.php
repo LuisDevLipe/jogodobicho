@@ -1,6 +1,8 @@
 <?php
 require_once('jogodobicho/connection/connectionMySQL.php');
-require_once 'jogodobicho/controllers/Users.php';
+// require_once 'jogodobicho/controllers/Users.php';
+
+use UsersController\Users;
 
 class Credentials
 {
@@ -15,12 +17,12 @@ class Credentials
         $this->password = $password;
         $this->rootuser = false;
     }
-    public function getId(): int{
+    public function getUserId(): int{
         global $con;
-        $sql = 'SELECT c.user_id , u.id FROM CREDENTIALS c WHERE username = ? JOIN USERS u ON c.user_id = u.id';
+        $sql = 'SELECT c.user_id , u.id FROM Credentials c, Users u WHERE c.user_id = u.id AND c.username = ? ';
         $result = $con->execute_query(query: $sql, params: [$this->username]);
         
-        if (!is_int($result)){
+        if (!is_int(value: $result)){
             die('Usuário não encontrado');
         }
         return $result;
@@ -54,7 +56,7 @@ class Credentials
     {
         global $con;
         $this->updated_at = time();
-        $usernameExists = Users::show();
+        $usernameExists = Users::show(id: $this->getUserId());
         $sql = 'INSERT INTO CREDENTIALS (username, password, rootuser, updated_at) VALUES (?, ?, ?, ?)';
 
         if ($usernameExists) {
