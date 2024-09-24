@@ -1,72 +1,59 @@
 <?php
-require_once('jogodobicho/connection/connectionMySQL.php');
-// require_once 'jogodobicho/controllers/Users.php';
-
-use UsersController\Users;
-
+// namespace CredentialsController;
+include "../connection/connectionMySQL.php";
 class Credentials
 {
+    private $user_id;
     private $username;
     private $password;
     private $rootuser;
-    private $updated_at;
-
+    private $updated_at = false;
+    private $con;
+    /**
+     * @param string $username
+     * @param string $password
+     */
     public function __construct($username, $password)
     {
         $this->username = $username;
         $this->password = $password;
-        $this->rootuser = false;
-    }
-    public function getUserId(): int{
-        global $con;
-        $sql = 'SELECT c.user_id , u.id FROM Credentials c, Users u WHERE c.user_id = u.id AND c.username = ? ';
-        $result = $con->execute_query(query: $sql, params: [$this->username]);
-        
-        if (!is_int(value: $result)){
-            die('Usuário não encontrado');
-        }
-        return $result;
 
+        $config = new Connection\ConnectionMariaDB();
+        $this->con = $config->connect();
     }
 
     public function login(): bool
     {
-        global $con;
-        $sql = 'SELECT * FROM CREDENTIALS WHERE username = ? AND password = ?';
-
-        $result = $con->execute_query(query: $sql, params: [$this->username, $this->password]);
-
-        if ($result) {
+        $sql = "SELECT * FROM Credentials WHERE username = ? AND password = ?";
+        $result = $this->con->execute_query(
+            query: $sql,
+            params: [$this->username, $this->password]
+        );
+        if ($result->num_rows > 0) {
             session_start();
-            $_SESSION['username'] = $this->username;
+            $_SESSION["username"] = $this->username;
+            $_SESSION["password"] = $this->password;
             session_commit();
-        
-        } else {
-            echo 'Usuário ou senha inválidos';
+            return true;
         }
-        return $result;
+        return false;
     }
+
     public function logout(): void
     {
         session_start();
         session_destroy();
         session_commit();
     }
-    public function registerCredentials(): bool
+
+    public function getUserId(): int
     {
-        global $con;
-        $this->updated_at = time();
-        $usernameExists = Users::show(id: $this->getUserId());
-        $sql = 'INSERT INTO CREDENTIALS (username, password, rootuser, updated_at) VALUES (?, ?, ?, ?)';
-
-        if ($usernameExists) {
-            die(new UserAlreadyExistsException()->getMessage());
-        }
-
-        $result = $con->execute_query(query: $sql, params: [$this->username, $this->password, $this->rootuser, $this->updated_at]);
-
-        return $result;
+        $sql =
+            "SELECT c.user_id , u.id FROM Credentials c, Users u WHERE c.user_id = u.id AND c.username = ? ";
+        $result = $this->con->execute_query(
+            query: $sql,
+            params: [$this->username]
+        );
+        return $result->fetch_assoc()["user_id"];
     }
-
 }
-

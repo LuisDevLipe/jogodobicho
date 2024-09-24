@@ -8,26 +8,21 @@
 <body>
     <h1>Ola</h1>
 <?php
-echo 'hi';
-include '../controllers/Users.php';
-echo 'hi';
-$con = mysqli_connect(
-    hostname:'localhost',
-    username:'root',
-    password:'',
-    database:'jogodobicho',
-    port:3306
-);
-$sql = "SELECT * FROM Users WHERE id = 1";
-$result = mysqli_query(mysql: $con, query: $sql);
-$result;
-var_dump($result->fetch_all());
-echo '<br>Cotroller<br>';
+echo "hi";
+include "../controllers/Users.php";
+include "../controllers/Credentials.php";
 
-var_dump(UsersController\Users::show(1)->fetch_assoc());
-echo 'hi';
+$username = "lipe";
+$password = "0000";
 
+$credentials = new Credentials($username, $password);
+$user_id = $credentials->login();
+echo $user_id;
+
+echo "<br> Welcome " . $_SESSION["username"] . "<br>";
+
+echo "bye";
 ?>
-    
+
 </body>
 </html>
