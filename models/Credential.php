@@ -1,13 +1,18 @@
 <?php
-// namespace CredentialsController;
-include "../connection/connectionMySQL.php";
-class Credentials
+namespace models;
+include $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/connection/config.php";
+use \Connection\ConnectionMariaDB;
+
+use \mysqli_result;
+
+new ConnectionMariaDB();
+class Credential
 {
-    private $user_id;
-    private $username;
-    private $password;
+    protected $user_id;
+    protected $username;
+    protected $password;
+    protected $updated_at;
     private $rootuser;
-    private $updated_at = false;
     private $con;
     /**
      * @param string $username
@@ -17,36 +22,22 @@ class Credentials
     {
         $this->username = $username;
         $this->password = $password;
+        $this->rootuser = false;
+        $this->updated_at = time();
 
-        $config = new Connection\ConnectionMariaDB();
+        $config = new ConnectionMariaDB();
         $this->con = $config->connect();
     }
-
-    public function login(): bool
+    public function findUser(): bool|mysqli_result
     {
         $sql = "SELECT * FROM Credentials WHERE username = ? AND password = ?";
         $result = $this->con->execute_query(
             query: $sql,
             params: [$this->username, $this->password]
         );
-        if ($result->num_rows > 0) {
-            session_start();
-            $_SESSION["username"] = $this->username;
-            $_SESSION["password"] = $this->password;
-            session_commit();
-            return true;
-        }
-        return false;
+        return $result;
     }
-
-    public function logout(): void
-    {
-        session_start();
-        session_destroy();
-        session_commit();
-    }
-
-    public function getUserId(): int
+    public function findUserId(): int|bool
     {
         $sql =
             "SELECT c.user_id , u.id FROM Credentials c, Users u WHERE c.user_id = u.id AND c.username = ? ";
@@ -54,6 +45,6 @@ class Credentials
             query: $sql,
             params: [$this->username]
         );
-        return $result->fetch_assoc()["user_id"];
+        return $result;
     }
 }

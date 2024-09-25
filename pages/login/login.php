@@ -28,9 +28,9 @@
         <form action="#" method="post">
             <h1>Login</h1>
             <fieldset>
-                <label for="email">Email</label>
+                <label for="username">Usuário</label>
                 
-                <input type="email" name="email" id="email" required>
+                <input type="text" name="username" id="username" required>
             </fieldset>
             <fieldset>
 
@@ -43,7 +43,24 @@
             </fieldset>
                 <a href="/jogodobicho/pages/auth-util/recuperar-senha.php">Esqueci minha senha</a>
             <a href="/jogodobicho/pages/cadastro/cadastro.php">Cadastrar</a>
+
         </form>
+        <?php
+        include $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/Credential.php";
+        use controllers\CredentialController;
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $username = $_POST["username"];
+            $password = $_POST["password"];
+            $credential = new CredentialController($username, $password);
+            if ($credential->login()) {
+                header("Location: /jogodobicho/");
+            } else {
+                echo "<p>Usuário ou senha inválidos</p>";
+            }
+        }
+
+
+        ?>
     </main>
     <script>lucide.createIcons()</script>
 </body>

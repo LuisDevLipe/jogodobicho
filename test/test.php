@@ -8,20 +8,8 @@
 <body>
     <h1>Ola</h1>
 <?php
-echo "hi";
-include "../controllers/Users.php";
-include "../controllers/Credentials.php";
 
-$username = "lipe";
-$password = "0000";
-
-$credentials = new Credentials($username, $password);
-$user_id = $credentials->login();
-echo $user_id;
-
-echo "<br> Welcome " . $_SESSION["username"] . "<br>";
-
-echo "bye";
+include dirname(__DIR__) . '/test2/test_include.php';
 ?>
 
 </body>

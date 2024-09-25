@@ -21,7 +21,12 @@
 		<span class="toggle"><i data-lucide="menu"></i></span>
 		<a href="/jogodobicho/">Jogo Do Bicho Online</a>
 		<div class="sub-menu-items">
-			<a href="/jogodobicho/pages/placar-de-lideres/">Placar de Líderes</a>
+			<!-- <a href="/jogodobicho/pages/placar-de-lideres/">Placar de Líderes</a> -->
+			<?php 
+				session_start();
+				echo '<a href=\'#\'>' . 'bem vindo de volta '. $_SESSION["username"].' seu arrombado' . '</a>';
+				session_commit();
+			?>
 		</div>
 		<div class="menu-items">
 			<a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
