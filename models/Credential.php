@@ -1,7 +1,7 @@
 <?php
 namespace models;
-include $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/connection/config.php";
-use \Connection\ConnectionMariaDB;
+include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/connection/config.php";
+use Connection\ConnectionMariaDB;
 
 use \mysqli_result;
 

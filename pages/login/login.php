@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+session_start();
+if ($_SESSION["username"]):?>
+    <script>confirm('you are already logged in'); </script>
+<?php endif; session_commit();?>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -25,11 +30,11 @@
 	<script src="/jogodobicho/components/navbar/scripts.js" defer></script>
 
     <main>
-        <form action="#" method="post">
+        <form action="#" method="post" name='login'>
             <h1>Login</h1>
             <fieldset>
                 <label for="username">Usuário</label>
-                
+
                 <input type="text" name="username" id="username" required>
             </fieldset>
             <fieldset>
@@ -46,22 +51,22 @@
 
         </form>
         <?php
-        include $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/Credential.php";
+        include_once $_SERVER["DOCUMENT_ROOT"] .
+            "/jogodobicho/controllers/Credential.php";
         use controllers\CredentialController;
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
             $username = $_POST["username"];
             $password = $_POST["password"];
             $credential = new CredentialController($username, $password);
-            if ($credential->login()) {
-                header("Location: /jogodobicho/");
-            } else {
+            $user = $credential->login();
+            if (!$user) {
                 echo "<p>Usuário ou senha inválidos</p>";
+            } else {
+                header("Location: /jogodobicho/");
             }
         }
-
-
         ?>
     </main>
     <script>lucide.createIcons()</script>
-</body>
+</cript
 </html>
