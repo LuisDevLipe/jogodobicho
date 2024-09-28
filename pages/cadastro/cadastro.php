@@ -26,7 +26,7 @@
 	<script src="/jogodobicho/components/navbar/scripts.js" defer></script>
 
 	<main>
-		<form action="#" method="post">
+		<form action="#" method="post" name='cadastro' enctype='application/x-www-form-urlencoded'>
 			<h1>Cadastro</h1>
 			<div class="fields-wrapper">
 
@@ -49,17 +49,19 @@
 					<fieldset><label for="filiation-name">Nome Mãe</label><input required type="text" name="filiation-name">
 					</fieldset>
 					<fieldset><label for="cpf">CPF</label><input required type="text"
-						oninput="validarCPF(this.value)"
-							pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})">
+					name="cpf"
+					oninput="validarCPF(this.value)"
+							pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})"
+					>
 					</fieldset>
 					<fieldset>
 						<label for="email">Email</label>
 						<input required type="email" name="email" id="email" />
 					</fieldset>
-					<fieldset><label for="cel">Celular</label><input required type="cel" name="cel"
-							pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"></fieldset>
-					<fieldset><label for="tel">Fixo</label><input required type="tel" name="cel"
-							pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"></fieldset>
+					<fieldset><label for="celular">Celular</label><input required type="cel" name="celular"
+							pattern="[0-9]{2}[0-9]{5}-[0-9]{4}" placeholder="2179999-8888"></fieldset>
+					<fieldset><label for="fixo">Fixo</label><input required type="tel" name="fixo"
+							pattern="[0-9]{2}[0-9]{5}-[0-9]{4}"></fieldset>
 				</div>
 				<div class="field-wrapper">
 
@@ -68,11 +70,15 @@
 						<input type="text" required name="cep" oninput="validarCEP(this.value)" minlength="8" maxlength="8">
 						<label for="logradouro">Rua</label><input required name="logradouro" type="text">
 						<label for="numero">Número</label> <input required type="text" name="numero">
-						<label for="cidade">Cidade</label><input required type="text" name="Cidade">
+						<label for="cidade">Cidade</label><input required type="text" name="cidade">
 						<label for="estado">Estado</label><input required name="estado" type="text">
 						<label for="complemento">Complemento</label><input required type="text" name="complemento">
 						<label for="bairro">Bairro</label><input required name="bairro" type="text">
 					</fieldset>
+					<fieldset>
+                        <label for="username">Nome de Usuário</label>
+                        <input required type="text" name="username" id="username" />
+                    </fieldset>
 					<fieldset>
 
 						<label for="password">Senha</label>
@@ -87,7 +93,7 @@
 			</div>
 			<fieldset>
 
-				<button type="submit">Cadastrar</button>
+				<button type="submit" name='cadastrar'>Cadastrar</button>
 			</fieldset>
 			<fieldset>
 				<input required type="checkbox" name="termos" id="termos" />
@@ -97,8 +103,49 @@
 			</fieldset>
 			<a href="/jogodobicho/pages/login/login.php">Login</a>
 		</form>
+		<?php
+  if (isset($_POST["cadastrar"]));
+  include_once $_SERVER["DOCUMENT_ROOT"] .
+      "/jogodobicho/controllers/Credential.php";
+  include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
+  echo "dafuq";
+  echo $_POST["dob"];
+  $user = new controllers\UserController(
+      fullname: $_POST["name"],
+      dob: date("d-m-Y", strtotime($_POST["dob"])),
+      gender: $_POST["gender"],
+      mothername: $_POST["filiation-name"],
+      cpf: $_POST["cpf"],
+      email: $_POST["email"],
+      celular: $_POST["celular"],
+      fixo: $_POST["fixo"],
+	  created_at: time(),
+	  updated_at: time()
+  );
+  echo '<pre>';
+  var_dump($_POST);
+  echo '</pre>';
+  echo "pqp;";
+  echo '<pre>';
+  var_dump($user->peekParams());
+  echo '</pre>';
+  $user->registerUser();
+  echo "registrado";
+  $userId = $user->findUser()["id"];
+  echo "userId:";
+  echo $userId;
+  $userCredentials = new controllers\CredentialController(
+      username: $_POST["username"],
+      password: $_POST["password"]
+  );
+  echo "instanciado credencial";
+
+  $userCredentials->setUserId($userId);
+  echo "setado userId";
+  $userCredentials->registerCredential();
+  ?>
 	</main>
-	<script src="cadastro.js"></script>
+	<script src="./cadastro.js"></script>
 	<script>lucide.createIcons()</script>
 </body>
 

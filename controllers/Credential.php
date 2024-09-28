@@ -10,20 +10,18 @@ class CredentialController extends Credential
         parent::__construct($username, $password);
     }
 
-    public function login(): bool | array
+    public function login(): bool|array
     {
-        $user = $this->findUser();
-        
+        $user = $this->read();
 
         if ($user->num_rows === 0) {
             return false; // false
-        } 
+        }
         $user = $user->fetch_assoc();
-            session_start();
-            $_SESSION["username"] = $user["username"];
-            session_commit();
-            return $user;
-        
+        session_start();
+        $_SESSION["username"] = $user["username"];
+        session_commit();
+        return $user;
     }
 
     public static function logout(): void
@@ -32,5 +30,27 @@ class CredentialController extends Credential
         session_unset();
         session_destroy();
         session_commit();
+        header("Refresh:0");
+    }
+    /**
+     * @param int $user_id
+     */
+    public function setUserId($user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    public function registerCredential(): bool
+    {
+        $credential = $this->create();
+        $erro = $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/pages/erro/erro.php";
+        $login =
+            $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/pages/login/login.php";
+        if (!$credential) {
+            header("Location: $erro");
+        } else {
+            header("Location: $login");
+            return true;
+        }
     }
 }

@@ -25,10 +25,14 @@
 			<?php
    session_start();
    if ($_SESSION["username"]): ?>
-	   <a href='#'><?=$_SESSION["username"] ?>seu arrombado</a>
+	   <a href='#'>Bem vindo de volta <?= $_SESSION[
+        "username"
+    ] ?>, seu arrombado</a>
    <?php else: ?>
-	   <a href="/jogodobicho/pages/login/login.php/">Bem vindo, Visitante!</a>
-	     <?php endif; session_commit(); ?>
+	   <a href="/jogodobicho/pages/login/login.php/" target="_self">Bem vindo, Visitante!</a>
+	     <?php endif;
+   session_commit();
+   ?>
 		</div>
 		<div class="menu-items">
 			<a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
@@ -36,21 +40,22 @@
 			<?php
    session_start();
    if ($_SESSION["username"]): ?>
-       <form method='post' name='logout' action='#'>
-           <button type='submit' name="logout" value="logout">Logout</button>
+       <form method='post' name='logout' action=''>
+           <button type='submit' name="logout" value="logout">Desconectar</button>
        </form>
    <?php else: ?>
        <a href='/jogodobicho/pages/login/login.php' class='login-btn'>Login/Cadastro <i data-lucide='circle-user-round'></i></a>
-  <?php endif; session_commit(); ?>
-   
+  <?php endif;
+   session_commit();
+   ?>
 
 
-  <?php if ($_POST["logout"] === "logout") {
 
-      	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/Credential.php";
-		
-     	controllers\CredentialController::logout();
-			header("Refresh: 0");
+  <?php if (isset($_POST["logout"])) {
+      include_once $_SERVER["DOCUMENT_ROOT"] .
+          "/jogodobicho/controllers/Credential.php";
+
+      controllers\CredentialController::logout();
   } ?>
 		</div>
 	</nav>

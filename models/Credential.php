@@ -1,7 +1,10 @@
 <?php
 namespace models;
 include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/connection/config.php";
+include_once $_SERVER["DOCUMENT_ROOT"] .
+    "/jogodobicho/exceptions/exceptions.php";
 use Connection\ConnectionMariaDB;
+use exceptions\UserAlreadyExistsException;
 
 use \mysqli_result;
 
@@ -28,7 +31,7 @@ class Credential
         $config = new ConnectionMariaDB();
         $this->con = $config->connect();
     }
-    public function findUser(): bool|mysqli_result
+    public function read(): bool|mysqli_result
     {
         $sql = "SELECT * FROM Credentials WHERE username = ? AND password = ?";
         $result = $this->con->execute_query(
@@ -37,14 +40,25 @@ class Credential
         );
         return $result;
     }
-    public function findUserId(): int|bool
+
+    protected function create(): bool
     {
+        $user = $this->read()->num_rows;
         $sql =
-            "SELECT c.user_id , u.id FROM Credentials c, Users u WHERE c.user_id = u.id AND c.username = ? ";
+            "INSERT INTO Credentials (username, password, rootuser, updated_at,user_id) VALUES (?, ?, ?, ?,?)";
+        if ($user === 0) {
+            return false;
+        }
         $result = $this->con->execute_query(
             query: $sql,
-            params: [$this->username]
+            params: [
+                $this->username,
+                $this->password,
+                $this->rootuser,
+                $this->updated_at,
+                $this->user_id,
+            ]
         );
-        return $result;
+        return true;
     }
 }

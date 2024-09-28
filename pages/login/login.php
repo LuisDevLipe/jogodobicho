@@ -9,7 +9,7 @@ if ($_SESSION["username"]):?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Jogo do Bicho Online</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="/jogodobicho/pages/login/login.css">
     <link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -60,7 +60,7 @@ if ($_SESSION["username"]):?>
             $credential = new CredentialController($username, $password);
             $user = $credential->login();
             if (!$user) {
-                echo "<p>Usuário ou senha inválidos</p>";
+                echo "<script>alert('Usuário ou senha inválidos')</script>";
             } else {
                 header("Location: /jogodobicho/");
             }
