@@ -34,13 +34,11 @@ class UserController extends User
     public function registerUser(): bool
     {
         $user = $this->create();
-        $erro = $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/pages/erro/erro.php";
-        $login =
-            $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/pages/login/login.php";
+       
         if (!$user) {
-            header("Location: $erro");
+          return false;
         }
-        header("Location: $login");
+       
         return true;
 
     }

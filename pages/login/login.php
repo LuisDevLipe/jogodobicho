@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-if ($_SESSION["username"]):?>
+if (isset($_SESSION["username"])):?>
     <script>confirm('you are already logged in'); </script>
 <?php endif; session_commit();?>
 <html lang="pt-BR">

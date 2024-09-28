@@ -24,7 +24,7 @@
 			<!-- <a href="/jogodobicho/pages/placar-de-lideres/">Placar de Líderes</a> -->
 			<?php
    session_start();
-   if ($_SESSION["username"]): ?>
+   if (isset($_SESSION["username"])): ?>
 	   <a href='#'>Bem vindo de volta <?= $_SESSION[
         "username"
     ] ?>, seu arrombado</a>
@@ -39,7 +39,7 @@
 			<a href="#">Meus Jogos</a>
 			<?php
    session_start();
-   if ($_SESSION["username"]): ?>
+   if (isset($_SESSION["username"])): ?>
        <form method='post' name='logout' action=''>
            <button type='submit' name="logout" value="logout">Desconectar</button>
        </form>

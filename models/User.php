@@ -65,19 +65,12 @@ class User
         if ($userExists->num_rows > 0) {
             return false;
         }
-        echo "<br>the user does not exist<br>";
+       
         $sql = "INSERT INTO Users
                 (fullname,dob,gender,mothername,cpf,email,celular,fixo,created_at,updated_at)
             VALUES
                 (?,?,?,?,?,?,?,?,?,?)";
-        echo "dopaksdoksa";
-        echo "<br><pre> Params for create";
-        var_dump($this->peekParams());
-        echo "</pre><br>";
-        var_dump(date(format: 'd-m-Y h:i:s', timestamp: $this->created_at));
-        var_dump(
-            date(format: 'd-m-Y h:i:s', timestamp: $this->updated_at)
-        );
+       
         $result = $this->con->execute_query(query: $sql, params: [
             $this->fullname,
             $this->dob,
@@ -91,9 +84,7 @@ class User
             date(format: 'd-m-Y h:i:s', timestamp: $this->updated_at)
         ]);
 
-        echo "<br><pre> Result from create";
-        var_dump($result);
-        echo "</pre><br>";
+      
         return true;
     }
 
@@ -101,9 +92,7 @@ class User
     {
         $sql = "SELECT * FROM Users WHERE cpf = ?";
         $result = $this->con->execute_query(query: $sql, params: [$this->cpf]);
-        echo "<br><pre> Result from read";
-        var_dump($result);
-        echo "</pre><br>";
+        
         return $result;
     }
     public function peekParams()

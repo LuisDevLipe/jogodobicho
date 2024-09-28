@@ -104,45 +104,40 @@
 			<a href="/jogodobicho/pages/login/login.php">Login</a>
 		</form>
 		<?php
-  if (isset($_POST["cadastrar"]));
-  include_once $_SERVER["DOCUMENT_ROOT"] .
-      "/jogodobicho/controllers/Credential.php";
-  include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
-  echo "dafuq";
-  echo $_POST["dob"];
-  $user = new controllers\UserController(
-      fullname: $_POST["name"],
-      dob: date("d-m-Y", strtotime($_POST["dob"])),
-      gender: $_POST["gender"],
-      mothername: $_POST["filiation-name"],
-      cpf: $_POST["cpf"],
-      email: $_POST["email"],
-      celular: $_POST["celular"],
-      fixo: $_POST["fixo"],
-	  created_at: time(),
-	  updated_at: time()
-  );
-  echo '<pre>';
-  var_dump($_POST);
-  echo '</pre>';
-  echo "pqp;";
-  echo '<pre>';
-  var_dump($user->peekParams());
-  echo '</pre>';
-  $user->registerUser();
-  echo "registrado";
-  $userId = $user->findUser()["id"];
-  echo "userId:";
-  echo $userId;
-  $userCredentials = new controllers\CredentialController(
-      username: $_POST["username"],
-      password: $_POST["password"]
-  );
-  echo "instanciado credencial";
+		if (isset($_POST["cadastrar"])) {
 
-  $userCredentials->setUserId($userId);
-  echo "setado userId";
-  $userCredentials->registerCredential();
+			include_once $_SERVER["DOCUMENT_ROOT"] .
+				"/jogodobicho/controllers/Credential.php";
+			include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
+
+			$user = new controllers\UserController(
+				fullname: $_POST["name"],
+				dob: date("d-m-Y", strtotime($_POST["dob"])),
+				gender: $_POST["gender"],
+				mothername: $_POST["filiation-name"],
+				cpf: $_POST["cpf"],
+				email: $_POST["email"],
+				celular: $_POST["celular"],
+				fixo: $_POST["fixo"],
+				created_at: time(),
+				updated_at: time()
+			);
+
+			$user->registerUser();
+
+			$userId = $user->findUser()["id"];
+
+			$userCredentials = new controllers\CredentialController(
+				username: $_POST["username"],
+				password: $_POST["password"]
+			);
+
+			$userCredentials->setUserId($userId);
+
+			$userCredentials->registerCredential();
+			
+				
+		}
   ?>
 	</main>
 	<script src="./cadastro.js"></script>

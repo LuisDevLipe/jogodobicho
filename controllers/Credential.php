@@ -43,14 +43,16 @@ class CredentialController extends Credential
     public function registerCredential(): bool
     {
         $credential = $this->create();
-        $erro = $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/pages/erro/erro.php";
-        $login =
-            $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/pages/login/login.php";
-        if (!$credential) {
-            header("Location: $erro");
-        } else {
-            header("Location: $login");
-            return true;
-        }
+        return $credential;
+    }
+
+    public function peekParams(): void{
+        $params = [
+            "username" => $this->username,
+            "password" => $this->password,
+            "user_id" => $this->user_id,
+            "updated_at" => $this->updated_at,
+            
+        ];;
     }
 }
