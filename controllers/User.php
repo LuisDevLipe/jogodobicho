@@ -12,9 +12,7 @@ class UserController extends User
         $cpf,
         $email,
         $celular,
-        $fixo,
-        $created_at,
-        $updated_at
+        $fixo
     ) {
         parent::__construct(
             $fullname,
@@ -24,22 +22,31 @@ class UserController extends User
             $cpf,
             $email,
             $celular,
-            $fixo,
-            $created_at,
-            $updated_at
+            $fixo
+
         );
         // debug_print_backtrace();
     }
 
     public function registerUser(): bool
     {
-        $user = $this->create();
+        $user = $this->read();
        
-        if (!$user) {
-          return false;
+        if ($user->num_rows > 0) {
+            // user exists
+            return false;
         }
-       
-        return true;
+        if ($user->fetch_assoc()["cpf"] === $this->cpf) {
+            return false;
+        }
+
+
+        // create user
+        $query_result = $this->create();
+
+
+       // returns the result of the query ( true or false on failure)
+        return $query_result;
 
     }
     /**

@@ -41,9 +41,7 @@ class User
         $cpf,
         $email,
         $celular,
-        $fixo,
-        $created_at,
-        $updated_at
+        $fixo
     ) {
         $this->fullname = $fullname;
         $this->dob = $dob;
@@ -53,23 +51,20 @@ class User
         $this->email = $email;
         $this->celular = $celular;
         $this->fixo = $fixo;
-        $this->created_at = $created_at;
-        $this->updated_at = $updated_at;
+        $this->created_at = time();
+        $this->updated_at = time();
         $this->con = new ConnectionMariaDB();
         $this->con = $this->con->connect();
     }
 
     protected function create(): bool
     {
-        $userExists = $this->read();
-        if ($userExists->num_rows > 0) {
-            return false;
-        }
+         
        
         $sql = "INSERT INTO Users
-                (fullname,dob,gender,mothername,cpf,email,celular,fixo,created_at,updated_at)
+                (fullname,dob,gender,mothername,cpf,email,celular,fixo)
             VALUES
-                (?,?,?,?,?,?,?,?,?,?)";
+                (?,?,?,?,?,?,?,?)";
        
         $result = $this->con->execute_query(query: $sql, params: [
             $this->fullname,
@@ -79,13 +74,10 @@ class User
             $this->cpf,
             $this->email,
             $this->celular,
-            $this->fixo,
-            date(format: 'd-m-Y h:i:s', timestamp: $this->created_at),
-            date(format: 'd-m-Y h:i:s', timestamp: $this->updated_at)
+            $this->fixo
         ]);
-
       
-        return true;
+        return $result;
     }
 
     protected function read(): mysqli_result
@@ -95,20 +87,18 @@ class User
         
         return $result;
     }
-    public function peekParams()
-    {
-        $params = [
-            "fullname" => $this->fullname,
-            "dob" => $this->dob,
-            "gender" => $this->gender,
-            "mothername" => $this->mothername,
-            "cpf" => $this->cpf,
-            "email" => $this->email,
-            "celular" => $this->celular,
-            "fixo" => $this->fixo,
-            "created_at" => $this->created_at,
-            "updated_at" => $this->updated_at,
-        ];
-        return $params;
-    }
+    // public function peekParams()
+    // {
+    //     $params = [
+    //         "fullname" => $this->fullname,
+    //         "dob" => $this->dob,
+    //         "gender" => $this->gender,
+    //         "mothername" => $this->mothername,
+    //         "cpf" => $this->cpf,
+    //         "email" => $this->email,
+    //         "celular" => $this->celular,
+    //         "fixo" => $this->fixo
+    //     ];
+    //     return $params;
+    // }
 }

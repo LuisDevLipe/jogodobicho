@@ -26,12 +26,11 @@ class Credential
         $this->username = $username;
         $this->password = $password;
         $this->rootuser = false;
-        $this->updated_at = date('d-m-Y h-i-s', time());
 
         $config = new ConnectionMariaDB();
         $this->con = $config->connect();
     }
-    public function read(): bool|mysqli_result
+    public function read(): mysqli_result|bool
     {
         $sql = "SELECT * FROM Credentials WHERE username = ? AND password = ?";
         $result = $this->con->execute_query(
@@ -40,7 +39,7 @@ class Credential
         );
         return $result;
     }
-    public function readUsername(): mysqli_result
+    public function readUsername(): mysqli_result|bool
     {
         $sql = "SELECT * FROM Credentials WHERE username = ?";
         $result = $this->con->execute_query(
@@ -51,29 +50,22 @@ class Credential
 
     }
 
-    protected function create(): bool
+    protected function create(): mysqli_result|bool
     {
-        $user = $this->readUsername();
-        if ($user->num_rows > 0) {
-
-            return false;
-        }
-
 
         $sql =
-            "INSERT INTO Credentials (username, password, rootuser, updated_at,user_id) VALUES (?, ?, ?, ?,?)";
+            "INSERT INTO Credentials (username, password, rootuser,user_id) VALUES (?, ?, ?, ?)";
 
-        $this->con->execute_query(
+        $result = $this->con->execute_query(
             query: $sql,
             params: [
                 $this->username,
                 $this->password,
                 $this->rootuser,
-                $this->updated_at,
                 $this->user_id,
             ]
         );
 
-        return true;
+        return $result;
     }
 }

@@ -11,16 +11,16 @@
 </head>
 
 <body>
-<nav class="main-navigation closed">
+	<nav class="main-navigation closed">
 		<span class="toggle"><i data-lucide="menu"></i></span>
 		<a href="/jogodobicho/">Jogo Do Bicho Online</a>
 		<div class="sub-menu-items">
-			<a href="/jogodobicho/pages/placar-de-lideres/">Placar de Líderes</a>
 		</div>
 		<div class="menu-items">
 			<a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
 			<a href="#">Meus Jogos</a>
-			<a href="/jogodobicho/pages/login/login.php" class="login-btn">Login/Cadastro <i data-lucide="circle-user-round"></i></a>
+			<a href="/jogodobicho/pages/login/login.php" class="login-btn">Login/Cadastro <i
+					data-lucide="circle-user-round"></i></a>
 		</div>
 	</nav>
 	<script src="/jogodobicho/components/navbar/scripts.js" defer></script>
@@ -36,7 +36,8 @@
 						<label for="name">Nome</label>
 						<input required type="text" name="name" minlength="15" maxlength="80">
 					</fieldset>
-					<fieldset><label for="dob">Data de Nascimento</label><input required type="date" name="dob"></fieldset>
+					<fieldset><label for="dob">Data de Nascimento</label><input required type="date" name="dob">
+					</fieldset>
 
 					<fieldset><label for="gender">Sexo</label>
 						<select name="gender" required>
@@ -46,13 +47,12 @@
 							<option value="na">Prefiro não informar</option>
 						</select>
 					</fieldset>
-					<fieldset><label for="filiation-name">Nome Mãe</label><input required type="text" name="filiation-name">
+					<fieldset><label for="filiation-name">Nome Mãe</label><input required type="text"
+							name="filiation-name">
 					</fieldset>
-					<fieldset><label for="cpf">CPF</label><input required type="text"
-					name="cpf"
-					oninput="validarCPF(this.value)"
-							pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})"
-					>
+					<fieldset><label for="cpf">CPF</label><input required type="text" name="cpf"
+							oninput="validarCPF(this.value)"
+							pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})">
 					</fieldset>
 					<fieldset>
 						<label for="email">Email</label>
@@ -67,7 +67,8 @@
 
 					<fieldset class="adress">
 						<label for="cep">CEP</label>
-						<input type="text" required name="cep" oninput="validarCEP(this.value)" minlength="8" maxlength="8">
+						<input type="text" required name="cep" oninput="validarCEP(this.value)" minlength="8"
+							maxlength="8">
 						<label for="logradouro">Rua</label><input required name="logradouro" type="text">
 						<label for="numero">Número</label> <input required type="text" name="numero">
 						<label for="cidade">Cidade</label><input required type="text" name="cidade">
@@ -76,9 +77,9 @@
 						<label for="bairro">Bairro</label><input required name="bairro" type="text">
 					</fieldset>
 					<fieldset>
-                        <label for="username">Nome de Usuário</label>
-                        <input required type="text" name="username" id="username" />
-                    </fieldset>
+						<label for="username">Nome de Usuário</label>
+						<input required type="text" name="username" id="username" />
+					</fieldset>
 					<fieldset>
 
 						<label for="password">Senha</label>
@@ -110,35 +111,46 @@
 				"/jogodobicho/controllers/Credential.php";
 			include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
 
-			$user = new controllers\UserController(
+			$newUser = new controllers\UserController(
 				fullname: $_POST["name"],
-				dob: date("d-m-Y", strtotime($_POST["dob"])),
+				dob: $_POST["dob"] ,
 				gender: $_POST["gender"],
 				mothername: $_POST["filiation-name"],
 				cpf: $_POST["cpf"],
 				email: $_POST["email"],
 				celular: $_POST["celular"],
-				fixo: $_POST["fixo"],
-				created_at: time(),
-				updated_at: time()
+				fixo: $_POST["fixo"]
 			);
 
-			$user->registerUser();
+			$userSaved = $newUser->registerUser();
 
-			$userId = $user->findUser()["id"];
+			if (!$userSaved) {
+				echo "<script>alert('CPF de Usuário já cadastrado')</script>";
+				exit();
+			}
+			$newUser_id = $newUser->findUser()["id"];
 
-			$userCredentials = new controllers\CredentialController(
+
+			$newUserCredentials = new controllers\CredentialController(
 				username: $_POST["username"],
 				password: $_POST["password"]
 			);
 
-			$userCredentials->setUserId($userId);
+			$newUserCredentials->setUserId($newUser_id);
 
-			$userCredentials->registerCredential();
-			
-				
+			$credentialSaved = $newUserCredentials->registerCredential();
+
+			if (!$credentialSaved) {
+				echo "<script>alert('Nome de Usuário já cadastrado')</script>";
+				exit();
+			}
+			echo "<script>alert('Usuário cadastrado com sucesso')</script>";
+			echo "<script>location.href = '/jogodobicho/pages/login/login.php'</script>";
+
+			exit();
+
 		}
-  ?>
+		?>
 	</main>
 	<script src="./cadastro.js"></script>
 	<script>lucide.createIcons()</script>
