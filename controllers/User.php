@@ -31,7 +31,7 @@ class UserController extends User
     public function registerUser(): bool
     {
         $user = $this->read();
-       
+
         if ($user->num_rows > 0) {
             // user exists
             return false;
@@ -45,7 +45,7 @@ class UserController extends User
         $query_result = $this->create();
 
 
-       // returns the result of the query ( true or false on failure)
+        // returns the result of the query ( true or false on failure)
         return $query_result;
 
     }
@@ -60,6 +60,24 @@ class UserController extends User
         }
         $user = $user->fetch_assoc();
         return $user;
+    }
+
+    public function findUsers($queryParam = ''): bool|array
+    {
+        $queryParam = trim($queryParam);
+        $queryParam = filter_var($queryParam, FILTER_SANITIZE_STRING);
+        $queryParam = filter_var($queryParam, FILTER_SANITIZE_SPECIAL_CHARS);
+        $queryParam = '%' . $queryParam . '%';
+        if ($queryParam !== '') {
+            $users = $this->queryUsers(queryParam: $queryParam);
+        } else {
+            $users = $this->readAll();
+        }
+        if ($users->num_rows === 0) {
+            return false;
+        }
+        $users = $users->fetch_all(MYSQLI_ASSOC);
+        return $users;
     }
 
     public function peekParams()

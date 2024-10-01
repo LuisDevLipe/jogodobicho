@@ -17,7 +17,7 @@ if (isset($_SESSION['rootuser'])) {
 		alert('Você não tem permissão para acessar essa página, entre com sua conta de administrador');
 		location.href = '/jogodobicho/pages/login/login.php';
 	</script>";
-	
+
 }
 session_commit();
 ?>
@@ -31,6 +31,22 @@ session_commit();
 	<link rel="stylesheet" href="style.css" />
 	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
 	<script src="https://unpkg.com/lucide@latest"></script>
+	<?php
+	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
+	$UserControllerInstance = new controllers\UserController(fullname: '', dob: '', gender: '', mothername: '', cpf: '', email: '', celular: '', fixo: '');
+
+	if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar"])) {
+
+		$users = $UserControllerInstance->findUsers(queryParam: $_GET["query_string"]);
+
+	} else if( $_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar_todos"])) {
+
+		$UserControllerInstance->findUsers();
+		$users = $UserControllerInstance->findUsers();
+	} else {
+		$users = $UserControllerInstance->findUsers();
+	}
+	?>
 </head>
 
 <body>
@@ -68,9 +84,8 @@ session_commit();
 			<?php endif;
 			session_commit();
 			?>
-		
-		
-		
+
+
 			<?php if (isset($_POST["logout"])) {
 				include_once $_SERVER["DOCUMENT_ROOT"] .
 					"/jogodobicho/controllers/Credential.php";
@@ -89,9 +104,15 @@ session_commit();
 					<label for="query_string">Buscar Usuário</label>
 					<input type="text" name="query_string" placeholder="Digite o nome do usuário" />
 				</fieldset>
-				<fieldset>
-					<button type="submit">Buscar <i data-lucide="search"></i></button>
-				</fieldset>
+				<div class="actions">
+
+					<fieldset>
+						<button type="submit" name="buscar">Buscar <i data-lucide="search"></i></button>
+					</fieldset>
+					<fieldset>
+						<button type="submit" name="buscar_todos">Buscar Todos <i data-lucide="text-search"></i></button>
+					</fieldset>
+				</div>
 			</form>
 		</section>
 		<section class="usuarios">
@@ -107,26 +128,26 @@ session_commit();
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>João da Silva</td>
-						<td>123.456.789-00</td>
-						<td>joao@jogodobicho.com</td>
-						<td>(21)9 9999-9999</td>
-						<td>16-09-2024</td>
-						<td>
-							<button><i data-lucide="trash"></i></button>
-						</td>
-					</tr>
-					<tr>
-						<td>Maria da Silva</td>
-						<td>123.456.789-00</td>
-						<td>maria@jogodobicho.com</td>
-						<td>(21)9 9999-9999</td>
-						<td>16-09-2024</td>
-						<td>
-							<button><i data-lucide="trash"></i></button>
-						</td>
-					</tr>
+					<?php if (!empty($users)) {
+						foreach ($users as $user) {
+							echo "<tr>";
+							echo "<td>{$user['fullname']}</td>";
+							echo "<td>{$user['cpf']}</td>";
+							echo "<td>{$user['email']}</td>";
+							echo "<td>{$user['celular']}</td>";
+							echo "<td>{$user['created_at']}</td>";
+							echo "<td><form><button type='submit' name='delete_user' value={$user['id']}><i data-lucide='trash'></i></button></form></td>";
+							echo "</tr>";
+						}
+					}
+
+
+
+
+					?>
+
+
+					<tr></tr>
 				</tbody>
 			</table>
 		</section>

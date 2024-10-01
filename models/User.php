@@ -87,6 +87,20 @@ class User
         
         return $result;
     }
+    protected function readAll(): mysqli_result
+    {
+        $sql = "SELECT * FROM Users";
+        $result = $this->con->execute_query(query: $sql);
+        return $result;
+    }
+
+    protected function queryUsers($queryParam): mysqli_result
+    {
+        $sql = "SELECT * FROM Users where fullname like ?";
+        $result = $this->con->execute_query(query: $sql, params: [$queryParam]);
+        return $result;
+    }
+    
     // public function peekParams()
     // {
     //     $params = [
