@@ -20,7 +20,7 @@ class UserLogController extends UserLog
         if ($query_result->num_rows === 0) {
             return false;
         }
-        return $query_result->fetch_all(mode: MYSQLI_ASSOC);
+        return $query_result->fetch_all(mode: MYSQLI_ASSOC);    
     }
 }
 

@@ -3,17 +3,16 @@ session_start();
 if (isset($_SESSION['rootuser'])) {
 
 	switch (($_SESSION['rootuser'])) {
-	case 0:
-		echo '<script>alert("Você não tem permissão para acessar essa página")</script>';
-		echo '<script>location.href = "/jogodobicho"</script>';
+		case 0:
+			echo '<script>alert("Você não tem permissão para acessar essa página")</script>';
+			echo '<script>location.href = "/jogodobicho"</script>';
 			echo $_SESSION['rootuser'];
 			break;
 		case 1:
 			// echo "Você é um root user";
 			break;
 	}
-} 
-else {
+} else {
 	echo "<script>
 		alert('Você não tem permissão para acessar essa página, entre com sua conta de administrador');
 		location.href = '/jogodobicho/pages/login/login.php';
@@ -23,6 +22,7 @@ session_commit();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -30,34 +30,25 @@ session_commit();
 	<link rel="stylesheet" href="console.css" />
 	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
 	<script src="https://unpkg.com/lucide@latest"></script>
-
-	<?php 
-	
-	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/UserLog.php";
-	$UserLogControllerInstance = new controllers\UserLogController(username: '');
-
-	$userLogs  = $UserLogControllerInstance->findUserLogs(queryOption: '--all', queryParam: '11111111111');
-	?>
 </head>
 
-<body>
 
-<nav class="main-navigation closed">
-	<span class="toggle"><i data-lucide="menu"></i></span>
-	<a href="/jogodobicho/">Jogo Do Bicho Online</a>
-	<div class="sub-menu-items">
+	<nav class="main-navigation closed">
+		<span class="toggle"><i data-lucide="menu"></i></span>
+		<a href="/jogodobicho/">Jogo Do Bicho Online</a>
+		<div class="sub-menu-items">
 
-		<?php
-		session_start();
-		if (isset($_SESSION["username"])): ?>
-			<a href='#'>Bem vindo de volta <?= $_SESSION[
-				"username"
-			] ?>.</a>
-		<?php else: ?>
-			<a href="/jogodobicho/pages/login/login.php/" target="_self">Bem vindo, Visitante!</a>
-		<?php endif;
-		session_commit();
-		?>
+			<?php
+			session_start();
+			if (isset($_SESSION["username"])): ?>
+				<a href='#'>Bem vindo de volta <?= $_SESSION[
+					"username"
+				] ?>.</a>
+			<?php else: ?>
+				<a href="/jogodobicho/pages/login/login.php/" target="_self">Bem vindo, Visitante!</a>
+			<?php endif;
+			session_commit();
+			?>
 			<a href="./consulta_usuarios.php">Consulta Usuarios</a>
 			<a href="./system_log.php">Log do Sistema</a>
 		</div>
@@ -76,9 +67,8 @@ session_commit();
 			<?php endif;
 			session_commit();
 			?>
-		
-		
-		
+
+
 			<?php if (isset($_POST["logout"])) {
 				include_once $_SERVER["DOCUMENT_ROOT"] .
 					"/jogodobicho/controllers/Credential.php";
@@ -87,6 +77,32 @@ session_commit();
 			} ?>
 		</div>
 	</nav>
+	<?php
+	if (isset($_GET['command']) && !empty($_GET['command'])) {
+		include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/UserLog.php";
+
+		$UserLogControllerInstance = new controllers\UserLogController(username: '');
+		$command = $_GET['command'];
+		$command = explode(' ', $command);
+		if (count($command) > 2) {
+			echo '<script>alert("Comando inválido")</script>';
+			exit();
+		} else if (count($command) === 1) {
+			$queryOption = $command[0];
+			$queryParam = '';
+		} else {
+			$queryOption = $command[0];
+			$queryParam = $command[1];
+		}
+		$userLogs = $UserLogControllerInstance->findUserLogs(queryOption: $queryOption, queryParam: $queryParam);
+		if (!$userLogs) {
+			echo '<script>alert("Nenhum resultado encontrado")</script>';
+			exit();
+		}
+
+
+	}
+	?>
 	<main class="system_log">
 		<h1>Log do Sistema</h1>
 		<section class="wrapper">
@@ -99,9 +115,9 @@ session_commit();
 					</div>
 					<div>
 						<h2>Comandos disponíveis:</h2>
-						<p>buscar --nome &lt;nome:string&gt;</p>|
-						<p>buscar --cpf &lt;cpf:string&gt;</p>|
-						<p>buscar --all</p>
+						<p>--nome &lt;nome:string&gt;</p>|
+						<p>--cpf &lt;cpf:string&gt;</p>|
+						<p>--all</p>
 					</div>
 					<div>
 						<i data-lucide="minus"></i>
@@ -118,8 +134,11 @@ session_commit();
 							<command> buscar --all </command>
 						</line>
 						<output>
-							<p>auth_when: 00-00-00 | nome: Luis | 2FA: nome_da_mãe</p>
-							<p>auth_when: 00-00-00 | nome: João | 2FA: data_nascimento</p>
+
+						<?php if (isset($userLogs)):
+						foreach($userLogs as $user) :?>
+							<p>auth_when: <?=$user['login_at']?> | nome: <?=$user['fullname']?> | 2FA: <?=$user['TwoFA_Answer']?></p>
+						<?php endforeach; endif; ?>
 						</output>
 					</div>
 					<form action="#" method="get">
@@ -137,11 +156,6 @@ session_commit();
 			</div>
 		</section>
 	</main>
-	<?php 
-	echo '<pre>';	
-	var_dump($userLogs);
-	echo '</pre>';
-?>
 
 	<script>
 		lucide.createIcons();
