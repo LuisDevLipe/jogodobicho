@@ -77,7 +77,7 @@ main.consulta-usuario {
                     flex-wrap: nowrap;
                     >button {
                         white-space: nowrap;
-                        break-word: keep-all;
+                        word-break: keep-all;
                     }
                 }
             }

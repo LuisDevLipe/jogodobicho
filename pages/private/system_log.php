@@ -30,6 +30,14 @@ session_commit();
 	<link rel="stylesheet" href="console.css" />
 	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
 	<script src="https://unpkg.com/lucide@latest"></script>
+
+	<?php 
+	
+	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/UserLog.php";
+	$UserLogControllerInstance = new controllers\UserLogController(username: '');
+
+	$userLogs  = $UserLogControllerInstance->findUserLogs(queryOption: '--all', queryParam: '11111111111');
+	?>
 </head>
 
 <body>
@@ -129,6 +137,11 @@ session_commit();
 			</div>
 		</section>
 	</main>
+	<?php 
+	echo '<pre>';	
+	var_dump($userLogs);
+	echo '</pre>';
+?>
 
 	<script>
 		lucide.createIcons();
