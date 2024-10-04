@@ -3,6 +3,8 @@
 session_start();
 if (isset($_SESSION["username"])):?>
     <script>confirm('you are already logged in'); </script>
+    <script>window.location.href = '/jogodobicho/'</script>
+    
 <?php endif; session_commit();?>
 <html lang="pt-BR">
 <head>
@@ -19,7 +21,6 @@ if (isset($_SESSION["username"])):?>
 		<span class="toggle"><i data-lucide="menu"></i></span>
 		<a href="/jogodobicho/">Jogo Do Bicho Online</a>
 		<div class="sub-menu-items">
-			<a href="/jogodobicho/pages/placar-de-lideres/">Placar de Líderes</a>
 		</div>
 		<div class="menu-items">
 			<a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
@@ -30,7 +31,7 @@ if (isset($_SESSION["username"])):?>
 	<script src="/jogodobicho/components/navbar/scripts.js" defer></script>
 
     <main>
-        <form action="#" method="post" name='login'>
+        <form action="/jogodobicho/proxy/route_requests.php" method="post" name='login'>
             <h1>Login</h1>
             <fieldset>
                 <label for="username">Usuário</label>
@@ -48,25 +49,10 @@ if (isset($_SESSION["username"])):?>
             </fieldset>
                 <a href="/jogodobicho/pages/auth-util/recuperar-senha.php">Esqueci minha senha</a>
             <a href="/jogodobicho/pages/cadastro/cadastro.php">Cadastrar</a>
-
+<input type="text" name="url" hidden value="<?= urlencode(string: basename(path: __FILE__))?>">
         </form>
-        <?php
-        include_once $_SERVER["DOCUMENT_ROOT"] .
-            "/jogodobicho/controllers/Credential.php";
-        use controllers\CredentialController;
-        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
-            $username = $_POST["username"];
-            $password = $_POST["password"];
-            $credential = new CredentialController($username, $password);
-            $user = $credential->login();
-            if (!$user) {
-                echo "<script>alert('Usuário ou senha inválidos')</script>";
-            } else {
-                header("Location: /jogodobicho/");
-            }
-        }
-        ?>
+        
     </main>
     <script>lucide.createIcons()</script>
-</cript
+</body>
 </html>

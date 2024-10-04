@@ -5,7 +5,6 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Jogo do Bicho</title>
-	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css" />
 	<link rel="stylesheet" href="/jogodobicho/components/acessibilidade/acessibilidade.css">
 
 	<!-- Development version -->
@@ -17,54 +16,7 @@
 </head>
 
 <body>
-	<nav class="main-navigation closed">
-		<span class="toggle"><i data-lucide="menu"></i></span>
-		<a href="/jogodobicho/">Jogo Do Bicho Online</a>
-		<div class="sub-menu-items">
-			<!-- <a href="/jogodobicho/pages/placar-de-lideres/">Placar de Líderes</a> -->
-			<?php
-			session_start();
-			if (isset($_SESSION["rootuser"]) === 1): ?>
-				<a href='/jogodobicho/pages/private/system_log.php'>log do sistema</a>
-				<a href='/jogodobicho/pages/private/consulta_usuarios.php'>Consulta usuários</a>
-			<?php endif;
-			if (isset($_SESSION["username"])): ?>
-				<a href='#'>Bem vindo de volta <?= $_SESSION[
-					"username"
-				] ?>.</a>
-			<?php else: ?>
-				<a href="/jogodobicho/pages/login/login.php/" target="_self">Bem vindo, Visitante!</a>
-			<?php endif;
-			session_commit();
-			?>
-		</div>
-		<div class="menu-items">
-			<a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
-			<a href="#">Meus Jogos</a>
-			<?php
-			session_start();
-			if (isset($_SESSION["username"])): ?>
-				<form method='post' name='logout' action=''>
-					<button type='submit' name="logout" value="logout">Desconectar</button>
-				</form>
-			<?php else: ?>
-				<a href='/jogodobicho/pages/login/login.php' class='login-btn'>Login/Cadastro <i
-						data-lucide='circle-user-round'></i></a>
-			<?php endif;
-			session_commit();
-			?>
-
-
-
-			<?php if (isset($_POST["logout"])) {
-				include_once $_SERVER["DOCUMENT_ROOT"] .
-					"/jogodobicho/controllers/Credential.php";
-
-				controllers\CredentialController::logout();
-			} ?>
-		</div>
-	</nav>
-	<script src="/jogodobicho/components/navbar/scripts.js" defer></script>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
 	<main class="index-content">
 		<section class="hero" id="inicio">
 			<div class="about-the-game">

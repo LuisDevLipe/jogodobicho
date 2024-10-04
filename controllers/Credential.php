@@ -39,6 +39,7 @@ class CredentialController extends Credential
             $username = $_SESSION["username"];
             $userLog = new UserLog(username: $username);
             $userLog->update();
+            
         }
 
         // destroy session
