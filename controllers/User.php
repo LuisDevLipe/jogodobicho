@@ -37,6 +37,7 @@ class UserController extends User
             return false;
         }
         if ($user->fetch_assoc()["cpf"] === $this->cpf) {
+            // cpf already in use
             return false;
         }
 

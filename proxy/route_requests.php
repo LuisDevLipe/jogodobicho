@@ -11,7 +11,7 @@ class Route_requests
 
 
         $this->uri = explode('.', $uri)[0];
-        
+
 
     }
 
@@ -21,8 +21,7 @@ class Route_requests
         switch ($this->uri) {
             case 'login':
 
-               
-                // <script>confirm('you are already logged in'); </script>
+
                 echo $_SERVER['DOCUMENT_ROOT'];
                 include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/Credential.php";
 
@@ -44,13 +43,47 @@ class Route_requests
                 break;
 
             case 'TwoFactorAuthentication':
+
+                include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/TwoFactorAuth.php";
+                if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["twoFaAnswer"])) {
+                    $twoFaAnswerId = $_POST["twoFaAnswer"];
+                    $twoFaAnswer = '';
+                    switch ($twoFaAnswer) {
+                        case '1':
+                            if (isset($_POST["mothername"])) {
+                                $twoFaAnswer = $_POST["mothername"];
+                            }
+
+                            break;
+                        case '2':
+                            if (isset($_POST["dob"])) {
+                                $twoFaAnswer = $_POST["dob"];
+                            }
+
+                            break;
+                            if (isset($_POST["cep"])) {
+                                $twoFaAnswer = $_POST["cep"];
+                            }
+
+                            break;
+
+                    }
+                    session_start();
+                    $user_id = $_SESSION["user_id"];
+                    session_commit();
+
+                    $twoFa = new \controllers\TwoFactorAuthController(user_id: $user_id, twoFaAnswer: $twoFaAnswer, twoFaAnswerId: $twoFaAnswerId);
+                    $twoFaVerified->verifyTwoFactorAuth();
+                    header("Location: /jogodobicho/pages/home/home.php");
+                    exit();
+                }
                 break;
 
             case 'logout':
                 if (isset($_POST["logout"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
                         "/jogodobicho/controllers/Credential.php";
-        
+
                     \controllers\CredentialController::logout();
                     header("Location: /jogodobicho/");
                     exit();

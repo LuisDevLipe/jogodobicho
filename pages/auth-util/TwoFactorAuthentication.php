@@ -28,21 +28,24 @@
 							echo '
 							<fieldset>
 							<label for="mothername">Qual o nome da sua mãe ?</label>
-							<input type="text" name="mothername" id="" required placeholder="Digite aqui" />
+							<input type=\'text\' name=\'twoFaAnswer\' id=\'twoFaAnswer\' hidden required value=\'1\' />
+							<input type="text" name="mothername" id="mothername" required placeholder="Digite aqui" />
 							</fieldset>';
 							break;
 						case 2:
 							echo '
 								<fieldset>
 								<label for="dob">Qual a data do seu nascimento</label>
-								<input type="date" name="dob" id="" required />
+								<input type=\'text\' name=\'twoFaAnswer\' id=\'twoFaAnswer\' hidden required value=\'2\' />
+								<input type="date" name="dob" id="dob" required />
 								</fieldset>';
 							break;
 						case 3:
 							echo '
 									<fieldset>
 									<label for="cep">Qual o CEP do seu endereço</label>
-									<input type="text" name="cep" id="" maxlength="8" required placeholder="Digite aqui" />
+									<input type=\'text\' name=\'twoFaAnswer\' id=\'twoFaAnswer\' hidden required value=\'3\' />
+									<input type="text" name="cep" id="cep" maxlength="8" required placeholder="Digite aqui" />
 									</fieldset>';
 							break;
 					}
