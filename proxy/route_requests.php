@@ -39,23 +39,23 @@ class Route_requests
                     header("Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php");
                     exit();
                 }
-
+                
                 break;
-
-            case 'TwoFactorAuthentication':
-
-                include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/TwoFactorAuth.php";
-                if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["twoFaAnswer"])) {
-                    $twoFaAnswerId = $_POST["twoFaAnswer"];
-                    $twoFaAnswer = '';
-                    switch ($twoFaAnswer) {
-                        case '1':
-                            if (isset($_POST["mothername"])) {
-                                $twoFaAnswer = $_POST["mothername"];
-                            }
-
-                            break;
-                        case '2':
+                
+                case 'TwoFactorAuthentication':
+                    
+                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/TwoFactorAuth.php";
+                    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["twoFaAnswer"])) {
+                        $twoFaAnswerId = $_POST["twoFaAnswer"];
+                        $twoFaAnswer = '';
+                        switch ($twoFaAnswer) {
+                            case '1':
+                                if (isset($_POST["mothername"])) {
+                                    $twoFaAnswer = $_POST["mothername"];
+                                }
+                                
+                                break;
+                                case '2':
                             if (isset($_POST["dob"])) {
                                 $twoFaAnswer = $_POST["dob"];
                             }
@@ -64,15 +64,15 @@ class Route_requests
                             if (isset($_POST["cep"])) {
                                 $twoFaAnswer = $_POST["cep"];
                             }
-
+                            
                             break;
-
-                    }
-                    session_start();
-                    $user_id = $_SESSION["user_id"];
-                    session_commit();
-
-                    $twoFa = new \controllers\TwoFactorAuthController(user_id: $user_id, twoFaAnswer: $twoFaAnswer, twoFaAnswerId: $twoFaAnswerId);
+                            
+                        }
+                        session_start();
+                        $user_id = $_SESSION["user_id"];
+                        session_commit();
+                        
+                        $twoFa = new \controllers\TwoFactorAuthController(user_id: $user_id, twoFaAnswer: $twoFaAnswer, twoFaAnswerId: $twoFaAnswerId);
                     $twoFaVerified->verifyTwoFactorAuth();
                     header("Location: /jogodobicho/pages/home/home.php");
                     exit();
@@ -80,16 +80,18 @@ class Route_requests
                 break;
 
             case 'logout':
+                
                 if (isset($_POST["logout"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
                         "/jogodobicho/controllers/Credential.php";
 
-                    \controllers\CredentialController::logout();
+                        \controllers\CredentialController::logout();
+                        
                     header("Location: /jogodobicho/");
                     exit();
                 }
-
-
+                
+                
         }
 
 

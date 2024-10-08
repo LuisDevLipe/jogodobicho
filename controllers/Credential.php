@@ -44,15 +44,16 @@ class CredentialController extends Credential
         $_SESSION['isAuthenticated2FA'] = false;
         $_SESSION['twoFaAnswer'] = null;
         session_commit();
-
-        // // LOG USER LOGIN IN UserLog
-        // $userLog = new UserLog(username: $user["username"]);
-        // $userLog->create();
-        // return $user;
+        
+        // LOG USER LOGIN IN UserLog
+        $userLog = new UserLog(username: $user["username"]);
+        $userLog->create();
+        return $user;
     }
 
     public static function logout(): void
     {
+        
         session_start();
         // LOG USER LOGOUT IN UserLog
         if (isset($_SESSION["username"])) {
@@ -60,8 +61,9 @@ class CredentialController extends Credential
             $userLog = new UserLog(username: $username);
             $userLog->update();
             
+            
         }
-
+        
         // destroy session
         session_unset();
         session_destroy();

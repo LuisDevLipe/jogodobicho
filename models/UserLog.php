@@ -43,13 +43,15 @@ class UserLog
         $queryParam = filter_var($queryParam, FILTER_SANITIZE_STRING);
         $queryParam = filter_var($queryParam, FILTER_SANITIZE_SPECIAL_CHARS);
         if ($queryOption === '--nome') {
-            $sql = "SELECT u.fullname, ul.TwoFA_Answer,ul.login_at FROM userlog ul, credentials c, users u where ul.username = c.username AND c.user_id = u.id AND u.fullname LIKE ? ORDER BY ul.login_at DESC";
+            $sql = "SELECT u.fullname, ul.TwoFA_Answer,ul.login_at FROM UserLog ul, Credentials c, Users u where ul.username = c.username AND c.user_id = u.id AND u.fullname LIKE ? ORDER BY ul.login_at DESC";
             $queryParam = "%$queryParam%";
         } else if ($queryOption === '--cpf') {
-            $sql = "SELECT u.fullname, ul.TwoFA_Answer,ul.login_at FROM userlog ul, credentials c, users u where ul.username = c.username AND c.user_id = u.id AND u.cpf = ? ORDER BY ul.login_at DESC";
+            $sql = "SELECT u.fullname, ul.TwoFA_Answer,ul.login_at FROM UserLog ul, Credentials c, Users u where ul.username = c.username AND c.user_id = u.id AND u.cpf = ? ORDER BY ul.login_at DESC";
         } else if ($queryOption === '--all') {
-            $sql = "SELECT u.fullname, ul.TwoFA_Answer,ul.login_at FROM userlog ul, credentials c, users u where ul.username = c.username AND c.user_id = u.id ORDER BY ul.login_at DESC;";
+            $sql = "SELECT u.fullname, ul.TwoFA_Answer,ul.login_at FROM UserLog ul, Credentials c, Users u where ul.username = c.username AND c.user_id = u.id ORDER BY ul.login_at DESC;";
+            
             $result = $this->con->execute_query(query: $sql);
+
             return $result;
         }
         
@@ -73,6 +75,8 @@ class UserLog
 
     public function update(): bool
     {
+        debug_print_backtrace();
+        echo $this->username;
         $sql = "UPDATE UserLog SET logout_at = NOW() WHERE username = ?";
         $result = $this->con->execute_query(
             query: $sql,

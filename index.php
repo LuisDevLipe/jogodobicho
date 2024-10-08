@@ -11,7 +11,7 @@
 	<!-- <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> -->
 
 	<!-- Production version -->
-	<script src="https://unpkg.com/lucide@latest"></script>
+	<!-- <script src="https://unpkg.com/lucide@latest"></script> -->
 	<link rel="stylesheet" href="styles.css" />
 </head>
 
