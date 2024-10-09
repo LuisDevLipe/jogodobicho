@@ -7,15 +7,17 @@ use mysqli_result;
 class UserLog
 {
     protected $id;
+    protected $session_id;
     protected $username;
-    protected $TwoFA_id;
     protected $TwoFa_Answer;
     protected $login_at;
     protected $logout_at;
     protected $con;
-    public function __construct($username)
+    public function __construct($username,$twoFaAnswer,$session_id)
     {
         $this->username = $username;
+        $this->TwoFa_Answer = $twoFaAnswer;
+        $this->session_id = $session_id;
         $this->con = new ConnectionMariaDB();
         $this->con = $this->con->connect();
     }
@@ -65,22 +67,20 @@ class UserLog
     }
     public function create(): bool
     {
-        $sql = "INSERT INTO UserLog (username) VALUES (?)";
+        $sql = "INSERT INTO UserLog (username, session_id,TwoFA_Answer) VALUES (?,?,?)";
         $result = $this->con->execute_query(
             query: $sql,
-            params: [$this->username]
+            params: [$this->username, session_id(), $this->TwoFa_Answer]
         );
         return $result;
     }
 
     public function update(): bool
     {
-        debug_print_backtrace();
-        echo $this->username;
-        $sql = "UPDATE UserLog SET logout_at = NOW() WHERE username = ?";
+        $sql = "UPDATE UserLog SET logout_at = NOW() WHERE username = ? AND session_id = ?";
         $result = $this->con->execute_query(
             query: $sql,
-            params: [$this->username]
+            params: [$this->username, session_id()]
         );
         return $result;
     }

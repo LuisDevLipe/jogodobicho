@@ -37,18 +37,28 @@ class CredentialController extends Credential
         if (!$verifyPassword) {
             return false;
         }
+        $this->unlock_account();
         session_start();
         $_SESSION["username"] = $user["username"];
         $_SESSION['rootuser'] = $user['rootuser'];
         $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['isAuthenticated2FA'] = false;
-        $_SESSION['twoFaAnswer'] = null;
+        $_SESSION['isAuthenticated'] = false;
         session_commit();
         
         // LOG USER LOGIN IN UserLog
-        $userLog = new UserLog(username: $user["username"]);
-        $userLog->create();
+        // $userLog = new UserLog(username: $user["username"]);
+        // $userLog->create();
+
         return $user;
+    }
+
+    public function unlock_account(): bool{
+        $unlocked = $this->update_unlock_account();
+        session_start();
+        $_SESSION['account_is_locked'] = false;
+        session_commit();
+        return $unlocked;
+
     }
 
     public static function logout(): void

@@ -55,4 +55,14 @@ class Credential
 
         return $result;
     }
+
+    protected function update_unlock_account():bool
+    {
+        $sql = "UPDATE Credentials SET locked_account = 0, login_attempts = 0 WHERE username = ?";
+        $result = $this->con->execute_query(
+            query: $sql,
+            params: [$this->username]
+        );
+        return $result;
+    }
 }

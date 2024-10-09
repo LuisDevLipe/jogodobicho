@@ -1,3 +1,16 @@
+<?php 
+	function isAccountLocked(): bool {
+		if(session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+		if(isset($_SESSION['account_is_locked']) && $_SESSION['account_is_locked'] === true) {
+			session_commit();
+			return true;
+		}
+		session_commit();
+		return false;
+	}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -23,7 +36,7 @@
 
 
 				<?php {
-					switch (rand(min: 1, max: 3)) {
+					switch (1) {
 						case 1:
 							echo '
 							<fieldset>
@@ -60,6 +73,11 @@ e redirecionar para a página de login -->
 
 				<fieldset>
 					<button type="submit">Enviar</button>
+				</fieldset>
+				<fieldset>
+					<?php if (isAccountLocked()): ?>
+						<p class="account-locked">3 tentativas sem sucesso! Favor realizar login novamente</p>
+					<?php endif; ?>
 				</fieldset>
 
 				<input type="text" name="url" hidden value="<?= urlencode(string: basename(path: __FILE__)) ?>">

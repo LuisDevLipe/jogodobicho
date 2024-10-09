@@ -4,20 +4,17 @@ if (isset($_SESSION['rootuser'])) {
 
 	switch (($_SESSION['rootuser'])) {
 		case 0:
-			echo '<script>alert("Você não tem permissão para acessar essa página")</script>';
-			echo '<script>location.href = "/jogodobicho"</script>';
-			echo $_SESSION['rootuser'];
-			break;
+			// redirect and set the statuscode on the url to 403
+			header(header: "Location: /jogodobicho/pages/erro/erro.php?403", replace: true);
+			exit();
 		case 1:
-			// echo "Você é um root user";
+			// no need to redirect the user is admin and can access the page
 			break;
 	}
 } else {
-	echo "<script>
-		alert('Você não tem permissão para acessar essa página, entre com sua conta de administrador');
-		location.href = '/jogodobicho/pages/login/login.php';
-	</script>";
-
+	// redirect and set the statuscode on the url to 403
+	header(header: "Location: /jogodobicho/pages/erro/erro.php?403", replace: true);
+	exit();
 }
 session_commit();
 ?>

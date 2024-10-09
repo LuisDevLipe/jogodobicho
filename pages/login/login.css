@@ -79,14 +79,22 @@ main {
             input[type='checkbox']  ~ label{
                 font-size: 0.75rem;
             }
+            > span.error{
+
+                display: block;
+                color: red;
+                font-size: 0.75rem;
+                line-height: 1.125rem;
+                margin-top:0.25rem;
+            }
         }
+        
+        fieldset.adress {
             
-            fieldset.adress {
-
-                input {
-                    margin-bottom: 1rem;
-                }
+            input {
+                margin-bottom: 1rem;
+            }
         }
-
+        
     }
 }

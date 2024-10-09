@@ -6,13 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Jogo do Bicho</title>
 	<link rel="stylesheet" href="/jogodobicho/components/acessibilidade/acessibilidade.css">
-
-	<!-- Development version -->
-	<!-- <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> -->
-
-	<!-- Production version -->
-	<!-- <script src="https://unpkg.com/lucide@latest"></script> -->
 	<link rel="stylesheet" href="styles.css" />
+	
 </head>
 
 <body>

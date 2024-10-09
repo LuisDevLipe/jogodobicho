@@ -1,0 +1,8 @@
+ErrorDocument 404 /jogodobicho/pages/erro/erro.php
+ErrorDocument 403 /jogodobicho/pages/erro/erro.php
+ErrorDocument 500 /jogodobicho/pages/erro/erro.php
+ErrorDocument 502 /jogodobicho/pages/erro/erro.php
+ErrorDocument 503 /jogodobicho/pages/erro/erro.php
+ErrorDocument 504 /jogodobicho/pages/erro/erro.php
+
+Options -Indexes

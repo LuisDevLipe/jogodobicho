@@ -1,4 +1,22 @@
+<?php
+
+
+    function isUserAuthenticated (): bool {
+        $userIsAuthenticated = false;
+        if(session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true) {
+            $userIsAuthenticated = true;
+            
+        }
+        
+        session_commit();
+        return $userIsAuthenticated;
+    }                  
+?>
 <nav class="main-navigation closed">
+    <script rel="stylesheet" src="/jogodobicho/public/css/lucide.dev.js"></script>
     <link rel="stylesheet" href='components/navbar/navbar.css'>
     <span class="toggle"><i data-lucide="menu"></i></span>
     <a href="/jogodobicho/">Jogo Do Bicho Online</a>
@@ -6,11 +24,11 @@
         <!-- <a href="/jogodobicho/pages/placar-de-lideres/">Placar de Líderes</a> -->
         <?php
         session_start();
-        if (isset($_SESSION["rootuser"]) === 1): ?>
+        if (isUserAuthenticated()  && $_SESSION['rootuser'] == 1): ?>
             <a href='/jogodobicho/pages/private/system_log.php'>log do sistema</a>
             <a href='/jogodobicho/pages/private/consulta_usuarios.php'>Consulta usuários</a>
         <?php endif;
-        if (isset($_SESSION["username"])): ?>
+        if (isUserAuthenticated()): ?>
             <a href='#'>Bem vindo de volta <?= $_SESSION[
                 "username"
             ] ?>.</a>
@@ -19,15 +37,16 @@
         <?php endif;
         session_commit();
         ?>
+     
     </div>
     <div class="menu-items">
         <a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
         <a href="#">Meus Jogos</a>
         <?php
         session_start();
-        if (isset($_SESSION["username"])): ?>
+        if (isUserAuthenticated()): ?>
             <form method='post' name='logout' action='/jogodobicho/proxy/route_requests.php'>
-            <input type="text" name="url" hidden value="<?= urlencode(string: 'logout')?>">
+                <input type="text" name="url" hidden value="<?= urlencode(string: 'logout') ?>">
                 <button type='submit' name="logout" value="logout">Desconectar</button>
             </form>
         <?php else: ?>
@@ -39,7 +58,7 @@
 
 
 
-        
+
     </div>
     <script src="/jogodobicho/components/navbar/scripts.js" defer></script>
 </nav>

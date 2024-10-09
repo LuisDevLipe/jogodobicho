@@ -45,7 +45,7 @@ class ConnectionMariaDB
             $this->port
         );
         if (mysqli_connect_errno()) {
-            exit("" . mysqli_connect_error());
+            exit("an eror has ocurred" . mysqli_connect_error());
         }
 
         return $this->con;

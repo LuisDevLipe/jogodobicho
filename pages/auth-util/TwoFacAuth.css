@@ -90,6 +90,11 @@ main.TwoFacAuth > section#form-section {
 			> button:focus {
 				background: var(--cta-button-hover);
 			}
+			p.account-locked {
+				color: red;
+				font-weight: bold;
+				font-size: 1rem;
+			}
 		}
 	}
 }

@@ -1,7 +1,21 @@
+<?php 
+    function credentialError():bool {
+        if(session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        if (isset($_SESSION['not_found_user']) && $_SESSION['not_found_user'] === true) {
+            session_commit();
+            return true;
+        }
+        session_commit();
+        return false;
+
+    }
+?>
 <!DOCTYPE html>
 <?php
 session_start();
-if (isset($_SESSION["username"])):?>
+if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true):?>
     <script>confirm('you are already logged in'); </script>
     <script>window.location.href = '/jogodobicho/'</script>
     
@@ -42,6 +56,9 @@ if (isset($_SESSION["username"])):?>
 
                 <label for="password">Senha</label>
                 <input type="password" name="password" id="password" required>
+                <?php if(credentialError()): ?>
+                    <span class="error">Usuário ou senha incorretos</span>
+                <?php endif; ?>
             </fieldset>
             <fieldset>
 
