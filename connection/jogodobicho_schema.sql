@@ -28,6 +28,8 @@
     user_id int,
     password varchar(255),
     rootuser boolean,
+    login_attempts int DEFAULT 0,
+    locked_account boolean DEFAULT false,
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   );
 
@@ -46,10 +48,10 @@
 
   CREATE TABLE if not exists userLog  (
     id int PRIMARY KEY AUTO_INCREMENT,
+    session_id varchar(255),
     username varchar(255),
     login_at timestamp DEFAULT CURRENT_TIMESTAMP,
     logout_at timestamp ,
-    TwoFA_id int,
     TwoFA_Answer varchar(255)
   );
 
