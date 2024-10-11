@@ -5,16 +5,15 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Cadastro Jogo do Bicho Online</title>
-	<link rel="stylesheet" href="../cadastro/cadastro.css" />
-	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css" />
-	<script src="https://unpkg.com/lucide@latest"></script>
+	<link rel="stylesheet" href="cadastro.css" />
+
 </head>
 
 <body>
 <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
 
 	<main>
-		<form action="#" method="post" name='cadastro' enctype='application/x-www-form-urlencoded'>
+		<form action="/jogodobicho/proxy/route_requests.php" method="post" name='cadastro' enctype='application/x-www-form-urlencoded'>
 			<h1>Cadastro</h1>
 			<div class="fields-wrapper">
 
@@ -39,44 +38,46 @@
 							name="filiation-name">
 					</fieldset>
 					<fieldset><label for="cpf">CPF</label><input required type="text" name="cpf"
-							oninput="validarCPF(this.value)"
-							pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})">
+							onchange="validarCPF(this.value)"
+							>
 					</fieldset>
 					<fieldset>
 						<label for="email">Email</label>
 						<input required type="email" name="email" id="email" />
 					</fieldset>
 					<fieldset><label for="celular">Celular</label><input required type="cel" name="celular"
-							pattern="[0-9]{2}[0-9]{5}-[0-9]{4}" placeholder="2179999-8888"></fieldset>
+					(+55)XX-XXXXXXXX.
+							pattern="\(\+[0-9]{2}\)[0-9]{2}-[0-9]{9}" placeholder="(+55)21-999999999"></fieldset>
 					<fieldset><label for="fixo">Fixo</label><input required type="tel" name="fixo"
-							pattern="[0-9]{2}[0-9]{5}-[0-9]{4}"></fieldset>
+							pattern="\(\+[0-9]{2}\)[0-9]{2}-[0-9]{9}" placeholder="(+55)21-999999999"></fieldset>
 				</div>
 				<div class="field-wrapper">
 
 					<fieldset class="adress">
 						<label for="cep">CEP</label>
 						<input type="text" required name="cep" oninput="validarCEP(this.value)" minlength="8"
-							maxlength="8">
+							maxlength="9">
 						<label for="logradouro">Rua</label><input required name="logradouro" type="text">
 						<label for="numero">Número</label> <input required type="text" name="numero">
 						<label for="cidade">Cidade</label><input required type="text" name="cidade">
 						<label for="estado">Estado</label><input required name="estado" type="text">
-						<label for="complemento">Complemento</label><input required type="text" name="complemento">
+						<label for="complemento">Complemento</label><input type="text" name="complemento">
 						<label for="bairro">Bairro</label><input required name="bairro" type="text">
+						<label for="pais">País</label><input required name="pais" type="text">
 					</fieldset>
 					<fieldset>
 						<label for="username">Nome de Usuário</label>
-						<input required type="text" name="username" id="username" />
+						<input required type="text" name="username" id="username" maxlength="6" minlength="6"/>
 					</fieldset>
 					<fieldset>
 
 						<label for="password">Senha</label>
-						<input required type="password" name="password" id="password" />
+						<input required type="password" name="password" id="password" minlength="8" maxlength="8"/>
 					</fieldset>
 					<fieldset>
 
 						<label for="passwordConfirm">Confirmar Senha</label>
-						<input required type="password" name="passwordConfirm" id="passwordConfirm" />
+						<input required type="password" name="passwordConfirm" id="passwordConfirm" minlength="8" maxlength="8" />
 					</fieldset>
 				</div>
 			</div>
@@ -91,56 +92,11 @@
 					<a href="#">Termos de serviços e condições</a></label>
 			</fieldset>
 			<a href="/jogodobicho/pages/login/login.php">Login</a>
+			<input type="text" name="url" hidden value="<?= urlencode(string: basename(path: __FILE__))?>">
 		</form>
-		<?php
-		if (isset($_POST["cadastrar"])) {
-
-			include_once $_SERVER["DOCUMENT_ROOT"] .
-				"/jogodobicho/controllers/Credential.php";
-			include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
-
-			$newUser = new controllers\UserController(
-				fullname: $_POST["name"],
-				dob: $_POST["dob"] ,
-				gender: $_POST["gender"],
-				mothername: $_POST["filiation-name"],
-				cpf: $_POST["cpf"],
-				email: $_POST["email"],
-				celular: $_POST["celular"],
-				fixo: $_POST["fixo"]
-			);
-
-			$userSaved = $newUser->registerUser();
-
-			if (!$userSaved) {
-				echo "<script>alert('CPF de Usuário já cadastrado')</script>";
-				exit();
-			}
-			$newUser_id = $newUser->findUser()["id"];
-
-
-			$newUserCredentials = new controllers\CredentialController(
-				username: $_POST["username"],
-				password: $_POST["password"]
-			);
-
-			$newUserCredentials->setUserId($newUser_id);
-
-			$credentialSaved = $newUserCredentials->registerCredential();
-
-			if (!$credentialSaved) {
-				echo "<script>alert('Nome de Usuário já cadastrado')</script>";
-				exit();
-			}
-			echo "<script>alert('Usuário cadastrado com sucesso')</script>";
-			echo "<script>location.href = '/jogodobicho/pages/login/login.php'</script>";
-
-			exit();
-
-		}
-		?>
+		
 	</main>
-	<script src="./cadastro.js"></script>
+	<script src="/jogodobicho/public/js/cadastro.js"></script>
 	<script>lucide.createIcons()</script>
 </body>
 

@@ -21,7 +21,11 @@
 
 html,body {
 	scroll-behavior: smooth;
+    min-height: 100svh;
     height: 100%;
+    
+}
+body{
     display: flex;
     flex-direction: column;
 }
@@ -48,8 +52,8 @@ main.consulta-usuario {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-
-    height: 100%;
+    min-height: 100%;
+    height: fit-content;
 
     > h2 {
         font-size: 2rem;
@@ -108,6 +112,7 @@ main.consulta-usuario {
             }
         }
     }
+    
     > section.usuarios {
         background-color: var(--primary-color);
         padding: 2rem;
@@ -136,6 +141,7 @@ main.consulta-usuario {
                 }
             }
             
+            
             th:last-child {
                text-align: center;
             }
@@ -163,4 +169,30 @@ main.consulta-usuario {
             }
         }
     }
+}
+@media screen and (max-width: 768px) {
+main.consulta-usuario{
+    padding: 1rem;
+    > section.busca{
+        padding: 1rem;
+}
+    > section.usuarios{
+        padding: 1rem;
+    }
+}
+    
+    thead th:nth-child(2),
+    thead th:nth-child(3),
+    thead th:nth-child(4){
+        display: none;
+    }
+    td:nth-child(2),
+    td:nth-child(3),
+    td:nth-child(4){
+        display: none;
+    }
+    
+    
+    
+    
 }

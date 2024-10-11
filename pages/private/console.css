@@ -83,11 +83,13 @@ main.system_log {
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             display: grid;
+            /* display: none; */
             gap: 0.5rem;
             >div.console-header {
                 display: flex;
                 justify-content: space-between;
                 padding: 0.25rem 0.5rem;
+                /* display: none; */
                 
                 div {
                     display: flex;
@@ -116,6 +118,7 @@ main.system_log {
                 font-size: 1rem;
                 line-height: 1.5rem;
                 display: flex;
+                /* display: none; */
                 flex-direction: column;
                 gap: 0.5rem;
                 outline: 1px solid var(--accent-color-1);
@@ -175,4 +178,15 @@ main.system_log {
             }
         }
     }
+}
+
+@media screen and (max-width: 768px) {
+    main.system_log {
+       padding: 1rem;
+
+       >section.wrapper {
+        padding: 1rem;
+       }
+    }
+    
 }

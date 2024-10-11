@@ -30,56 +30,14 @@ session_commit();
 	<script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
+<?php include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/navbar/navbar.php"; ?>
 
-	<nav class="main-navigation closed">
-		<span class="toggle"><i data-lucide="menu"></i></span>
-		<a href="/jogodobicho/">Jogo Do Bicho Online</a>
-		<div class="sub-menu-items">
-
-			<?php
-			session_start();
-			if (isset($_SESSION["username"])): ?>
-				<a href='#'>Bem vindo de volta <?= $_SESSION[
-					"username"
-				] ?>.</a>
-			<?php else: ?>
-				<a href="/jogodobicho/pages/login/login.php/" target="_self">Bem vindo, Visitante!</a>
-			<?php endif;
-			session_commit();
-			?>
-			<a href="./consulta_usuarios.php">Consulta Usuarios</a>
-			<a href="./system_log.php">Log do Sistema</a>
-		</div>
-		<div class="menu-items">
-			<a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
-			<a href="#">Meus Jogos</a>
-			<?php
-			session_start();
-			if (isset($_SESSION["username"])): ?>
-				<form method='post' name='logout' action=''>
-					<button type='submit' name="logout" value="logout">Desconectar</button>
-				</form>
-			<?php else: ?>
-				<a href='/jogodobicho/pages/login/login.php' class='login-btn'>Login/Cadastro <i
-						data-lucide='circle-user-round'></i></a>
-			<?php endif;
-			session_commit();
-			?>
-
-
-			<?php if (isset($_POST["logout"])) {
-				include_once $_SERVER["DOCUMENT_ROOT"] .
-					"/jogodobicho/controllers/Credential.php";
-
-				controllers\CredentialController::logout();
-			} ?>
-		</div>
-	</nav>
+<body>
 	<?php
 	if (isset($_GET['command']) && !empty($_GET['command'])) {
 		include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/UserLog.php";
 
-		$UserLogControllerInstance = new controllers\UserLogController(username: '');
+		
 		$command = $_GET['command'];
 		$command = explode(' ', $command);
 		if (count($command) > 2) {
@@ -92,10 +50,10 @@ session_commit();
 			$queryOption = $command[0];
 			$queryParam = $command[1];
 		}
-		$userLogs = $UserLogControllerInstance->findUserLogs(queryOption: $queryOption, queryParam: $queryParam);
+		$userLogs =  (new controllers\UserLogController)->findUserLogs(queryOption: $queryOption, queryParam: $queryParam);
 		if (!$userLogs) {
 			echo '<script>alert("Nenhum resultado encontrado")</script>';
-			exit();
+			
 		}
 
 
@@ -133,7 +91,7 @@ session_commit();
 						</line>
 						<output>
 
-						<?php if (isset($userLogs)):
+						<?php if (isset($userLogs) && !empty($userLogs)) :
 						foreach($userLogs as $user) :?>
 							<p>auth_when: <?=$user['login_at']?> | nome: <?=$user['fullname']?> | 2FA: <?=$user['TwoFA_Answer']?></p>
 						<?php endforeach; endif; ?>

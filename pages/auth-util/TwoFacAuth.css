@@ -35,7 +35,13 @@ main.TwoFacAuth {
 	main.TwoFacAuth > form {
 		max-width: 40% !important;
 	}
+}@media screen and (min-width: 720px) {
+	main.TwoFacAuth > section#form-section{
+		width: fit-content;
+	}
+	
 }
+
 main.TwoFacAuth > section#form-section {
 	padding: 3rem 2rem;
 	display: flex;
@@ -47,6 +53,8 @@ main.TwoFacAuth > section#form-section {
 	background-color: var(--text-color);
     aspect-ratio: 4/5;
     width: min-content;
+
+	
 
 	> form {
         display: grid;
@@ -65,8 +73,9 @@ main.TwoFacAuth > section#form-section {
 				border-radius: 4px;
 				border: 1px solid var(--primary-color);
 				box-shadow: 0 2px 4px black;
-                min-width: 30rch;
-                max-width: 40rch;
+                /* min-width: 30rch; */
+                max-width: 45rch;
+				width: 100%;
                 /* width: 100%; */
 			}
 			> input:focus {
@@ -97,4 +106,10 @@ main.TwoFacAuth > section#form-section {
 			}
 		}
 	}
+}
+@media screen and (max-width: 720px) {
+	main.TwoFacAuth > section#form-section{
+		width: fit-content;
+	}
+	
 }

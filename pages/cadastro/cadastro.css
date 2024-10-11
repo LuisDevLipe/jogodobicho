@@ -46,6 +46,7 @@ main {
             text-align: center;
             color: var(--primary-color);
         }
+        
         div.fields-wrapper{
             display: flex;
             >div.fields-group{
@@ -64,6 +65,11 @@ main {
                 }
 
             }
+        }@media screen and (max-width: 768px) {
+            div.fields-wrapper {
+                flex-direction: column;
+            }
+            
         }
         fieldset {
             /* border: 1px solid black; */

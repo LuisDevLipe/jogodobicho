@@ -36,7 +36,7 @@
 
 
 				<?php {
-					switch (1) {
+					switch (rand( min: 1, max: 3)) {
 						case 1:
 							echo '
 							<fieldset>
