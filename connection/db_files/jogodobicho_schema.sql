@@ -42,6 +42,8 @@
     number varchar(255),
     city varchar(255),
     state varchar(255),
+    complement varchar(255),
+    neighborhood varchar(255),
     country varchar(255),
     updated_at timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   );
