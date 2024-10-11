@@ -16,8 +16,8 @@
     }                  
 ?>
 <nav class="main-navigation closed">
-    <script rel="stylesheet" src="/jogodobicho/public/css/lucide.dev.js"></script>
-    <link rel="stylesheet" href='components/navbar/navbar.css'>
+    <link rel="stylesheet" href='/jogodobicho/components/navbar/navbar.css'>
+    <script rel="stylesheet" src="/jogodobicho/public/js/lucide.dev.js"></script>
     <span class="toggle"><i data-lucide="menu"></i></span>
     <a href="/jogodobicho/">Jogo Do Bicho Online</a>
     <div class="sub-menu-items">

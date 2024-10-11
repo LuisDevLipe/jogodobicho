@@ -82,9 +82,7 @@ nav.main-navigation.mobile.closed {
 	position: relative;
 	justify-content: center;
 	align-items: center;
-	>a {
-
-	}
+	
 	span {
 		display: block;
 		position: absolute;
@@ -151,6 +149,7 @@ nav.main-navigation.mobile.opened {
 		height: 100%;
 		border-left: 1px solid var(--cta-button);
 		padding: 0.25rem;
+		text-align: center;
 		
 	}
 
