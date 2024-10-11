@@ -5,9 +5,9 @@ use models\UserLog;
 
 class UserLogController extends UserLog
 {
-    public function __construct($username)
+    public function __construct($username = '', $twoFaAnswer = '', $session_id = '')
     {
-        parent::__construct(username: $username | '');
+        parent::__construct(username: $username | '', twoFaAnswer: $twoFaAnswer | '', session_id: $session_id | '');
     }
 
     public function findUserLogs($queryOption, $queryParam): bool|array

@@ -12,8 +12,12 @@ class UserController extends User
         $cpf,
         $email,
         $celular,
-        $fixo
+        $fixo,
+        $address_id
     ) {
+        // clean cpf from special characters
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+
         parent::__construct(
             $fullname,
             $dob,
@@ -22,7 +26,9 @@ class UserController extends User
             $cpf,
             $email,
             $celular,
-            $fixo
+            $fixo,
+            $address_id
+
 
         );
         // debug_print_backtrace();
@@ -36,12 +42,7 @@ class UserController extends User
             // user exists
             return false;
         }
-        if ($user->fetch_assoc()["cpf"] === $this->cpf) {
-            // cpf already in use
-            return false;
-        }
-
-
+        
         // create user
         $query_result = $this->create();
 
@@ -92,6 +93,7 @@ class UserController extends User
             "email" => $this->email,
             "celular" => $this->celular,
             "fixo" => $this->fixo,
+            "address_id" => $this->address_id,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
         ];

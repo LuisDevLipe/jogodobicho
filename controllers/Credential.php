@@ -64,12 +64,16 @@ class CredentialController extends Credential
     public static function logout(): void
     {
         
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         // LOG USER LOGOUT IN UserLog
         if (isset($_SESSION["username"])) {
+            session_start();
             $username = $_SESSION["username"];
-            $userLog = new UserLog(username: $username);
+            $userLog = new UserLog(username: $username, twoFaAnswer:'', session_id: session_id());
             $userLog->update();
+
             
             
         }

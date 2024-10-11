@@ -43,8 +43,17 @@ class TwoFactorAuthController
         $twoFAFieldName = self::getTwoFAFieldName(twoFaAnswerId: $this->twoFaAnswerId);
         $user_id = $this->user_id;
 
-        $query = "SELECT $twoFAFieldName FROM users WHERE id = ?";
-        $result = $this->con->execute_query($query, params: [$user_id]);
+        if ($twoFAFieldName === 'cep') {
+            $query_user_address_id = "SELECT address_id FROM users WHERE id = ?";
+            $result = $this->con->execute_query($query_user_address_id, params: [$user_id]);
+            $address_id = $result->fetch_assoc()['address_id'];
+            $query = "SELECT $twoFAFieldName FROM address WHERE id = ?";
+            $result = $this->con->execute_query($query, params: [$address_id]);
+        } else {
+            $query = "SELECT $twoFAFieldName FROM users WHERE id = ?";
+            $result = $this->con->execute_query($query, params: [$user_id]);
+        }
+
 
 
         $twoFaAnswer = $result->fetch_assoc()[$twoFAFieldName];
