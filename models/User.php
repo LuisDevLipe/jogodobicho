@@ -16,6 +16,9 @@ class User
     protected $email;
     protected $celular;
     protected $fixo;
+
+    protected $address_id;
+
     protected $created_at;
     protected $updated_at;
 
@@ -41,7 +44,8 @@ class User
         $cpf,
         $email,
         $celular,
-        $fixo
+        $fixo,
+        $address_id
     ) {
         $this->fullname = $fullname;
         $this->dob = $dob;
@@ -51,6 +55,7 @@ class User
         $this->email = $email;
         $this->celular = $celular;
         $this->fixo = $fixo;
+        $this->address_id = $address_id;
         $this->created_at = time();
         $this->updated_at = time();
         $this->con = new ConnectionMariaDB();
@@ -61,10 +66,10 @@ class User
     {
          
        
-        $sql = "INSERT INTO Users
-                (fullname,dob,gender,mothername,cpf,email,celular,fixo)
+        $sql = "INSERT INTO users
+                (fullname,dob,gender,mothername,cpf,email,celular,fixo,address_id)
             VALUES
-                (?,?,?,?,?,?,?,?)";
+                (?,?,?,?,?,?,?,?,?)";
        
         $result = $this->con->execute_query(query: $sql, params: [
             $this->fullname,
@@ -74,7 +79,8 @@ class User
             $this->cpf,
             $this->email,
             $this->celular,
-            $this->fixo
+            $this->fixo,
+            $this->address_id
         ]);
       
         return $result;
@@ -82,21 +88,21 @@ class User
 
     protected function read(): mysqli_result
     {
-        $sql = "SELECT * FROM Users WHERE cpf = ?";
+        $sql = "SELECT * FROM users WHERE cpf = ?";
         $result = $this->con->execute_query(query: $sql, params: [$this->cpf]);
         
         return $result;
     }
     protected function readAll(): mysqli_result
     {
-        $sql = "SELECT * FROM Users";
+        $sql = "SELECT * FROM users";
         $result = $this->con->execute_query(query: $sql);
         return $result;
     }
 
     protected function queryUsers($queryParam): mysqli_result
     {
-        $sql = "SELECT * FROM Users where fullname like ?";
+        $sql = "SELECT * FROM users where fullname like ?";
         $result = $this->con->execute_query(query: $sql, params: [$queryParam]);
         return $result;
     }

@@ -30,7 +30,7 @@ class Credential
     }
     public function read(): mysqli_result|bool
     {
-        $sql = "SELECT * FROM Credentials WHERE username = ?";
+        $sql = "SELECT * FROM credentials WHERE username = ?";
         $result = $this->con->execute_query(
             query: $sql,
             params: [$this->username]
@@ -42,7 +42,7 @@ class Credential
     {
 
         $sql =
-            "INSERT INTO Credentials (username, password,user_id) VALUES (?, ?, ?)";
+            "INSERT INTO credentials (username, password,user_id) VALUES (?, ?, ?)";
 
         $result = $this->con->execute_query(
             query: $sql,
@@ -58,7 +58,7 @@ class Credential
 
     protected function update_unlock_account():bool
     {
-        $sql = "UPDATE Credentials SET locked_account = 0, login_attempts = 0 WHERE username = ?";
+        $sql = "UPDATE credentials SET locked_account = 0, login_attempts = 0 WHERE username = ?";
         $result = $this->con->execute_query(
             query: $sql,
             params: [$this->username]
