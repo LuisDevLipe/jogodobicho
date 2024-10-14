@@ -51,13 +51,13 @@ main {
                 display: block;
             }
 
-            > input {
+            > input[type="text"],input[type="password"] {
                 padding: 0.5rem;
                 border-radius: 4px;
                 border: 1px solid var(--primary-color);
                 box-shadow: 0 2px 4px black;
             }
-            >input:focus {
+            >input[type="text"]:focus ,input[type="password"]:focus {
                 outline: none;
                 border: 1px solid var(--cta-button);
             }
@@ -72,10 +72,10 @@ main {
                 cursor: pointer;
                 width: 100%;
             }
-            
             > button[type="submit"]:hover,button[type="submit"]:focus {
                 background-color: rgb(255, 153, 0);
             }
+           
             input[type='checkbox']  ~ label{
                 font-size: 0.75rem;
             }

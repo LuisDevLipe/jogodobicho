@@ -93,7 +93,7 @@ session_commit();
 
 						<?php if (isset($userLogs) && !empty($userLogs)) :
 						foreach($userLogs as $user) :?>
-							<p>auth_when: <?=$user['login_at']?> | nome: <?=$user['fullname']?> | 2FA: <?=$user['TwoFA_Answer']?></p>
+							<p>auth_when: <?=$user['login_at']?> | nome: <?=$user['fullname']?> | 2FA: <?=$user['TwoFaAnswer']?></p>
 						<?php endforeach; endif; ?>
 						</output>
 					</div>

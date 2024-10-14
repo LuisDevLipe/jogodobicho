@@ -85,6 +85,9 @@
 
 				<button type="submit" name='cadastrar'>Cadastrar</button>
 			</fieldset>
+			<fieldset> 
+				<input type="reset" value="Limpar"/>
+			</fieldset>
 			<fieldset>
 				<input required type="checkbox" name="termos" id="termos" />
 				<label for="termos">Eu concordo com os

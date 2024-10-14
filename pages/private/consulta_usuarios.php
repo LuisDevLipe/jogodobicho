@@ -30,7 +30,7 @@ session_commit();
 	<script src="https://unpkg.com/lucide@latest"></script>
 	<?php
 	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
-	$UserControllerInstance = new controllers\UserController(fullname: '', dob: '', gender: '', mothername: '', cpf: '', email: '', celular: '', fixo: '');
+	$UserControllerInstance = new controllers\UserController(fullname: '', dob: '', gender: '', mothername: '', cpf: '', email: '', celular: '', fixo: '', address_id: '');
 
 	if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar"])) {
 
@@ -90,7 +90,14 @@ session_commit();
 							echo "<td>{$user['email']}</td>";
 							echo "<td>{$user['celular']}</td>";
 							echo "<td>{$user['created_at']}</td>";
-							echo "<td><form><button type='submit' name='delete_user' value={$user['id']}><i data-lucide='trash'></i></button></form></td>";
+							echo "<td>
+									<form action='/jogodobicho/proxy/route_requests.php' method='POST' enctype='application/x-www-form-urlencoded'
+										onsubmit='return confirm(\"Tem certeza que deseja excluir o usuário?\")'
+									>
+										<button type='submit' name='delete_user' value={$user['ID']}><i data-lucide='trash'></i></button>
+										<input type='text' hidden name='url' value=delete-user>
+									</form>
+								</td>";
 							echo "</tr>";
 						}
 					}

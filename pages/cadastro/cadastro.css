@@ -83,7 +83,7 @@ main {
                 color: var(--jet-black2);
             }
 
-            > input {
+            > input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="cel"], input[type="date"] {
                 padding: 0.5rem;
                 border-radius: 4px;
                 border: 1px solid var(--primary-color);
@@ -92,10 +92,23 @@ main {
                 line-height: 1.5rem;
                 color: var(--jet-black);
             }
-            >input:focus {
+            > input[type="reset"]{
+                background-color: var(--text-color);
+                border: 1px solid var(--cta-button);
+                color: var(--cta-button);
+                font-size: 1rem;
+                padding: 0.5rem;
+                border-radius: 4px;
+                box-shadow: 0 2px 4px black;
+                cursor: pointer;
+                width: 100%;
+
+            }
+            >input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="cel"]:focus, input[type="date"]:focus {
                 outline: none;
                 border: 1px solid var(--cta-button);
             }
+            
             
             > button[type="submit"] {
                 background-color: var(--cta-button);
@@ -110,6 +123,10 @@ main {
             
             > button[type="submit"]:hover,button[type="submit"]:focus {
                 background-color: rgb(255, 153, 0);
+            }
+            > input[type="reset"]:hover,button[type='reset']:focus{
+                background-color: var(--cta-button);
+                color: var(--text-color);
             }
             input[type='checkbox']  ~ label{
                 font-size: 0.75rem;

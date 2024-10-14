@@ -11,7 +11,7 @@
 	<body>
 	<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
 		<main id="AlterarSenha">
-			<form action="#" method="post">
+			<form action="/jogodobicho/proxy/route_requests.php" method="post" enctype="application/x-www-form-urlencoded">
 				<div>
 					<h1>Recuperar Senha</h1>
 					<p>Se você perdeu a sua senha de acesso e de gostaria de recuperar.</p>
@@ -35,7 +35,7 @@
 						<a href="/jogodobicho/pages/cadastro/cadastro.php">Cadastro</a>
 					</p>
 				</div>
-
+				<input type="text" name="url" hidden value="<?= urlencode(string: basename(path: __FILE__)) ?>">
             
 			</form>
 		</main>

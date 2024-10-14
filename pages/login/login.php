@@ -51,6 +51,7 @@ if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true
 
                 <button type="submit">Entrar</button>
             </fieldset>
+           
                 <a href="/jogodobicho/pages/auth-util/recuperar-senha.php">Esqueci minha senha</a>
             <a href="/jogodobicho/pages/cadastro/cadastro.php">Cadastrar</a>
 <input type="text" name="url" hidden value="<?= urlencode(string: basename(path: __FILE__))?>">
