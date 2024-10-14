@@ -156,41 +156,118 @@ class Route_requests
                         address_id: $address_id
                     );
 
-                    $userSaved = $newUser->registerUser();
-
-                    if (!$userSaved) {
-                        echo "<script>alert('CPF de Usuário já cadastrado')</script>";
-                        header("Location: /jogodobicho/pages/cadastro/cadastro.php");
+                    $userExists = $newUser->findUser();
+                    if ($userExists) {
+                        echo "<script>alert('Usuário cpf já cadastrado')</script>";
+                        echo "<script>location.href = '/jogodobicho/pages/cadastro/cadastro.php'</script>";
                         exit();
                     }
-                    $newUser_id = $newUser->findUser()["ID"];
-
-
                     $newUserCredentials = new \controllers\CredentialController(
                         username: $_POST["username"],
                         password: $_POST["password"]
                     );
 
-                    $newUserCredentials->setUserId($newUser_id);
-
-                    $credentialSaved = $newUserCredentials->registerCredential();
-
-                    if (!$credentialSaved) {
+                    $credentialExists = $newUserCredentials::check_if_username_exists(username: $_POST["username"]);
+                    if ($credentialExists) {
                         echo "<script>alert('Nome de Usuário já cadastrado')</script>";
                         exit();
                     }
+                    if (!$userExists && !$credentialExists) {
+                        $newUser->registerUser();
+                        $newUserCredentials->setUserId(user_id: $newUser->findUser()["ID"]);
+                        $newUserCredentials->registerCredential();
+
+                    }
                     echo "<script>alert('Usuário cadastrado com sucesso')</script>";
-                    header("Location: /jogodobicho/pages/login/login.php");
+                    echo "<script>location.href = '/jogodobicho/pages/login/login.php'</script>";
+                    exit();
+
+
+                }
+                break;
+
+            case 'recuperar-senha':
+                // send mail to user with link to reset password
+                if (isset($_POST['user']) && isset($_POST['useremail'])) {
+                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/Credential.php";
+                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/User.php";
+                    $user = \controllers\CredentialController::check_if_username_exists(username: $_POST['user']);
+                    if (!$user) {
+                        echo "<script>alert('Usuário não encontrado')</script>";
+                        // header("Location: /jogodobicho/pages/auth-util/recuperar-senha.php");
+                        exit();
+                    }
+                    $email = \controllers\UserController::check_if_email_exists(email: $_POST['useremail']);
+                    if (!$email) {
+                        echo "<script>alert('Email não encontrado')</script>";
+                        // header("Location: /jogodobicho/pages/auth-util/recuperar-senha.php");
+                        exit();
+                    }
+                    echo "<form action='/jogodobicho/proxy/route_requests.php' method='POST'>";
+                    echo "<input type='text' name='url' hidden value='new-password-form'>";
+                    echo "<input type='text' name='username' hidden value='$user'>";
+                    echo "<input type='text' name='email' hidden value='$email'>";
+                    echo '<input type="password" name="password" placeholder="Nova senha" required>';
+                    echo "<button type='submit' name='reset' value='reset'>Resetar senha</button>";
+                    echo '</form>';
 
                     exit();
+                }
+                break;
+            case 'new-password-form':
+                if (isset($_POST['reset']) && isset($_POST['password'])) {
+                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/Credential.php";
+                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/User.php";
+                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/passwordEncrypt/encrypt.php";
+                    $newPassword = $_POST['password'];
+
+                    $newUserCredentials = new \controllers\CredentialController(
+                        username: $_POST["username"],
+                        password: $newPassword
+                    );
+                    $updated_password = $newUserCredentials->update_password();
+                    if (!$updated_password) {
+                        echo "<script>alert('Erro ao resetar senha')</script>";
+                        echo "<script>location.href = '/jogodobicho/pages/auth-util/recuperar-senha.php'</script>";
+                        exit();
+                    } else {
+                        echo "<script>alert('Senha resetada com sucesso')</script>";
+                        echo "<script>location.href = '/jogodobicho/pages/login/login.php'</script>";
+                        exit();
+
+                    }
+                }
+                break;
+            case 'delete-user':
+                if (isset($_POST['delete_user'])) {
+                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/User.php";
+
+                    $user_id = $_POST['delete_user'];
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+                    if ($_SESSION['user_id'] == $user_id) {
+                        echo "<script>alert('Você não pode deletar a si mesmo')</script>";
+                        echo "<script>location.href = '/jogodobicho/pages/private/consulta_usuarios.php'</script>";
+                        exit();
+                    }
+                    $user_was_deleted = \controllers\UserController::delete_user($user_id);
+                    if (!$user_was_deleted) {
+                        echo "<script>alert('Erro ao deletar usuário')</script>";
+                        echo "<script>location.href = '/jogodobicho/pages/private/consulta_usuarios.php'</script>";
+                        exit();
+                    } else {
+                        echo "<script>alert('Usuário deletado com sucesso')</script>";
+                        echo "<script>location.href = '/jogodobicho/pages/private/consulta_usuarios.php'</script>";
+                        exit();
+                    }
+
 
                 }
                 break;
 
 
         }
-
-
     }
 }
 
