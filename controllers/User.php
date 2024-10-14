@@ -81,7 +81,17 @@ class UserController extends User
         $users = $users->fetch_all(MYSQLI_ASSOC);
         return $users;
     }
+    public function update_user($ID): bool
+    {
 
+
+        return false;
+    }
+    public static function delete_user($ID): bool
+    {
+        $result = self::delete(ID: $ID);
+        return $result;
+    }
     public function peekParams()
     {
         $params = [
@@ -98,5 +108,30 @@ class UserController extends User
             "updated_at" => $this->updated_at,
         ];
         return $params;
+    }
+
+    public static function check_if_email_exists($email): string|bool
+    {
+        $user = new User(
+            fullname: '',
+            dob: '',
+            gender: '',
+            mothername: '',
+            cpf: '',
+            email: $email,
+            celular: '',
+            fixo: '',
+            address_id: 0
+        );
+        $user = $user->read_user_by_email();
+        if ($user === null) {
+            return false;
+        } else if ($user->num_rows === 0) {
+            return false;
+        }
+        $user = $user->fetch_assoc();
+        $user_email = $user["email"];
+        return $user_email;
+
     }
 }

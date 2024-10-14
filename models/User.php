@@ -22,7 +22,7 @@ class User
     protected $created_at;
     protected $updated_at;
 
-    private $con;
+    protected static $con;
     /**
      * @param int $id
      * @param string $fullname
@@ -58,9 +58,16 @@ class User
         $this->address_id = $address_id;
         $this->created_at = time();
         $this->updated_at = time();
-        $this->con = new ConnectionMariaDB();
-        $this->con = $this->con->connect();
+        $config = new ConnectionMariaDB();
+        self::$con = $config->connect();
     }
+
+    private static function static_connection(): void
+    {
+        $config = new ConnectionMariaDB();
+        self::$con = $config->connect();
+    }
+
 
     protected function create(): bool
     {
@@ -70,8 +77,8 @@ class User
                 (fullname,dob,gender,mothername,cpf,email,celular,fixo,address_id)
             VALUES
                 (?,?,?,?,?,?,?,?,?)";
-       
-        $result = $this->con->execute_query(query: $sql, params: [
+
+        $result = self::$con->execute_query(query: $sql, params: [
             $this->fullname,
             $this->dob,
             $this->gender,
@@ -89,24 +96,43 @@ class User
     protected function read(): mysqli_result
     {
         $sql = "SELECT * FROM users WHERE cpf = ?";
-        $result = $this->con->execute_query(query: $sql, params: [$this->cpf]);
-        
+        $result = self::$con->execute_query(query: $sql, params: [$this->cpf]);
+
         return $result;
     }
+
+    protected function update(): bool
+    {
+        return false;
+    }
+    protected static function delete($ID): bool
+    {
+        self::static_connection();
+        $sql = "DELETE FROM users WHERE ID = ?";
+        $result = self::$con->execute_query(query: $sql, params: [$ID]);
+        return $result;
+    }
+
     protected function readAll(): mysqli_result
     {
         $sql = "SELECT * FROM users";
-        $result = $this->con->execute_query(query: $sql);
+        $result = self::$con->execute_query(query: $sql);
         return $result;
     }
 
     protected function queryUsers($queryParam): mysqli_result
     {
         $sql = "SELECT * FROM users where fullname like ?";
-        $result = $this->con->execute_query(query: $sql, params: [$queryParam]);
+        $result = self::$con->execute_query(query: $sql, params: [$queryParam]);
         return $result;
     }
-    
+
+    protected function read_user_by_email(): mysqli_result
+    {
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $result = self::$con->execute_query(query: $sql, params: [$this->email]);
+        return $result;
+    }
     // public function peekParams()
     // {
     //     $params = [

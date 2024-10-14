@@ -118,4 +118,29 @@ class CredentialController extends Credential
         ];
         ;
     }
+
+
+    public static function check_if_username_exists($username): string | bool
+    {
+        $credential = new Credential(username: $username, password: '');
+        $user = $credential->read();
+        if ($user === null) {
+            return false;
+        } else if ($user->num_rows === 0) {
+            return false;
+        }
+        $user = $user->fetch_assoc();
+        $user_email = $user["username"];
+        return $user_email;
+        
+    }
+
+    public function update_password():bool{
+        $updated_password = $this->update();
+        if($updated_password <> null && $updated_password){
+            return true;
+            
+        }
+        return false;
+    }
 }

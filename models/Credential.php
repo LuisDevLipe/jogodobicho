@@ -15,7 +15,7 @@ class Credential
     protected $username;
     protected $password;
     protected $updated_at;
-    private $con;
+    private static $con;
     /**
      * @param string $username
      * @param string $password
@@ -26,12 +26,12 @@ class Credential
         $this->password = $password;
 
         $config = new ConnectionMariaDB();
-        $this->con = $config->connect();
+        self::$con = $config->connect();
     }
-    public function read(): mysqli_result|bool
+    protected function read(): mysqli_result|bool
     {
         $sql = "SELECT * FROM credentials WHERE username = ?";
-        $result = $this->con->execute_query(
+        $result = self::$con->execute_query(
             query: $sql,
             params: [$this->username]
         );
@@ -44,7 +44,7 @@ class Credential
         $sql =
             "INSERT INTO credentials (username, password,user_id) VALUES (?, ?, ?)";
 
-        $result = $this->con->execute_query(
+        $result = self::$con->execute_query(
             query: $sql,
             params: [
                 $this->username,
@@ -55,14 +55,23 @@ class Credential
 
         return $result;
     }
+    protected function update (): bool{
+        $sql = "UPDATE credentials SET password = ? WHERE username = ?";
+        $result = self::$con->execute_query(
+            query: $sql,
+            params: [$this->password, $this->username]
+        );
+        return $result;
+    }
 
     protected function update_unlock_account():bool
     {
         $sql = "UPDATE credentials SET locked_account = 0, login_attempts = 0 WHERE username = ?";
-        $result = $this->con->execute_query(
+        $result = self::$con->execute_query(
             query: $sql,
             params: [$this->username]
         );
         return $result;
     }
+
 }
