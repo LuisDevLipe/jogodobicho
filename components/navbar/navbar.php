@@ -27,8 +27,13 @@
         if (isUserAuthenticated()  && $_SESSION['rootuser'] == 1): ?>
             <a href='/jogodobicho/pages/private/system_log.php'>log do sistema</a>
             <a href='/jogodobicho/pages/private/consulta_usuarios.php'>Consulta usuários</a>
-        <?php endif;
-        if (isUserAuthenticated()): ?>
+        <?php endif; ?>
+        
+        </div>
+        <div class="menu-items">
+            <a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
+            <a href="#">Meus Jogos</a>
+            <?php if (isUserAuthenticated()): ?>
             <a href='#'>Bem vindo de volta <?= $_SESSION[
                 "username"
             ] ?>.</a>
@@ -37,11 +42,6 @@
         <?php endif;
         session_commit();
         ?>
-     
-    </div>
-    <div class="menu-items">
-        <a href="#" class="jogar-btn">Jogar <i data-lucide="dices"></i></a>
-        <a href="#">Meus Jogos</a>
         <?php
         session_start();
         if (isUserAuthenticated()): ?>
