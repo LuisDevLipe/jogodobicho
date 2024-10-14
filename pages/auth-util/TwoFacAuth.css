@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+:root {
+	--primary-color: #192143;
+	--secondary-color: #2e355c;
+	--text-color: #f5f5f5;
+	--cta-button: #ffa500;
+
+	--jet-black: #0a0a0a;
+	--jet-black2: #2d2c2f;
+}
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	border: none;
+
+	font-family: "Montserrat", "Barlow", "Arial";
+}
+html,
+body {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+main.TwoFacAuth {
+	font-family: "Barlow", "Arial";
+	display: grid;
+	place-items: center;
+	height: 100%;
+	padding: 1rem;
+	background-color: var(--primary-color);
+}
+@media screen and (min-width: 1024px) {
+	main.TwoFacAuth > form {
+		max-width: 40% !important;
+	}
+}@media screen and (min-width: 720px) {
+	main.TwoFacAuth > section#form-section{
+		width: fit-content;
+	}
+	
+}
+
+main.TwoFacAuth > section#form-section {
+	padding: 3rem 2rem;
+	display: flex;
+	flex-direction: column;
+    justify-content: space-between;
+	gap: 2rem;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px black;
+	background-color: var(--text-color);
+    aspect-ratio: 4/5;
+    width: min-content;
+
+	
+
+	> form {
+        display: grid;
+        place-items: center;
+		> fieldset {
+            padding: 0.5rem;
+            width: 100%;
+			> label {
+                display: block;
+				font-weight: bold;
+				line-height: 1.5rem;
+				font-size: 1rem;
+			}
+			> input {
+                padding: 0.5rem;
+				border-radius: 4px;
+				border: 1px solid var(--primary-color);
+				box-shadow: 0 2px 4px black;
+                /* min-width: 30rch; */
+                max-width: 45rch;
+				width: 100%;
+                /* width: 100%; */
+			}
+			> input:focus {
+				outline: none;
+				border: 1px solid var(--cta-button);
+			}
+
+			> button[type="submit"] {
+				width: 100%;
+				padding: 0.5rem;
+				background: var(--cta-button);
+				border-radius: 4px;
+				box-shadow: 0 2px 4px black;
+				cursor: pointer;
+
+				font-family: "Barlow Condensed";
+				font-weight: 500;
+				font-size: 1.25rem;
+			}
+			> button:hover,
+			> button:focus {
+				background: var(--cta-button-hover);
+			}
+			p.account-locked {
+				color: red;
+				font-weight: bold;
+				font-size: 1rem;
+			}
+		}
+	}
+}
+@media screen and (max-width: 720px) {
+	main.TwoFacAuth > section#form-section{
+		width: fit-content;
+	}
+	
+}

@@ -1,0 +1,88 @@
+:root {
+    --big-text:2rem;
+    --med-text:1.5rem;
+    --normal-text:1rem;
+    --small-text:0.75rem;
+
+    --big-line-height:3rem;
+    --med-line-height:2.25rem;
+    --normal-line-height:1.5rem;
+    --small-line-height:1rem;
+}
+div#acessibilidade {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin: 2rem;
+
+	display: flex;
+	align-items: center;
+
+	> div.icon {
+		cursor: pointer;
+		padding: 0.25rem;
+		border-radius: 100%;
+		width: 4.5rem;
+		height: 4.5rem;
+		background-color: var(--cta-button);
+		box-shadow: 2px 8px 16px 4px rgba(0, 0, 0, 0.644);
+		svg {
+			width: 4rem;
+			height: 4rem;
+			color: var(--secondary-color);
+		}
+	}
+	> div.icon:hover {
+		background-color: var(--cta-button-hover);
+	}
+	> div.wrapper {
+		> div#change-contrast {
+			display: none;
+		}
+		> div#change-font {
+			display: none;
+		}
+	}
+}
+
+div#acessibilidade.opened {
+	display: flex;
+	flex-direction: column;
+	> div.wrapper {
+		position: absolute;
+		top: 0;
+		right: 0;
+		transform: translate(0, -100%);
+		z-index: -1;
+        display: grid;
+        gap: 0.5rem;
+        padding-bottom: 0.75rem;
+		> div#change-contrast {
+            display: flex;
+			flex-direction: column;
+            gap: 0.25rem;
+            
+		}
+        
+		> div#change-font {
+            display: flex;
+			flex-direction: column;
+            gap: 0.25rem;
+		}
+        & button {
+            word-break: keep-all;
+            white-space: nowrap;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            background-color: var(--cta-button);
+            font-family: 'Barlow Condensed';
+            font-size: 1.25rem;
+            line-height: 1.25rem;
+            cursor: pointer;
+            box-shadow: 0 2px 4px black;
+        }
+	}
+	> div.icon {
+        box-shadow: none;
+	}
+}

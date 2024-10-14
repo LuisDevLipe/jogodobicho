@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+:root {
+	--primary-color: #192143;
+	--secondary-color: #2e355c;
+	--text-color: #f5f5f5;
+	--cta-button: #ffa500;
+	--cta-button-hover: #ff8c00;
+
+	--accent-color-1: #ffa500;
+
+    --border-radius: 4px;
+}
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	border: none;
+
+	font-family: "Montserrat", "Barlow", "Arial";
+}
+
+html,body {
+	scroll-behavior: smooth;
+    min-height: 100svh;
+    height: 100%;
+    
+}
+body{
+    display: flex;
+    flex-direction: column;
+}
+nav.private-nav{
+    display: flex;
+    padding: 1rem;
+    justify-content: center;
+    gap: 2rem;
+    > a {
+        text-decoration: none;
+        font-family:'Barlow Semi Condesed', sans-serif;
+        font-size: 1.25rem;
+        line-height: calc(1.25rem + (1.25rem / 2));
+        color: var(--text-color);
+        /* border-bottom:2px solid var(--cta-button); */
+    }
+    border-bottom: 2px solid var(--secondary-color);
+    background: var(--primary-color);
+}
+main.consulta-usuario {
+    padding: 2rem;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: 100%;
+    height: fit-content;
+
+    > h2 {
+        font-size: 2rem;
+        line-height: calc(2rem + (2rem / 2));
+    }
+
+    > section.busca {
+        background-color: var(--primary-color);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+
+        form{
+            label {
+                display: block;
+                font-size: 1.25rem;
+                line-height: calc(1.25rem + (1.25rem / 2));
+            }
+            div.actions{
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                margin-top:     1rem;
+                > fieldset{
+                    display: flex;
+                    flex-wrap: nowrap;
+                    >button {
+                        white-space: nowrap;
+                        word-break: keep-all;
+                    }
+                }
+            }
+            input[type="text"] {
+                width: 100%;
+                padding: 0.5rem;
+                font-size: 1rem;
+                line-height: calc(1rem + (1rem / 2));
+                border-radius: var(--border-radius);
+            }
+            button {
+                padding: 0.5rem 1rem;
+                background: var(--cta-button);
+                color: var(--text-color);
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 1rem;
+                line-height: 1.5rem;
+                display: flex;
+                gap: 1rem;
+            }
+            button:hover, button:focus {
+                background: var(--cta-button-hover);
+            }
+            button[name='buscar_todos']{
+                background-color: #00ff00;
+                color: var(--primary-color);
+            }
+        }
+    }
+    
+    > section.usuarios {
+        background-color: var(--primary-color);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            thead {
+                background-color: var(--secondary-color);
+                color: var(--text-color);
+
+            }
+            th, td {
+                padding: 0.5rem;
+                text-align: left;
+                font-size: 1rem;
+                line-height: 1.5rem;
+            }
+            tr {
+                &:nth-child(even) {
+                    background-color: var(--secondary-color);
+                }
+                &:nth-child(odd) {
+                    background-color: var(--primary-color);
+                }
+            }
+            
+            
+            th:last-child {
+               text-align: center;
+            }
+            button {
+                background: transparent;
+                color: var(--text-color);
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 1rem;
+                line-height: 1.5rem;
+                width: 100%;
+                height: 100%;
+
+                display: grid;
+                place-items: center;
+
+                svg {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+               
+            }
+            button:hover, button:focus {
+                color: var(--cta-button-hover);
+            }
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+main.consulta-usuario{
+    padding: 1rem;
+    > section.busca{
+        padding: 1rem;
+}
+    > section.usuarios{
+        padding: 1rem;
+    }
+}
+    
+    thead th:nth-child(2),
+    thead th:nth-child(3),
+    thead th:nth-child(4){
+        display: none;
+    }
+    td:nth-child(2),
+    td:nth-child(3),
+    td:nth-child(4){
+        display: none;
+    }
+    
+    
+    
+    
+}
