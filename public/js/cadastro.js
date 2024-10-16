@@ -1,7 +1,7 @@
-function validarCPF(CPF) {
-  if (!checkIfHasErrors(CPF)) {
-    return false;
-  }
+function validarCPF(CPF, el) {
+	if (!checkIfHasErrors(CPF)) {
+		return false;
+	}
 	const PESOS1 = ["10", "9", "8", "7", "6", "5", "4", "3", "2"];
 	const PESOS2 = ["11", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
 
@@ -13,9 +13,11 @@ function validarCPF(CPF) {
 
 	if (CPF.length == 11) {
 		if (comparaDigitos(CPF, digito1Verificado, digito2Verificado)) {
+			successStyle(el);
 			return true;
 		} else {
-			alert(mensagem.erro);
+			jsToastMessage("CPF inválido", "error");
+			errorStyle(el);
 			return false;
 		}
 	}
@@ -47,26 +49,31 @@ function validarCPF(CPF) {
 		} else return false;
 	}
 
-  function checkIfHasErrors(CPF) {
-    // limpar o cpf
-    CPF = CPF.replace(/\D/g, "");
-    // verificar se o cpf nao e uma string vazia
-    if (CPF === "") {
-      alert("CPF não pode ser vazio");
-      return false;
-    }
-    // verificar se o cpf contem somente numeros
-    if (!CPF.match(/^[0-9]+$/)) {
-      alert("CPF deve conter apenas números");
-      return false;
-    }
+	function checkIfHasErrors(CPF) {
+		// limpar o cpf
+		CPF = CPF.replace(/\D/g, "");
+		// verificar se o cpf nao e uma string vazia
+		if (CPF === "") {
+			jsToastMessage("CPF não pode ser vazio", "error");
+			return false;
+		}
+		// verificar se o cpf contem somente numeros
+		if (!CPF.match(/^[0-9]+$/)) {
+			jsToastMessage("CPF deve conter apenas números", "error");
+			return false;
+		}
 
-    if (CPF.length != 11) {
-      alert("CPF deve conter 11 dígitos");
-      return false;
-    }
-    return true;
-  }
+		if (CPF.length != 11) {
+			jsToastMessage("CPF deve conter 11 dígitos", "error");
+			return false;
+		}
+		// check if all numbers are the same
+		if (CPF.split("").every((val, i, arr) => val === arr[0])) {
+			jsToastMessage("CPF inválido", "error");
+			return false;
+		}
+		return true;
+	}
 }
 
 async function validarCEP(cep) {
@@ -84,7 +91,7 @@ async function validarCEP(cep) {
 				if (CEP_FROM_API.erro) {
 					cepFIELD.value = "";
 					cepFIELD.focus();
-					alert("CEP inválido");
+					jsToastMessage("CEP inválido", "error");
 				} else {
 					const { logradouro, bairro, localidade, uf } = CEP_FROM_API;
 					document.getElementsByName("logradouro")[0].value = logradouro;
@@ -93,6 +100,123 @@ async function validarCEP(cep) {
 					document.getElementsByName("estado")[0].value = uf;
 				}
 			})
-			.catch(console.error);
+			.catch((e) => {
+				jsToastMessage("CEP inválido", "error");
+				console.error(e);
+			});
 	}
+}
+
+function validarNome(el, minlength = 15, maxlength = 80) {
+	if (el.value.length < minlength) {
+		jsToastMessage("Nome muito curto, precisa ter no mínimo 15 letras.", "error");
+		errorStyle(el);
+	} else if (el.value.length > maxlength) {
+		jsToastMessage("Nome muito longo, precisa ter no máximo 80 letras.", "error");
+		errorStyle(el);
+	} else {
+		successStyle(el);
+	}
+}
+function validarUsername(username, el, length = 6) {
+	if (username.length !== length) {
+		jsToastMessage("Username deve conter 6 caracteres", "error");
+		errorStyle(el);
+		return false;
+	} else {
+		successStyle(el);
+		return true;
+	}
+}
+
+function validarSenha(senha, el, length = 8) {
+	if (senha.length !== length) {
+		jsToastMessage(errorMessages.password, "error");
+		errorStyle(el);
+		return false;
+	} else {
+		successStyle(el);
+		return true;
+	}
+}
+function validarSenhaConfirmacao(confirmacao, el, senha = document.getElementById("password").value, length = 8) {
+	if (senha !== confirmacao) {
+		jsToastMessage(errorMessages.passwordConfirmation, "error");
+		errorStyle(el);
+		return false;
+	}
+	if (confirmacao.length !== length) {
+		jsToastMessage(errorMessages.password, "error");
+		errorStyle(el);
+		return false;
+	} else {
+		successStyle(el);
+		return true;
+	}
+}
+// formatar no seguinte formato (+55)21-965762671
+function formatarCelular(telefone, el) {
+	// console.log(type);
+	let formatted;
+	// regex that matches the above string format;
+	const regex = /^\(\+\d{2}\)\d{2}-\d{5}\d{4}$/;
+	formatted = telefone.replace(/\D/g, "").replace(/^(\d{2})(\d{2})(\d{5})(\d{4})$/, "(+$1)$2-$3$4");
+	if (!formatted.match(regex)) {
+		return false;
+	} else {
+		el.value = formatted;
+		return true;
+	}
+}
+function formatarFixo(telefone, el) {
+	let formatted;
+	// regex that matches the above string format;
+	const regex = /^\(\+\d{2}\)\d{2}-\d{8}$/;
+	formatted = telefone.replace(/\D/g, "").replace(/^(\d{2})(\d{2})(\d{8})$/, "(+$1)$2-$3");
+	if (!formatted.match(regex)) {
+		return false;
+	} else {
+		el.value = formatted;
+		return true;
+	}
+}
+//validar no seguinte formato (+55)21-965762671
+function validarTelefone(telefone, el, fixo = false) {
+	if (!fixo) {
+		if (!formatarCelular(telefone, el)) {
+			jsToastMessage("Celular inválido", "error");
+			errorStyle(el);
+			return false;
+		} else {
+			successStyle(el);
+			return true;
+		}
+	} else {
+		if (!formatarFixo(telefone, el)) {
+			jsToastMessage("Telefone inválido", "error");
+			errorStyle(el);
+			return false;
+		} else {
+			successStyle(el);
+			return true;
+		}
+	}
+}
+
+function errorStyle(el) {
+	el.focus();
+	el.style.border = "1px solid red";
+}
+function successStyle(el) {
+	el.style.border = "1px solid green";
+}
+
+function send_to_backend(route, data) {
+	fetch(route, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	});
 }

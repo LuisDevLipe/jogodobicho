@@ -5,10 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Alterar Senha</title>
         <link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
-        <link rel="stylesheet" href="RecuparSenha.css">
+        <link rel="stylesheet" href="/jogodobicho/pages/auth-util/RecuperarSenha.css">
 		<script src="https://unpkg.com/lucide@latest"></script>
 	</head>
-	<body>
+		<body>
 	<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
 		<main id="AlterarSenha">
 			<form action="/jogodobicho/proxy/route_requests.php" method="post" enctype="application/x-www-form-urlencoded">
@@ -18,8 +18,8 @@
 					<p>Entre com os dados abaixo para trocar para uma nova senha</p>
 				</div>
                 <fieldset>
-                    <label for="user">Usuário</label>
-                    <input type="text" name="user" placeholder="Seu nome de usuário"  required>
+                    <label for="username">Usuário</label>
+                    <input type="text" name="username" placeholder="Seu nome de usuário"  required>
                 </fieldset>
                 <fieldset>
                     <label for="useremail">Email já cadastrado</label>

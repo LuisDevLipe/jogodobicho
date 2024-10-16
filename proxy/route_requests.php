@@ -1,133 +1,160 @@
 <?php
 namespace Router;
 
-
 class Route_requests
 {
     public $uri;
 
     public function __construct($uri)
     {
-
-
-        $this->uri = explode('.', $uri)[0];
-
-
+        $this->uri = explode(".", $uri)[0];
     }
 
     public function route()
     {
-
         switch ($this->uri) {
-            case 'login':
+            case "login":
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                if (isset($_SESSION["user_id"])) {
+                    header("Location: /jogodobicho?success=auth");
+                    exit();
+                }
 
+                echo $_SERVER["DOCUMENT_ROOT"];
+                include_once $_SERVER["DOCUMENT_ROOT"] .
+                    "/jogodobicho/controllers/Credential.php";
 
-                echo $_SERVER['DOCUMENT_ROOT'];
-                include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/Credential.php";
-
-                if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
+                if (
+                    $_SERVER["REQUEST_METHOD"] === "POST" &&
+                    isset($_POST["username"]) &&
+                    isset($_POST["password"])
+                ) {
                     $username = $_POST["username"];
                     $password = $_POST["password"];
 
-                    $credential = new \controllers\CredentialController($username, $password);
+                    $credential = new \controllers\CredentialController(
+                        $username,
+                        $password
+                    );
                     $user = $credential->login();
                     $_POST = [];
                     if (!$user) {
-                        session_start();
-                        $_SESSION['not_found_user'] = true;
-                        session_commit();
-                        header("Location: /jogodobicho/pages/login/login.php");
+                        header(
+                            "Location: /jogodobicho/pages/login/login.php?error=auth"
+                        );
                         exit();
-
                     }
-                    session_start();
-                    $_SESSION['not_found_user'] = false;
-                    session_commit();
-                    header("Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php");
+
+                    header(
+                        "Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php"
+                    );
                     exit();
                 }
 
                 break;
 
-            case 'TwoFactorAuthentication':
+            case "TwoFactorAuthentication":
 
-                include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/TwoFactorAuth.php";
-                if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["twoFaAnswer"])) {
+                include_once $_SERVER["DOCUMENT_ROOT"] .
+                    "/jogodobicho/controllers/TwoFactorAuth.php";
+                if (
+                    $_SERVER["REQUEST_METHOD"] === "POST" &&
+                    isset($_POST["twoFaAnswer"])
+                ) {
                     $twoFaAnswerId = $_POST["twoFaAnswer"];
-                    $twoFaAnswer = '';
+                    $twoFaAnswer = "";
                     switch ($twoFaAnswerId) {
-                        case '1':
+                        case "1":
                             if (isset($_POST["mothername"])) {
                                 $twoFaAnswer = $_POST["mothername"];
                             }
 
                             break;
-                        case '2':
+                        case "2":
                             if (isset($_POST["dob"])) {
                                 $twoFaAnswer = $_POST["dob"];
                             }
 
                             break;
-                        case '3':
+                        case "3":
                             if (isset($_POST["cep"])) {
                                 $twoFaAnswer = $_POST["cep"];
                             }
 
                             break;
-
                     }
                     session_start();
                     $user_id = $_SESSION["user_id"];
                     session_commit();
 
-                    $newTwoFAInstance = new \controllers\TwoFactorAuthController(user_id: $user_id, twoFaAnswer: $twoFaAnswer, twoFaAnswerId: $twoFaAnswerId);
+                    $newTwoFAInstance = new \controllers\TwoFactorAuthController(
+                        user_id: $user_id,
+                        twoFaAnswer: $twoFaAnswer,
+                        twoFaAnswerId: $twoFaAnswerId
+                    );
                     $twoFaVerified = $newTwoFAInstance->verifyTwoFactorAuth();
-
-
-                    if (!$twoFaVerified) {
-                        header("Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php");
+                    if (
+                        isset($_SESSION["account_is_locked"]) &&
+                        $_SESSION["account_is_locked"] === true
+                    ) {
+                        header(
+                            "Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php?error=locked"
+                        );
                         exit();
                     }
-
-                    if (session_status() === PHP_SESSION_NONE) {
-                        session_start();
-                        var_dump($_POST);
+                    if (!$twoFaVerified) {
+                        header(
+                            "Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php?error=auth2fa"
+                        );
+                        exit();
                     }
-                    $username = $_SESSION["username"];
-                    $session_id = session_id();
-                    logNewSuccessfulAuth(
-                        username: $username,
-                        twoFaAnswer: $twoFaAnswer,
-                        session_id: $session_id
-                    );
-                    session_commit();
-                    header("Location: /jogodobicho/");
-                    exit();
-
                 }
+
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                    var_dump($_POST);
+                }
+                $username = $_SESSION["username"];
+                $session_id = session_id();
+                logNewSuccessfulAuth(
+                    username: $username,
+                    twoFaAnswer: $twoFaAnswer,
+                    session_id: $session_id
+                );
+                session_commit();
+                header("Location: /jogodobicho/?success=auth");
+
                 break;
 
-            case 'logout':
-
+            case "logout":
                 if (isset($_POST["logout"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
                         "/jogodobicho/controllers/Credential.php";
 
                     \controllers\CredentialController::logout();
 
-                    header("Location: /jogodobicho/");
+                    header("Location: /jogodobicho?success=logout");
                     exit();
                 }
                 break;
 
-            case 'cadastro':
-
+            case "cadastro":
                 if (isset($_POST["cadastrar"])) {
+                    include_once $_SERVER["DOCUMENT_ROOT"] .
+                        "/jogodobicho/controllers/Credential.php";
+                    include_once $_SERVER["DOCUMENT_ROOT"] .
+                        "/jogodobicho/controllers/User.php";
+                    include_once $_SERVER["DOCUMENT_ROOT"] .
+                        "/jogodobicho/controllers/Address.php";
 
-                    include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/Credential.php";
-                    include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
-                    include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/Address.php";
-
+                    if (!isset($_POST["termos"])) {
+                        header(
+                            "Location: /jogodobicho/pages/cadastro/cadastro.php?error=termos"
+                        );
+                        exit();
+                    }
                     $new_address = new \controllers\AdressController(
                         cep: $_POST["cep"],
                         logradouro: $_POST["logradouro"],
@@ -141,8 +168,7 @@ class Route_requests
 
                     $address_id = $new_address->createAddressAndReturn_id();
 
-
-                    echo "<script>alert('Endereço cadastrado com sucesso')</script>";
+                    // echo "<script>alert('Endereço cadastrado com sucesso')</script>";
 
                     $newUser = new \controllers\UserController(
                         fullname: $_POST["name"],
@@ -155,11 +181,11 @@ class Route_requests
                         fixo: $_POST["fixo"],
                         address_id: $address_id
                     );
-
                     $userExists = $newUser->findUser();
                     if ($userExists) {
-                        echo "<script>alert('Usuário cpf já cadastrado')</script>";
-                        echo "<script>location.href = '/jogodobicho/pages/cadastro/cadastro.php'</script>";
+                        header(
+                            "Location: /jogodobicho/pages/cadastro/cadastro.php?error=userExists"
+                        );
                         exit();
                     }
                     $newUserCredentials = new \controllers\CredentialController(
@@ -167,91 +193,120 @@ class Route_requests
                         password: $_POST["password"]
                     );
 
-                    $credentialExists = $newUserCredentials::check_if_username_exists(username: $_POST["username"]);
+                    $credentialExists = $newUserCredentials::check_if_username_exists(
+                        username: $_POST["username"]
+                    );
                     if ($credentialExists) {
-                        echo "<script>alert('Nome de Usuário já cadastrado')</script>";
+                        header(
+                            "Location: /jogodobicho/pages/cadastro/cadastro.php?error=usernameExists"
+                        );
                         exit();
                     }
                     if (!$userExists && !$credentialExists) {
                         $newUser->registerUser();
-                        $newUserCredentials->setUserId(user_id: $newUser->findUser()["ID"]);
+                        $newUserCredentials->setUserId(
+                            user_id: $newUser->findUser()["ID"]
+                        );
                         $newUserCredentials->registerCredential();
-
                     }
-                    echo "<script>alert('Usuário cadastrado com sucesso')</script>";
-                    echo "<script>location.href = '/jogodobicho/pages/login/login.php'</script>";
+                    header(
+                        "Location: /jogodobicho/pages/login/login.php?success=register"
+                    );
                     exit();
-
-
                 }
                 break;
 
-            case 'recuperar-senha':
-                // send mail to user with link to reset password
-                if (isset($_POST['user']) && isset($_POST['useremail'])) {
-                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/Credential.php";
-                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/User.php";
-                    $user = \controllers\CredentialController::check_if_username_exists(username: $_POST['user']);
+            case "recuperar-senha":
+
+                if (isset($_POST["username"]) && isset($_POST["useremail"])) {
+                    include_once $_SERVER["DOCUMENT_ROOT"] .
+                        "/jogodobicho/controllers/Credential.php";
+                    include_once $_SERVER["DOCUMENT_ROOT"] .
+                        "/jogodobicho/controllers/User.php";
+                    $user = \controllers\CredentialController::check_if_username_exists(
+                        username: $_POST["username"]
+                    );
                     if (!$user) {
-                        echo "<script>alert('Usuário não encontrado')</script>";
-                        // header("Location: /jogodobicho/pages/auth-util/recuperar-senha.php");
+                        header(
+                            "Location: /jogodobicho/pages/auth-util/recuperar-senha.php?error=userNotFound"
+                        );
                         exit();
                     }
-                    $email = \controllers\UserController::check_if_email_exists(email: $_POST['useremail']);
+                    $email = \controllers\UserController::check_if_email_exists(
+                        email: $_POST["useremail"]
+                    );
                     if (!$email) {
-                        echo "<script>alert('Email não encontrado')</script>";
-                        // header("Location: /jogodobicho/pages/auth-util/recuperar-senha.php");
+                        header(
+                            "Location: /jogodobicho/pages/auth-util/recuperar-senha.php?error=emailNoMatch"
+                        );
                         exit();
                     }
-                    echo "<form action='/jogodobicho/proxy/route_requests.php' method='POST'>";
-                    echo "<input type='text' name='url' hidden value='new-password-form'>";
-                    echo "<input type='text' name='username' hidden value='$user'>";
-                    echo "<input type='text' name='email' hidden value='$email'>";
-                    echo '<input type="password" name="password" placeholder="Nova senha" required>';
-                    echo "<button type='submit' name='reset' value='reset'>Resetar senha</button>";
-                    echo '</form>';
-
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+                    $_SESSION['username'] = $_POST['username'];
+                    session_commit();
+                    header(
+                        "Location: /jogodobicho/pages/auth-util/recuperar-senha-form.php?"
+                    );
                     exit();
+
                 }
+                header("Location: /jogodobicho/pages/erro/erro.php?500");
                 break;
-            case 'new-password-form':
-                if (isset($_POST['reset']) && isset($_POST['password'])) {
-                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/Credential.php";
-                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/User.php";
-                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/passwordEncrypt/encrypt.php";
-                    $newPassword = $_POST['password'];
+            case "new-password-form":
+                if (isset($_POST["reset"]) && isset($_POST["password"])) {
+                    include_once $_SERVER["DOCUMENT_ROOT"] .
+                        "/jogodobicho/controllers/Credential.php";
+                    include_once $_SERVER["DOCUMENT_ROOT"] .
+                        "/jogodobicho/controllers/User.php";
+                    include_once $_SERVER["DOCUMENT_ROOT"] .
+                        "/jogodobicho/controllers/passwordEncrypt/encrypt.php";
+                    $newPassword = $_POST["password"];
+                    echo $newPassword;
 
                     $newUserCredentials = new \controllers\CredentialController(
                         username: $_POST["username"],
                         password: $newPassword
                     );
                     $updated_password = $newUserCredentials->update_password();
-                    if (!$updated_password) {
-                        echo "<script>alert('Erro ao resetar senha')</script>";
-                        echo "<script>location.href = '/jogodobicho/pages/auth-util/recuperar-senha.php'</script>";
-                        exit();
-                    } else {
-                        echo "<script>alert('Senha resetada com sucesso')</script>";
-                        echo "<script>location.href = '/jogodobicho/pages/login/login.php'</script>";
-                        exit();
-
-                    }
-                }
-                break;
-            case 'delete-user':
-                if (isset($_POST['delete_user'])) {
-                    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/User.php";
-
-                    $user_id = $_POST['delete_user'];
                     if (session_status() === PHP_SESSION_NONE) {
                         session_start();
                     }
-                    if ($_SESSION['user_id'] == $user_id) {
+                    session_destroy();
+                    session_commit();
+                    if (!$updated_password) {
+                        header(
+                            "Location: /jogodobicho/pages/auth-util/recuperar-senha-form.php?error=passwordReset"
+                        );
+                        exit();
+                    } else {
+                        header(
+                            "Location: /jogodobicho/pages/login/login.php?success=passwordReset"
+                        );
+                        exit();
+                    }
+
+                }
+                header("Location: /jogodobicho/pages/erro/erro.php?500");
+                break;
+            case "delete-user":
+                if (isset($_POST["delete_user"])) {
+                    include_once $_SERVER["DOCUMENT_ROOT"] .
+                        "/jogodobicho/controllers/User.php";
+
+                    $user_id = $_POST["delete_user"];
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+                    if ($_SESSION["user_id"] == $user_id) {
                         echo "<script>alert('Você não pode deletar a si mesmo')</script>";
                         echo "<script>location.href = '/jogodobicho/pages/private/consulta_usuarios.php'</script>";
                         exit();
                     }
-                    $user_was_deleted = \controllers\UserController::delete_user($user_id);
+                    $user_was_deleted = \controllers\UserController::delete_user(
+                        $user_id
+                    );
                     if (!$user_was_deleted) {
                         echo "<script>alert('Erro ao deletar usuário')</script>";
                         echo "<script>location.href = '/jogodobicho/pages/private/consulta_usuarios.php'</script>";
@@ -261,30 +316,29 @@ class Route_requests
                         echo "<script>location.href = '/jogodobicho/pages/private/consulta_usuarios.php'</script>";
                         exit();
                     }
-
-
                 }
                 break;
-
-
         }
+        exit();
     }
 }
 
-
-
-
-$uri = $_SERVER['REQUEST_METHOD'] == 'GET' ? $_GET["url"] : $_POST["url"];
+$uri = $_SERVER["REQUEST_METHOD"] == "GET" ? $_GET["url"] : $_POST["url"];
 $router = new Route_requests($uri);
 $router->route();
 
 function logNewSuccessfulAuth($username, $twoFaAnswer, $session_id): void
 {
-    include_once $_SERVER['DOCUMENT_ROOT'] . "/jogodobicho/controllers/UserLog.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] .
+        "/jogodobicho/controllers/UserLog.php";
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    $userLog = new \controllers\UserLogController(username: $username, twoFaAnswer: $twoFaAnswer, session_id: $session_id);
+    $userLog = new \controllers\UserLogController(
+        username: $username,
+        twoFaAnswer: $twoFaAnswer,
+        session_id: $session_id
+    );
     $userLog->create();
     session_commit();
 }

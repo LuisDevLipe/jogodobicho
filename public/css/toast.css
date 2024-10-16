@@ -1,0 +1,146 @@
+.toast {
+    background-color: #f0f0f0;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+}
+div.toast > p {
+    padding: 1rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+.toast {
+    position: fixed;
+    bottom: 1rem;
+    left: -100%;
+    width: 20rem;
+    height: 7rem;
+
+    // altura do toast deve ser a soma da altura do timer,
+    /* mais a altura do padding top e bottom do texto,  */
+    /* mais n vezes a altura do line-height dependendo da quantidade de linhas que eu quiser. */
+     /*
+     0.5
+     2.0 padding * 2 (top and bottom);
+    +4.5
+    -----
+     7.0 */
+}
+.timer {
+    width: 100px;
+    height: 0.5rem;
+    background: #f0f0f0;
+    border-radius: 0.25rem;
+}
+
+// animate the timer
+@keyframes timer {
+    0% {
+        width: 20px;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+.timer.playing {
+    animation: timer 5s linear;
+    animation-delay: 1s;
+    -webkit-animation: timer 5s linear;
+    -webkit-animation-delay: 1s;
+    -moz-animation: timer 5s linear;
+    -moz-animation-delay: 1s;
+}
+.toast.playing {
+    animation: slideIn 1s linear;
+    animation-fill-mode: forwards;
+    -webkit-animation: slideIn 1s linear;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation: slideIn 1s linear;
+    -moz-animation-fill-mode: forwards;
+}
+.toast.stop {
+    animation: slideOut 1s linear;
+    animation-fill-mode: forwards;
+    -webkit-animation: slideOut 1s linear;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation: slideOut 1s linear;
+    -moz-animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes timer {
+    0% {
+        width: 20px;
+    }
+    100% {
+        width: 100%;
+    }
+}
+@-moz-keyframes timer {
+    0% {
+        width: 20px;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 1rem;
+    }
+}
+@-webkit-keyframes slideIn {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 1rem;
+    }
+}
+@-moz-keyframes slideIn {
+    0% {
+        /* left: -100%; */
+    }
+    100% {
+        left: 1rem;
+    }
+}
+@keyframes slideOut {
+    0% {
+        left: 1rem;
+    }
+    100% {
+        left: -100%;
+    }
+}
+@-webkit-keyframes slideOut {
+    0% {
+        left: 1rem;
+    }
+    100% {
+        left: -100%;
+    }
+}
+@-moz-keyframes slideOut {
+    0% {
+        left: 1rem;
+    }
+    100% {
+        left: -100%;
+    }
+}
+
+.timer.error {
+    background-color: #ff0000;
+}
+.timer.success {
+    background-color: #00ff00;
+}

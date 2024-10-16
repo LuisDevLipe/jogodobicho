@@ -137,10 +137,9 @@ class CredentialController extends Credential
 
     public function update_password():bool{
         $updated_password = $this->update();
-        if($updated_password <> null && $updated_password){
-            return true;
-            
+        if ($updated_password === null) {
+            return false;
         }
-        return false;
+        return $updated_password;
     }
 }
