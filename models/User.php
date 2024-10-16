@@ -68,28 +68,29 @@ class User
         self::$con = $config->connect();
     }
 
-
     protected function create(): bool
     {
-         
-       
         $sql = "INSERT INTO users
                 (fullname,dob,gender,mothername,cpf,email,celular,fixo,address_id)
             VALUES
                 (?,?,?,?,?,?,?,?,?)";
 
-        $result = self::$con->execute_query(query: $sql, params: [
-            $this->fullname,
-            $this->dob,
-            $this->gender,
-            $this->mothername,
-            $this->cpf,
-            $this->email,
-            $this->celular,
-            $this->fixo,
-            $this->address_id
-        ]);
-      
+        $result = self::$con->execute_query(
+            query: $sql,
+            params: [
+                $this->fullname,
+                $this->dob,
+                $this->gender,
+                $this->mothername,
+                $this->cpf,
+                $this->email,
+                $this->celular,
+                $this->fixo,
+                $this->address_id,
+            ]
+        );
+        // print error if any
+
         return $result;
     }
 
@@ -130,21 +131,25 @@ class User
     protected function read_user_by_email(): mysqli_result
     {
         $sql = "SELECT * FROM users WHERE email = ?";
-        $result = self::$con->execute_query(query: $sql, params: [$this->email]);
+        $result = self::$con->execute_query(
+            query: $sql,
+            params: [$this->email]
+        );
         return $result;
     }
-    // public function peekParams()
-    // {
-    //     $params = [
-    //         "fullname" => $this->fullname,
-    //         "dob" => $this->dob,
-    //         "gender" => $this->gender,
-    //         "mothername" => $this->mothername,
-    //         "cpf" => $this->cpf,
-    //         "email" => $this->email,
-    //         "celular" => $this->celular,
-    //         "fixo" => $this->fixo
-    //     ];
-    //     return $params;
-    // }
+    public function peekParams()
+    {
+        $params = [
+            "fullname" => $this->fullname,
+            "dob" => $this->dob,
+            "gender" => $this->gender,
+            "mothername" => $this->mothername,
+            "cpf" => $this->cpf,
+            "email" => $this->email,
+            "celular" => $this->celular,
+            "fixo" => $this->fixo,
+            "address_id" => $this->address_id,
+        ];
+        return $params;
+    }
 }

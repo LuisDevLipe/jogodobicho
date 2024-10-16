@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `db_jogodobicho`.`userLogs` (
   `login_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `logout_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
   `TwoFaAnswer` VARCHAR(255) NOT NULL,
-  `username` VARCHAR(255) NULL DEFAULT ,
+  `username` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC),
   INDEX `fk_userLogs_Credentials1_idx` (`username` ASC),

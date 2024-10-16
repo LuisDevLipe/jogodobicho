@@ -7,11 +7,12 @@
 	<title>Jogo do Bicho</title>
 	<link rel="stylesheet" href="/jogodobicho/components/acessibilidade/acessibilidade.css">
 	<link rel="stylesheet" href="styles.css" />
-	
+
 </head>
 
 <body>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
+<?php include_once $_SERVER["DOCUMENT_ROOT"] .
+    "/jogodobicho/components/navbar/navbar.php"; ?>
 	<main class="index-content">
 		<section class="hero" id="inicio">
 			<div class="about-the-game">
@@ -279,6 +280,13 @@
 	<script>
 		lucide.createIcons();
 	</script>
+<!--
+	<div class='toast'>
+
+	<p>error message</p>
+	<div class='timer'></div>
+	</div>
+	-->
 </body>
 
 </html>
