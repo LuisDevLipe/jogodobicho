@@ -300,23 +300,30 @@ class Route_requests
                         session_start();
                     }
                     if ($_SESSION["user_id"] == $user_id) {
-                        echo "<script>alert('Você não pode deletar a si mesmo')</script>";
-                        echo "<script>location.href = '/jogodobicho/pages/private/consulta_usuarios.php'</script>";
+                        header(
+                            "Location: /jogodobicho/pages/private/consulta_usuarios.php?error=deleteSelf"
+                        );
+
                         exit();
                     }
                     $user_was_deleted = \controllers\UserController::delete_user(
                         $user_id
                     );
                     if (!$user_was_deleted) {
-                        echo "<script>alert('Erro ao deletar usuário')</script>";
-                        echo "<script>location.href = '/jogodobicho/pages/private/consulta_usuarios.php'</script>";
+                        header(
+                            "Location: /jogodobicho/pages/private/consulta_usuarios.php?error=delete"
+                        );
+
                         exit();
                     } else {
-                        echo "<script>alert('Usuário deletado com sucesso')</script>";
-                        echo "<script>location.href = '/jogodobicho/pages/private/consulta_usuarios.php'</script>";
+                        header(
+                            "Location: /jogodobicho/pages/private/consulta_usuarios.php?success=delete"
+                        );
+
                         exit();
                     }
                 }
+                header("Location: /jogodobicho/pages/erro/erro.php?500");
                 break;
         }
         exit();

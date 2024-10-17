@@ -43,6 +43,7 @@ session_commit();
 	} else {
 		$users = $UserControllerInstance->findUsers();
 	}
+	
 	?>
 </head>
 
@@ -100,6 +101,9 @@ session_commit();
 								</td>";
 							echo "</tr>";
 						}
+					} else {
+						echo "<tr><td colspan='6'>Nenhum usuário encontrado</td></tr>";
+						echo "<script>jsToastMessage('A pesquisa não retornou resultados.','error')</script>";
 					}
 
 

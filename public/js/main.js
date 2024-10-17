@@ -1,22 +1,23 @@
 const errorMessages = {
-  required: "This field is required",
-  email: "Please enter a valid email address",
-  password: "Senha deve conter 8 caracteres",
-  passwordConfirmation: "Senhas não conferem",
-  username: "Username must be 6 characters long",
-  shortname: "Name must be at least 15 characters long",
-  longname: "Name must be at most 80 characters long",
-  cpf: "Este número de cpf parece inválido.",
-  auth: "Usuário ou senha inválidos",
-  auth2fa: "Código de autenticação inválido,tente novamente.",
-  locked:
-    "Sua conta foi bloqueada por exceder o número máximo de tentativas de login.Volte para a tela de login.",
-  userExists: "Este CPF já está sendo utilizado",
-  usernameExists: "Este nome de usuário já está sendo utilizado",
-  termos: "Você precisa aceitar os termos de uso",
-  userNotFound: "Usuário não encontrado",
-  emailNoMatch: "Email não confere com usuário",
-  passwordReset: "Erro ao redefinir senha",
+	required: "This field is required",
+	email: "Please enter a valid email address",
+	password: "Senha deve conter 8 caracteres",
+	passwordConfirmation: "Senhas não conferem",
+	username: "Username must be 6 characters long",
+	shortname: "Name must be at least 15 characters long",
+	longname: "Name must be at most 80 characters long",
+	cpf: "Este número de cpf parece inválido.",
+	auth: "Usuário ou senha inválidos",
+	auth2fa: "Código de autenticação inválido,tente novamente.",
+	locked: "Sua conta foi bloqueada por exceder o número máximo de tentativas de login.Volte para a tela de login.",
+	userExists: "Este CPF já está sendo utilizado",
+	usernameExists: "Este nome de usuário já está sendo utilizado",
+	termos: "Você precisa aceitar os termos de uso",
+	userNotFound: "Usuário não encontrado",
+	emailNoMatch: "Email não confere com usuário",
+	passwordReset: "Erro ao redefinir senha",
+	deleteSelf: "Você não pode deletar sua própria conta",
+	delete: "Erro ao deletar conta",
 };
 
 const successMessages = {
@@ -24,6 +25,7 @@ const successMessages = {
   register: "Cadastro efetuado com sucesso",
   logout: "Logout efetuado com sucesso",
   passwordReset: "Senha redefinida com sucesso",
+  delete: "Conta deletada com sucesso",
 };
 
 // get the query string from the url consisting of the error key

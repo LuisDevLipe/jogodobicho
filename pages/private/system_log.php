@@ -52,7 +52,7 @@ session_commit();
 		}
 		$userLogs =  (new controllers\UserLogController)->findUserLogs(queryOption: $queryOption, queryParam: $queryParam);
 		if (!$userLogs) {
-			echo '<script>alert("Nenhum resultado encontrado")</script>';
+			echo '<script></script>';
 			
 		}
 
@@ -94,7 +94,9 @@ session_commit();
 						<?php if (isset($userLogs) && !empty($userLogs)) :
 						foreach($userLogs as $user) :?>
 							<p>auth_when: <?=$user['login_at']?> | nome: <?=$user['fullname']?> | 2FA: <?=$user['TwoFaAnswer']?></p>
-						<?php endforeach; endif; ?>
+						<?php endforeach; else: ?>
+						<p>Nenhum resultado encontrado</p>
+						<?php endif; ?>
 						</output>
 					</div>
 					<form action="#" method="get">
