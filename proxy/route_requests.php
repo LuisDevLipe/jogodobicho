@@ -141,6 +141,58 @@ class Route_requests
                 break;
 
             case "cadastro":
+                $_POST;
+                // echo every input from the $_POST variable
+                // and die
+                // echo "<pre>";
+                // var_dump($_POST);
+                // echo "</pre>";
+                // die();
+                // sanitize every inupt from the $_POST variable, to prevent SQL injection
+                foreach ($_POST as $key => $value) {
+                    $_POST[$key] = filter_var($value, FILTER_SANITIZE_STRING);
+                }
+
+                require_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/functions/validations.php";
+
+
+                // remover caracteres especiais do celular
+                $_POST["celular"] = preg_replace("/[^0-9]/", "", $_POST["celular"]);
+                $_POST["fixo"] = preg_replace("/[^0-9]/", "", $_POST["fixo"]);
+
+                // remover caracteres especiais do cep 
+                $_POST["cep"] = preg_replace("/[^0-9]/", "", $_POST["cep"]);
+                // remover caracteres especiais do cpf
+                $_POST["cpf"] = preg_replace("/[^0-9]/", "", $_POST["cpf"]);
+                // validar cpf
+                if (!validarCPF($_POST["cpf"])) {
+                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=cpf");
+                    exit();
+                }
+                // username deve conter exatos 6 caracteres alfabeticos
+                if (!validarUsername($_POST["username"])) {
+                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=username");
+                    exit();
+                }
+
+                // senha deve conter exatos 8 caracteres alfabeticos
+                if (!validarSenha($_POST["password"])) {
+                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=password");
+                    exit();
+                }
+
+                // senhas conferem
+                if ($_POST["password"] !== $_POST["passwordConfirm"]) {
+                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=passwordConfirmation");
+                    exit();
+                }
+
+                // validar se aceitou os termos
+                if (!isset($_POST["termos"])) {
+                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=termos");
+                    exit();
+                }
+
                 if (isset($_POST["cadastrar"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
                         "/jogodobicho/controllers/Credential.php";
@@ -168,7 +220,7 @@ class Route_requests
 
                     $address_id = $new_address->createAddressAndReturn_id();
 
-                    // echo "<script>alert('Endereço cadastrado com sucesso')</script>";
+                   
 
                     $newUser = new \controllers\UserController(
                         fullname: $_POST["name"],

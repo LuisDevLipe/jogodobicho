@@ -1,9 +1,10 @@
 const errorMessages = {
 	required: "This field is required",
 	email: "Please enter a valid email address",
-	password: "Senha deve conter 8 caracteres",
+	password: "Senha deve conter 8 caracteres, e conter apenas letras",
 	passwordConfirmation: "Senhas não conferem",
-	username: "Username must be 6 characters long",
+	username: "Nome de usuário deve conter 6 caracteres, e conter apenas letras e números",
+  nome: "Nome deve conter pelo menos 15 caracteres, e no máximo 80 caracteres",
 	shortname: "Name must be at least 15 characters long",
 	longname: "Name must be at most 80 characters long",
 	cpf: "Este número de cpf parece inválido.",
