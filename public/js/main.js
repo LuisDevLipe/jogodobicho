@@ -37,29 +37,33 @@ let errorKey = url.searchParams.get("error");
 let successKey = url.searchParams.get("success");
 
 function createToast(errormessage, errorType = "error") {
-  const toast = document.createElement("div");
-  toast.classList.add("toast");
-  const message = document.createElement("p");
-  message.textContent = errormessage;
-  toast.appendChild(message);
-  const timer = document.createElement("div");
-  timer.classList.add("timer");
-  timer.setAttribute("name", "timer");
-  toast.appendChild(timer);
-  document.body.appendChild(toast);
-  if (errorType === "error") {
-    toast.classList.add("error");
-    timer.classList.add("error");
-  } else {
-    toast.classList.add("success");
-    timer.classList.add("success");
-    // if(toast.classList.contains(''))
-  }
+	const toast = document.createElement("div");
+	toast.classList.add("toast");
+	const textwrapper = document.createElement("div");
+	textwrapper.classList.add("textwrapper");
+	textwrapper.classList.add("textwrapper");
+	toast.appendChild(textwrapper);
+	const message = document.createElement("p");
+	message.textContent = errormessage;
+	textwrapper.appendChild(message);
+	const timer = document.createElement("div");
+	timer.classList.add("timer");
+	timer.setAttribute("name", "timer");
+	toast.appendChild(timer);
+	document.body.appendChild(toast);
+	if (errorType === "error") {
+		toast.classList.add("error");
+		timer.classList.add("error");
+	} else {
+		toast.classList.add("success");
+		timer.classList.add("success");
+		// if(toast.classList.contains(''))
+	}
 
-  return {
-    toast,
-    timer: toast.querySelector("[name=timer]"),
-  };
+	return {
+		toast,
+		timer: toast.querySelector("[name=timer]"),
+	};
 }
 // checar se o erro existe
 // se existir, pegar a mensagem de erro
@@ -68,41 +72,42 @@ function createToast(errormessage, errorType = "error") {
 // run the code bellow as IIFE
 // IIFE - Immediately Invoked Function Expression
 (() => {
-  document.addEventListener("DOMContentLoaded", () => {
-    toastMessage();
-  });
+	document.addEventListener("DOMContentLoaded", () => {
+		toastMessage();
+	});
 })();
+const TOAST_DURATION = 7000;
 //function to show toast based on the uri query string sent back from the server
 function toastMessage() {
-  const toast = errorKey
-    ? createToast(errorMessages[errorKey], "error")
-    : createToast(successMessages[successKey], "success");
-  if (errorKey || successKey) {
-    showToast(toast.toast);
-    startTimer(toast.timer);
-    setTimeout(() => {
-      removeToast(toast.toast);
-      stopTimer(toast.timer);
-    }, 5000);
-  }
+	const toast = errorKey
+		? createToast(errorMessages[errorKey], "error")
+		: createToast(successMessages[successKey], "success");
+	if (errorKey || successKey) {
+		showToast(toast.toast);
+		startTimer(toast.timer);
+		setTimeout(() => {
+			removeToast(toast.toast);
+			// stopTimer(toast.timer);
+		}, TOAST_DURATION);
+	}
 }
 // function to show toast based on the error message from the js validation
 
 function jsToastMessage(errormessage, messageType = "error") {
-  let toast = {};
-  if (messageType === "success") {
-    toast = createToast(errormessage, "success");
-  } else {
-    toast = createToast(errormessage, "error");
-  }
-  if (errormessage !== "") {
-    showToast(toast.toast);
-    startTimer(toast.timer);
-    setTimeout(() => {
-      removeToast(toast.toast);
-      stopTimer(toast.timer);
-    }, 5000);
-  }
+	let toast = {};
+	if (messageType === "success") {
+		toast = createToast(errormessage, "success");
+	} else {
+		toast = createToast(errormessage, "error");
+	}
+	if (errormessage !== "") {
+		showToast(toast.toast);
+		startTimer(toast.timer);
+		setTimeout(() => {
+			removeToast(toast.toast);
+			// stopTimer(toast.timer); does nothing
+		}, TOAST_DURATION);
+	}
 }
 
 // bring the toast from outssde the screen to the screen

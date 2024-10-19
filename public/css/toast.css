@@ -1,146 +1,171 @@
+:root {
+	--TOAST-ENTRY-DELAY: 1s;
+	--TOAST-EXIT-DELAY: 1s;
+	--TIMER-ANIMATION-DURATION: 6.2s;
+	--TIMER-ANIMATION-TIMING-FUNCTION: linear;
+	--TIMER-ANIMATION-DELAY: 0.8s;
+	--TOAST-ENTRY-TIMING-FUNCTION: cubic-bezier(0.4, 0.19, 0.21, 1.24);
+	--TOAST-EXIT-TIMING-FUNCTION: cubic-bezier(0.64, -0.18, 0.19, 1.01);
+
+    --TOAST-LEFT-MARGIN: 1.5rem;
+    --TOAST-BOTTOM-MARGIN: 1rem;
+
+}
 .toast {
-    background-color: #f0f0f0;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+	background-color: #f0f0f0;
+	border-radius: 0.25rem;
+	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+div.toast > div.textwrapper {
+	display: flex;
+	justify-content: center;
     align-items: center;
-
-}
-div.toast > p {
-    padding: 1rem 1rem;
-    font-size: 1rem;
-    line-height: 1.5rem;
+	width: 100%;
+	height: 100%;
+	padding: 0.5rem 1rem;
+	> p {
+		font-family: "Barlow", sans-serif;
+        font-weight: 500;
+		font-size: 1rem;
+		line-height: 1.5rem;
+        text-align: justify;
+	}
 }
 .toast {
-    position: fixed;
-    bottom: 1rem;
-    left: -100%;
-    width: 20rem;
-    height: 7rem;
+	position: fixed;
+	bottom: var(--TOAST-BOTTOM-MARGIN);
+	left: -100%;
+	width: 20rem;
+	height: 4.75rem;
+	overflow: hidden;
 
-    // altura do toast deve ser a soma da altura do timer,
-    /* mais a altura do padding top e bottom do texto,  */
-    /* mais n vezes a altura do line-height dependendo da quantidade de linhas que eu quiser. */
-     /*
-     0.5
-     2.0 padding * 2 (top and bottom);
-    +4.5
+	/* altura do toast deve ser a soma da altura do timer,
+    mais a altura do padding top e bottom do texto,
+    mais n vezes a altura do line-height dependendo da quantidade de linhas que eu quiser.
+   
+     0.75rem altura do timer
+     1rem padding * 2 (top and bottom);
+    +3 2 LINHAS * 1.5rem line-height
     -----
-     7.0 */
+    4.75rem */
 }
 .timer {
-    width: 100px;
-    height: 0.5rem;
-    background: #f0f0f0;
-    border-radius: 0.25rem;
+	width: 1px;
+	height: 0.75rem;
+	background: #f0f0f0;
+	/* border-radius: 0.25rem 0 0 0.25rem; */
+	align-self: start;
 }
-
-// animate the timer
-@keyframes timer {
-    0% {
-        width: 20px;
-    }
-    100% {
-        width: 100%;
-    }
+.timer.error {
+	background: linear-gradient(to left, #d30606, #ff3c3c);
+}
+.timer.success {
+	background: linear-gradient(to left, #10e210, #9efd9e, #10e210);
 }
 
 .timer.playing {
-    animation: timer 5s linear;
-    animation-delay: 1s;
-    -webkit-animation: timer 5s linear;
-    -webkit-animation-delay: 1s;
-    -moz-animation: timer 5s linear;
-    -moz-animation-delay: 1s;
+	animation: timer var(--TIMER-ANIMATION-DURATION) var(--TIMER-ANIMATION-TIMING-FUNCTION);
+	animation-delay: var(--TIMER-ANIMATION-DELAY);
+	-webkit-animation: timer var(--TIMER-ANIMATION-DURATION) var(--TIMER-ANIMATION-TIMING-FUNCTION);
+	-webkit-animation-delay: var(--TIMER-ANIMATION-DELAY);
+	-moz-animation: timer var(--TIMER-ANIMATION-DURATION) var(--TIMER-ANIMATION-TIMING-FUNCTION);
+	-moz-animation-delay: var(--TIMER-ANIMATION-DELAY);
+	animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
 }
 .toast.playing {
-    animation: slideIn 1s linear;
-    animation-fill-mode: forwards;
-    -webkit-animation: slideIn 1s linear;
-    -webkit-animation-fill-mode: forwards;
-    -moz-animation: slideIn 1s linear;
-    -moz-animation-fill-mode: forwards;
+	animation: slideIn var(--TOAST-ENTRY-DELAY) var(--TOAST-ENTRY-TIMING-FUNCTION);
+	animation-fill-mode: forwards;
+	-webkit-animation: slideIn var(--TOAST-ENTRY-DELAY) var(--TOAST-ENTRY-TIMING-FUNCTION);
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation: slideIn var(--TOAST-ENTRY-DELAY) var(--TOAST-ENTRY-TIMING-FUNCTION);
+	-moz-animation-fill-mode: forwards;
 }
 .toast.stop {
-    animation: slideOut 1s linear;
-    animation-fill-mode: forwards;
-    -webkit-animation: slideOut 1s linear;
-    -webkit-animation-fill-mode: forwards;
-    -moz-animation: slideOut 1s linear;
-    -moz-animation-fill-mode: forwards;
+	animation: slideOut var(--TOAST-EXIT-DELAY) var(--TOAST-EXIT-TIMING-FUNCTION);
+	animation-fill-mode: forwards;
+	-webkit-animation: slideOut var(--TOAST-EXIT-DELAY) var(--TOAST-EXIT-TIMING-FUNCTION);
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation: slideOut var(--TOAST-EXIT-DELAY) var(--TOAST-EXIT-TIMING-FUNCTION);
+	-moz-animation-fill-mode: forwards;
 }
 
+/* animate the timer */
+@keyframes timer {
+	0% {
+		width: 1px;
+	}
+	100% {
+		width: 100%;
+	}
+}
 @-webkit-keyframes timer {
-    0% {
-        width: 20px;
-    }
-    100% {
-        width: 100%;
-    }
+	0% {
+		width: 1px;
+	}
+	100% {
+		width: 100%;
+	}
 }
 @-moz-keyframes timer {
-    0% {
-        width: 20px;
-    }
-    100% {
-        width: 100%;
-    }
+	0% {
+		width: 1px;
+	}
+	100% {
+		width: 100%;
+	}
 }
 
 @keyframes slideIn {
-    0% {
-        left: -100%;
-    }
-    100% {
-        left: 1rem;
-    }
+	0% {
+		left: -100%;
+	}
+	100% {
+		left: var(--TOAST-LEFT-MARGIN);
+	}
 }
 @-webkit-keyframes slideIn {
-    0% {
-        left: -100%;
-    }
-    100% {
-        left: 1rem;
-    }
+	0% {
+		left: -100%;
+	}
+	100% {
+		left:var(--TOAST-LEFT-MARGIN);
+	}
 }
 @-moz-keyframes slideIn {
-    0% {
-        /* left: -100%; */
-    }
-    100% {
-        left: 1rem;
-    }
+	0% {
+		left: -100%;
+	}
+	100% {
+		left:var(--TOAST-LEFT-MARGIN);
+	}
 }
 @keyframes slideOut {
-    0% {
-        left: 1rem;
-    }
-    100% {
-        left: -100%;
-    }
+	0% {
+		left: var(--TOAST-LEFT-MARGIN);
+	}
+	100% {
+		left: -100%;
+	}
 }
 @-webkit-keyframes slideOut {
-    0% {
-        left: 1rem;
-    }
-    100% {
-        left: -100%;
-    }
+	0% {
+		left:var(--TOAST-LEFT-MARGIN);
+	}
+	100% {
+		left: -100%;
+	}
 }
 @-moz-keyframes slideOut {
-    0% {
-        left: 1rem;
-    }
-    100% {
-        left: -100%;
-    }
-}
-
-.timer.error {
-    background-color: #ff0000;
-}
-.timer.success {
-    background-color: #00ff00;
+	0% {
+		left: var(--TOAST-LEFT-MARGIN);
+	}
+	100% {
+		left: -100%;
+	}
 }
