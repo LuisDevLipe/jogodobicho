@@ -4,7 +4,7 @@ const errorMessages = {
 	password: "Senha deve conter 8 caracteres, e conter apenas letras",
 	passwordConfirmation: "Senhas não conferem",
 	username: "Nome de usuário deve conter 6 caracteres, e conter apenas letras e números",
-  nome: "Nome deve conter pelo menos 15 caracteres, e no máximo 80 caracteres",
+	nome: "Nome deve conter pelo menos 15 caracteres, e no máximo 80 caracteres",
 	shortname: "Name must be at least 15 characters long",
 	longname: "Name must be at most 80 characters long",
 	cpf: "Este número de cpf parece inválido.",
@@ -19,14 +19,16 @@ const errorMessages = {
 	passwordReset: "Erro ao redefinir senha",
 	deleteSelf: "Você não pode deletar sua própria conta",
 	delete: "Erro ao deletar conta",
+	emptylist: "Não é possível gerar um relatório de uma lista vazia",
 };
 
 const successMessages = {
-  auth: "Login efetuado com sucesso",
-  register: "Cadastro efetuado com sucesso",
-  logout: "Logout efetuado com sucesso",
-  passwordReset: "Senha redefinida com sucesso",
-  delete: "Conta deletada com sucesso",
+	auth: "Login efetuado com sucesso",
+	register: "Cadastro efetuado com sucesso",
+	logout: "Logout efetuado com sucesso",
+	passwordReset: "Senha redefinida com sucesso",
+	delete: "Conta deletada com sucesso",
+	reportok: "Relatório gerado com sucesso",
 };
 
 const warningMessages = {

@@ -24,11 +24,12 @@ session_commit();
 	if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar"])) {
 
 		$users = $UserControllerInstance->findUsers(queryParam: $_GET["query_string"]);
+	$query = $_GET["query_string"];
 
 	} else {
 		$users = $UserControllerInstance->findUsers();
-	}
-
+	$query = 'all';
+}
 	?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -65,7 +66,8 @@ session_commit();
 								data-lucide="text-search"></i></button>
 					</fieldset>
 					<fieldset class="m-l-auto">
-						<button type="submit" name="gerar-pdf" formaction="/jogodobicho/functions/gerar_pdf.php">Exportar busca como PDF <i
+						<button type="submit" name="gerar-pdf" id="gerar-pdf" value="<?= $query ?>"
+							formaction="/jogodobicho/functions/gerar_pdf.php">Exportar busca como PDF <i
 								data-lucide="file"></i></button>
 					</fieldset>
 				</div>
