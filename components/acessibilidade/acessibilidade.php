@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/jogodobicho/components/acessibilidade/acessibilidade.css">
-<div id="acessibilidade">
-    <div class="wrapper">
+<div id="acessibilidade" tabindex="1">
+    <div class="wrapper" name="wrapper">
 
         <div id="change-contrast">
             <p>Tema atual: <span id="current-theme"></span></p>

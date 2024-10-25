@@ -11,8 +11,10 @@
 }
 body.high-contrast{
 	div#acessibilidade > div.icon{
+		
+		color: var(--text-color) !important;
 		svg{
-			color: var(--text-color) !important;
+			color: inherit;
 		}
 	}
 }
@@ -124,6 +126,12 @@ div#acessibilidade.opened {
 		font-family: 'Barlow Condensed';
 		font-size: 1.25rem;
 		line-height: 1.25rem;
-		color: var(--primary-color);
+		color: var(--text-color);
 	}
 }
+
+/* div#acessibilidade.opened:not(:focus-within){
+	div.wrapper{
+		display: none;
+	}
+} */

@@ -271,13 +271,6 @@ include_once $_SERVER["DOCUMENT_ROOT"] .
 	<script>
 		lucide.createIcons();
 	</script>
-<!--
-	<div class='toast'>
-
-	<p>error message</p>
-	<div class='timer'></div>
-	</div>
-	-->
 </body>
 
 </html>
