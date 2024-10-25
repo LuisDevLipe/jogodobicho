@@ -17,12 +17,12 @@ class Route_requests
                 if (session_status() === PHP_SESSION_NONE) {
                     session_start();
                 }
+                
                 if (isset($_SESSION["user_id"])) {
                     header("Location: /jogodobicho?success=auth");
                     exit();
                 }
 
-                echo $_SERVER["DOCUMENT_ROOT"];
                 include_once $_SERVER["DOCUMENT_ROOT"] .
                     "/jogodobicho/controllers/Credential.php";
 
@@ -39,6 +39,7 @@ class Route_requests
                         $password
                     );
                     $user = $credential->login();
+                
                     $_POST = [];
                     if (!$user) {
                         header(
@@ -46,6 +47,7 @@ class Route_requests
                         );
                         exit();
                     }
+                  
 
                     header(
                         "Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php"
@@ -114,7 +116,6 @@ class Route_requests
 
                 if (session_status() === PHP_SESSION_NONE) {
                     session_start();
-                    var_dump($_POST);
                 }
                 $username = $_SESSION["username"];
                 $session_id = session_id();
@@ -123,7 +124,9 @@ class Route_requests
                     twoFaAnswer: $twoFaAnswer,
                     session_id: $session_id
                 );
+                
                 session_commit();
+                
                 header("Location: /jogodobicho/?success=auth");
 
                 break;
@@ -377,6 +380,10 @@ class Route_requests
                 }
                 header("Location: /jogodobicho/pages/erro/erro.php?500");
                 break;
+
+            default:
+                header("Location: /jogodobicho/pages/erro/erro.php?404");
+                exit();
         }
         exit();
     }
