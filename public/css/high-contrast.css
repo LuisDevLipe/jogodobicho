@@ -1,0 +1,109 @@
+
+body.high-contrast{
+    --primary-color: #fff;
+    --secondary-color: #f5f5f5;
+    --text-color: #000;
+
+    --border-color:#000;
+   color: var(--text-color);
+
+   nav.main-navigation{
+    background-color: var(--primary-color) !important;
+    color: inherit;
+    border-bottom: 1px solid var(--border-color);
+   }
+    
+    section.hero{
+        color: var(--text-color);
+        box-shadow: none !important;
+        .about-the-game, .how-to-play{
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+    }
+    section.hero-products{
+        box-shadow: none !important;
+        .title-wrapper, article{
+            border: 1px solid var(--border-color) !important;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    section.results{
+        header,main{
+            border: 1px solid var(--border-color);
+        }
+    }
+    div#acessibilidade{
+        /* overflow: hidden; */
+        div.icon {
+            border: 1px solid var(--border-color);
+        }
+        button{
+            color: var(--text-color) !important; 
+        }
+        
+    }
+    div#acessibilidade.opened{
+       border: 1px solid var(--border-color);
+       border-radius: 0.5rem 0.5rem 0 0 ;
+       div.icon{
+        border: none;
+       }
+    }
+
+    form[name='login'],form[name='cadastro'],section[name='a2f-wrapper'],form[name='recuperar-senha'],form[name="recuperar-senha-form"]{
+        background-color: var(--secondary-color) !important;
+        color: var(--text-color) !important;
+        h1,button{
+            color: inherit;
+        }
+    }
+
+    div.toast{
+        border: 1px solid var(--border-color);
+
+        .timer{
+            box-shadow: 0 -1px 1px 1px #00000066;
+        }
+    }
+
+
+    main.system_log{
+        section.wrapper{
+
+            border:1px solid var(--border-color);
+        }
+        form input, form input::placeholder{
+            color:white !important;
+        }
+    }
+
+    main.consulta-usuario{
+        button{
+            color: var(--text-color) !important;
+        }
+        section.busca, section.usuarios{
+            border: 1px solid var(--border-color);
+            background-color: var(--secondary-color);
+
+            form input{
+                border: 1px solid var(--border-color);
+            }
+
+            th {
+                border: 1px solid var(--border-color);
+            }
+            tr{
+                border: 1px solid transparent;
+                border: 1px solid var(--border-color);
+            }
+
+            tr:nth-child(even){
+                background-color: var(--secondary-color);
+            }
+           
+        }
+    }
+
+}

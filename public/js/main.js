@@ -29,12 +29,17 @@ const successMessages = {
   delete: "Conta deletada com sucesso",
 };
 
+const warningMessages = {
+	logado: "Você já está logado",
+};
+
 // get the query string from the url consisting of the error key
 //
 
 let url = new URL(window.location.href);
 let errorKey = url.searchParams.get("error");
 let successKey = url.searchParams.get("success");
+let warningKey = url.searchParams.get("warning");
 
 function createToast(errormessage, errorType = "error") {
 	const toast = document.createElement("div");
@@ -54,10 +59,13 @@ function createToast(errormessage, errorType = "error") {
 	if (errorType === "error") {
 		toast.classList.add("error");
 		timer.classList.add("error");
-	} else {
+	} else if (errorType === "success") {
 		toast.classList.add("success");
 		timer.classList.add("success");
 		// if(toast.classList.contains(''))
+	} else {
+		toast.classList.add("warning");
+		timer.classList.add("warning");
 	}
 
 	return {
@@ -79,10 +87,17 @@ function createToast(errormessage, errorType = "error") {
 const TOAST_DURATION = 7000;
 //function to show toast based on the uri query string sent back from the server
 function toastMessage() {
-	const toast = errorKey
-		? createToast(errorMessages[errorKey], "error")
-		: createToast(successMessages[successKey], "success");
-	if (errorKey || successKey) {
+	let toast = {};
+	if (errorKey) {
+		toast = createToast(errorMessages[errorKey], "error");
+	} else if (successKey) {
+		toast = createToast(successMessages[successKey], "success");
+	} else {
+		toast = createToast(warningMessages[warningKey], "warning");
+	}
+
+	
+	if (errorKey || successKey || warningKey) {
 		showToast(toast.toast);
 		startTimer(toast.timer);
 		setTimeout(() => {
@@ -97,8 +112,10 @@ function jsToastMessage(errormessage, messageType = "error") {
 	let toast = {};
 	if (messageType === "success") {
 		toast = createToast(errormessage, "success");
-	} else {
+	} else if (messageType === "error") {
 		toast = createToast(errormessage, "error");
+	} else {
+		toast = createToast(errormessage, "warning");
 	}
 	if (errormessage !== "") {
 		showToast(toast.toast);

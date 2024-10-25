@@ -66,6 +66,9 @@ div.toast > div.textwrapper {
 .timer.success {
 	background: linear-gradient(to left, #10e210, #9efd9e, #10e210);
 }
+.timer.warning{
+	background: linear-gradient(to left, #ffff00, #ffff6d, #ffff00);
+}
 
 .timer.playing {
 	animation: timer var(--TIMER-ANIMATION-DURATION) var(--TIMER-ANIMATION-TIMING-FUNCTION);
@@ -169,3 +172,6 @@ div.toast > div.textwrapper {
 		left: -100%;
 	}
 }
+
+
+/* as */
