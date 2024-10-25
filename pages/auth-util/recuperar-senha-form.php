@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="/jogodobicho/pages/auth-util/RecuperarSenha.css">
 </head>
 
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/acessibilidade/acessibilidade.php' ?>
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -21,7 +22,7 @@ $_SESSION['useremail'] = $_POST['useremail'];
 <body>
     <main id="AlterarSenha">
 
-        <form action='/jogodobicho/proxy/route_requests.php' method='POST'>
+        <form action='/jogodobicho/proxy/route_requests.php' method='POST' name="recuperar-senha-form">
             <div>
                 <h1>Recuperar senha</h1>
             </div>
@@ -45,6 +46,7 @@ $_SESSION['useremail'] = $_POST['useremail'];
 
 </body>
 <script>
+    lucide.createIcons();
     function validarSenha(senha, el, length = 8) {
         if (senha.length !== length) {
             jsToastMessage(errorMessages.password, "error");
@@ -77,5 +79,7 @@ $_SESSION['useremail'] = $_POST['useremail'];
         }
     }
 </script>
+
+
 
 </html>

@@ -29,7 +29,9 @@ if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true
     
 </head>
 <body>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php';
+include_once $_SERVER["DOCUMENT_ROOT"] .
+    "/jogodobicho/components/acessibilidade/acessibilidade.php"; ?>
 
     <main>
         <form action="/jogodobicho/proxy/route_requests.php" method="post" name='login'>

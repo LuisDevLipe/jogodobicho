@@ -27,10 +27,11 @@ session_commit();
 	<title>Consulta de usuários</title>
 	<link rel="stylesheet" href="console.css" />
 	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
-	<script src="https://unpkg.com/lucide@latest"></script>
+	<!-- <script src="https://unpkg.com/lucide@latest"></script> -->
 </head>
 
-<?php include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/navbar/navbar.php"; ?>
+<?php include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/navbar/navbar.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/acessibilidade/acessibilidade.php' ?>
 
 <body>
 	<?php
@@ -117,6 +118,8 @@ session_commit();
 
 	<script>
 		lucide.createIcons();
+
+		document.addEventListener('DOMContentLoaded',() => document.querySelector('[name="command"]').focus());
 	</script>
 </body>
 

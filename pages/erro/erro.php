@@ -122,8 +122,13 @@
         $status = 500;
     } else {
 
-        $status = $_SERVER['QUERY_STRING'];
+        $status = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
     }
+
+    // echo $status;
+    // echo $_SERVER['QUERY_STRING'];
+    // echo $_SERVER['REQUEST_URI'];
+    // echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 
 
     ?>

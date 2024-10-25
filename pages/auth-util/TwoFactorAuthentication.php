@@ -1,5 +1,11 @@
 <?php
-
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
+if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated']) {
+	header('Location: /jogodobicho?warning=logado');
+	exit();
+}
 function isAccountLocked(): bool
 {
 		if(session_status() == PHP_SESSION_NONE) {
@@ -26,15 +32,18 @@ function isAccountLocked(): bool
 </head>
 
 <body>
-	<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
+	<?php
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php';
+	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/acessibilidade/acessibilidade.php"
+		?>
 	<main class="TwoFacAuth">
-		<section id="form-section">
+		<section id="form-section" name="a2f-wrapper">
 
 			<div>
 				<h1>Autenticação de 2 Fatores</h1>
 				<p>Responda a esta pergunta para garantirmos a sua segurança</p>
 			</div>
-			<form action="/jogodobicho/proxy/route_requests.php" method="post">
+			<form action="/jogodobicho/proxy/route_requests.php" method="post" >
 
 
 				<?php {

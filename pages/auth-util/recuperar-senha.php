@@ -9,9 +9,10 @@
 		<script src="https://unpkg.com/lucide@latest"></script>
 	</head>
 		<body>
-	<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
+	<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php';
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/acessibilidade/acessibilidade.php' ?>
 		<main id="AlterarSenha">
-			<form action="/jogodobicho/proxy/route_requests.php" method="post" enctype="application/x-www-form-urlencoded">
+			<form action="/jogodobicho/proxy/route_requests.php" method="post" enctype="application/x-www-form-urlencoded" name="recuperar-senha">
 				<div>
 					<h1>Recuperar Senha</h1>
 					<p>Se você perdeu a sua senha de acesso e de gostaria de recuperar.</p>

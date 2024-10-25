@@ -17,7 +17,19 @@ if (isset($_SESSION['rootuser'])) {
 	exit();
 }
 session_commit();
-?>
+
+	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
+	$UserControllerInstance = new controllers\UserController(fullname: '', dob: '', gender: '', mothername: '', cpf: '', email: '', celular: '', fixo: '', address_id: '');
+
+	if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar"])) {
+
+		$users = $UserControllerInstance->findUsers(queryParam: $_GET["query_string"]);
+
+	} else {
+		$users = $UserControllerInstance->findUsers();
+	}
+
+	?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -28,27 +40,11 @@ session_commit();
 	<link rel="stylesheet" href="style.css" />
 	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
 	<script src="https://unpkg.com/lucide@latest"></script>
-	<?php
-	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
-	$UserControllerInstance = new controllers\UserController(fullname: '', dob: '', gender: '', mothername: '', cpf: '', email: '', celular: '', fixo: '', address_id: '');
-
-	if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar"])) {
-
-		$users = $UserControllerInstance->findUsers(queryParam: $_GET["query_string"]);
-
-	} else if( $_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar_todos"])) {
-
-		$UserControllerInstance->findUsers();
-		$users = $UserControllerInstance->findUsers();
-	} else {
-		$users = $UserControllerInstance->findUsers();
-	}
-	
-	?>
 </head>
 
 <body>
-	<?php include $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/navbar/navbar.php"; ?>
+	<?php include $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/navbar/navbar.php";
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/acessibilidade/acessibilidade.php' ?>
 
 
 	<main class="consulta-usuario">
@@ -65,9 +61,16 @@ session_commit();
 						<button type="submit" name="buscar">Buscar <i data-lucide="search"></i></button>
 					</fieldset>
 					<fieldset>
-						<button type="submit" name="buscar_todos">Buscar Todos <i data-lucide="text-search"></i></button>
+						<button type="submit" name="buscar_todos">Buscar Todos <i
+								data-lucide="text-search"></i></button>
+					</fieldset>
+					<fieldset class="m-l-auto">
+						<button type="submit" name="gerar-pdf" formaction="/jogodobicho/functions/gerar_pdf.php">Exportar busca como PDF <i
+								data-lucide="file"></i></button>
 					</fieldset>
 				</div>
+				
+
 			</form>
 		</section>
 		<section class="usuarios">
