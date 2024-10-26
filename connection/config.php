@@ -51,7 +51,7 @@ class ConnectionMariaDB
             return $this->con;
         } catch (\Exception $e) {
             // echo $e->getMessage();
-            header("Location: jogodobicho/pages/erro/erro.php?500");
+            header("Location: /pages/erro/erro.php?500");
             die();
         }
 

@@ -19,24 +19,23 @@ class Route_requests
                 }
                 
                 if (isset($_SESSION["user_id"])) {
-                    header("Location: ?success=auth");
+                    header("Location: /index.php?success=auth");
                     exit();
                 }
-
                 include_once $_SERVER["DOCUMENT_ROOT"] .
-                    "/controllers/Credential.php";
-
+                "/controllers/Credential.php";
+                
                 if (
                     $_SERVER["REQUEST_METHOD"] === "POST" &&
                     isset($_POST["username"]) &&
                     isset($_POST["password"])
-                ) {
-                    $username = $_POST["username"];
+                    ) {
+                        $username = $_POST["username"];
                     $password = $_POST["password"];
-
+                    
                     $credential = new \controllers\CredentialController(
-                        $username,
-                        $password
+                        username: $username,
+                        password: $password
                     );
                     $user = $credential->login();
                 
