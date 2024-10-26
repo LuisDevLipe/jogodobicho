@@ -1,8 +1,8 @@
 <?php
 
 use Connection\ConnectionMariaDB;
-require_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/functions/fpdf/fpdf.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/connection/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/fpdf/fpdf.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/connection/config.php';
 
 
 class PDF extends fpdf
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['gerar-pdf'])) {
 
     if ($result->num_rows <= 0) {
         http_response_code(404);
-        header(header: 'Location: /jogodobicho/pages/private/consulta_usuarios.php?error=emptylist');
+        header(header: 'Location: /pages/private/consulta_usuarios.php?error=emptylist');
         die();
     }
     // Column headings

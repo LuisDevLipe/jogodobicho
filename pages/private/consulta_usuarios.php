@@ -5,7 +5,7 @@ if (isset($_SESSION['rootuser'])) {
 	switch (($_SESSION['rootuser'])) {
 		case 0:
 			// redirect and set the statuscode on the url to 403
-			header(header: "Location: /jogodobicho/pages/erro/erro.php?403", replace: true);
+			header(header: "Location: /pages/erro/erro.php?403", replace: true);
 			exit();
 		case 1:
 			// no need to redirect the user is admin and can access the page
@@ -13,12 +13,12 @@ if (isset($_SESSION['rootuser'])) {
 	}
 } else {
 	// redirect and set the statuscode on the url to 403
-	header(header: "Location: /jogodobicho/pages/erro/erro.php?403", replace: true);
+	header(header: "Location: /pages/erro/erro.php?403", replace: true);
 	exit();
 }
 session_commit();
 
-	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
+	include_once $_SERVER["DOCUMENT_ROOT"] . "/controllers/User.php";
 	$UserControllerInstance = new controllers\UserController(fullname: '', dob: '', gender: '', mothername: '', cpf: '', email: '', celular: '', fixo: '', address_id: '');
 
 	if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar"])) {
@@ -39,13 +39,13 @@ session_commit();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Consulta de usuários</title>
 	<link rel="stylesheet" href="style.css" />
-	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
+	<link rel="stylesheet" href="/components/navbar/navbar.css">
 	<script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
-	<?php include $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/navbar/navbar.php";
-	include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/acessibilidade/acessibilidade.php' ?>
+	<?php include $_SERVER["DOCUMENT_ROOT"] . "/components/navbar/navbar.php";
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/components/acessibilidade/acessibilidade.php' ?>
 
 
 	<main class="consulta-usuario">
@@ -67,7 +67,7 @@ session_commit();
 					</fieldset>
 					<fieldset class="m-l-auto">
 						<button type="submit" name="gerar-pdf" id="gerar-pdf" value="<?= $query ?>"
-							formaction="/jogodobicho/functions/gerar_pdf.php">Exportar busca como PDF <i
+							formaction="/functions/gerar_pdf.php">Exportar busca como PDF <i
 								data-lucide="file"></i></button>
 					</fieldset>
 				</div>
@@ -97,7 +97,7 @@ session_commit();
 							echo "<td>{$user['celular']}</td>";
 							echo "<td>{$user['created_at']}</td>";
 							echo "<td>
-									<form action='/jogodobicho/proxy/route_requests.php' method='POST' enctype='application/x-www-form-urlencoded'
+									<form action='/proxy/route_requests.php' method='POST' enctype='application/x-www-form-urlencoded'
 										onsubmit='return confirm(\"Tem certeza que deseja excluir o usuário?\")'
 									>
 										<button type='submit' name='delete_user' value={$user['ID']}><i data-lucide='trash'></i></button>

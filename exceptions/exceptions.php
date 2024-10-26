@@ -14,7 +14,7 @@ class UserAlreadyExistsException extends Exception
     /**
      * @param mixed $url
      */
-    public function redirect($url = "/jogodobicho/pages/erro/erro.php"): void
+    public function redirect($url = "/pages/erro/erro.php"): void
     {
         header("Location: $_SERVER[DOCUMENT_ROOT] $url");
     }

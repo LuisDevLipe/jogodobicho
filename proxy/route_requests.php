@@ -19,12 +19,12 @@ class Route_requests
                 }
                 
                 if (isset($_SESSION["user_id"])) {
-                    header("Location: /jogodobicho?success=auth");
+                    header("Location: ?success=auth");
                     exit();
                 }
 
                 include_once $_SERVER["DOCUMENT_ROOT"] .
-                    "/jogodobicho/controllers/Credential.php";
+                    "/controllers/Credential.php";
 
                 if (
                     $_SERVER["REQUEST_METHOD"] === "POST" &&
@@ -43,14 +43,14 @@ class Route_requests
                     $_POST = [];
                     if (!$user) {
                         header(
-                            "Location: /jogodobicho/pages/login/login.php?error=auth"
+                            "Location: /pages/login/login.php?error=auth"
                         );
                         exit();
                     }
                   
 
                     header(
-                        "Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php"
+                        "Location: /pages/auth-util/TwoFactorAuthentication.php"
                     );
                     exit();
                 }
@@ -60,7 +60,7 @@ class Route_requests
             case "TwoFactorAuthentication":
 
                 include_once $_SERVER["DOCUMENT_ROOT"] .
-                    "/jogodobicho/controllers/TwoFactorAuth.php";
+                    "/controllers/TwoFactorAuth.php";
                 if (
                     $_SERVER["REQUEST_METHOD"] === "POST" &&
                     isset($_POST["twoFaAnswer"])
@@ -102,13 +102,13 @@ class Route_requests
                         $_SESSION["account_is_locked"] === true
                     ) {
                         header(
-                            "Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php?error=locked"
+                            "Location: /pages/auth-util/TwoFactorAuthentication.php?error=locked"
                         );
                         exit();
                     }
                     if (!$twoFaVerified) {
                         header(
-                            "Location: /jogodobicho/pages/auth-util/TwoFactorAuthentication.php?error=auth2fa"
+                            "Location: /pages/auth-util/TwoFactorAuthentication.php?error=auth2fa"
                         );
                         exit();
                     }
@@ -127,18 +127,18 @@ class Route_requests
                 
                 session_commit();
                 
-                header("Location: /jogodobicho/?success=auth");
+                header("Location: /?success=auth");
 
                 break;
 
             case "logout":
                 if (isset($_POST["logout"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/Credential.php";
+                        "/controllers/Credential.php";
 
                     \controllers\CredentialController::logout();
 
-                    header("Location: /jogodobicho?success=logout");
+                    header("Location: ?success=logout");
                     exit();
                 }
                 break;
@@ -156,7 +156,7 @@ class Route_requests
                     $_POST[$key] = filter_var($value, FILTER_SANITIZE_STRING);
                 }
 
-                require_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/functions/validations.php";
+                require_once $_SERVER["DOCUMENT_ROOT"] . "/functions/validations.php";
 
 
                 // remover caracteres especiais do celular
@@ -169,44 +169,44 @@ class Route_requests
                 $_POST["cpf"] = preg_replace("/[^0-9]/", "", $_POST["cpf"]);
                 // validar cpf
                 if (!validarCPF($_POST["cpf"])) {
-                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=cpf");
+                    header("Location: /pages/cadastro/cadastro.php?error=cpf");
                     exit();
                 }
                 // username deve conter exatos 6 caracteres alfabeticos
                 if (!validarUsername($_POST["username"])) {
-                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=username");
+                    header("Location: /pages/cadastro/cadastro.php?error=username");
                     exit();
                 }
 
                 // senha deve conter exatos 8 caracteres alfabeticos
                 if (!validarSenha($_POST["password"])) {
-                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=password");
+                    header("Location: /pages/cadastro/cadastro.php?error=password");
                     exit();
                 }
 
                 // senhas conferem
                 if ($_POST["password"] !== $_POST["passwordConfirm"]) {
-                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=passwordConfirmation");
+                    header("Location: /pages/cadastro/cadastro.php?error=passwordConfirmation");
                     exit();
                 }
 
                 // validar se aceitou os termos
                 if (!isset($_POST["termos"])) {
-                    header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=termos");
+                    header("Location: /pages/cadastro/cadastro.php?error=termos");
                     exit();
                 }
 
                 if (isset($_POST["cadastrar"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/Credential.php";
+                        "/controllers/Credential.php";
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/User.php";
+                        "/controllers/User.php";
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/Address.php";
+                        "/controllers/Address.php";
 
                     if (!isset($_POST["termos"])) {
                         header(
-                            "Location: /jogodobicho/pages/cadastro/cadastro.php?error=termos"
+                            "Location: /pages/cadastro/cadastro.php?error=termos"
                         );
                         exit();
                     }
@@ -239,7 +239,7 @@ class Route_requests
                     $userExists = $newUser->findUser();
                     if ($userExists) {
                         header(
-                            "Location: /jogodobicho/pages/cadastro/cadastro.php?error=userExists"
+                            "Location: /pages/cadastro/cadastro.php?error=userExists"
                         );
                         exit();
                     }
@@ -253,7 +253,7 @@ class Route_requests
                     );
                     if ($credentialExists) {
                         header(
-                            "Location: /jogodobicho/pages/cadastro/cadastro.php?error=usernameExists"
+                            "Location: /pages/cadastro/cadastro.php?error=usernameExists"
                         );
                         exit();
                     }
@@ -265,7 +265,7 @@ class Route_requests
                         $newUserCredentials->registerCredential();
                     }
                     header(
-                        "Location: /jogodobicho/pages/login/login.php?success=register"
+                        "Location: /pages/login/login.php?success=register"
                     );
                     exit();
                 }
@@ -275,15 +275,15 @@ class Route_requests
 
                 if (isset($_POST["username"]) && isset($_POST["useremail"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/Credential.php";
+                        "/controllers/Credential.php";
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/User.php";
+                        "/controllers/User.php";
                     $user = \controllers\CredentialController::check_if_username_exists(
                         username: $_POST["username"]
                     );
                     if (!$user) {
                         header(
-                            "Location: /jogodobicho/pages/auth-util/recuperar-senha.php?error=userNotFound"
+                            "Location: /pages/auth-util/recuperar-senha.php?error=userNotFound"
                         );
                         exit();
                     }
@@ -292,7 +292,7 @@ class Route_requests
                     );
                     if (!$email) {
                         header(
-                            "Location: /jogodobicho/pages/auth-util/recuperar-senha.php?error=emailNoMatch"
+                            "Location: /pages/auth-util/recuperar-senha.php?error=emailNoMatch"
                         );
                         exit();
                     }
@@ -302,21 +302,21 @@ class Route_requests
                     $_SESSION['username'] = $_POST['username'];
                     session_commit();
                     header(
-                        "Location: /jogodobicho/pages/auth-util/recuperar-senha-form.php?"
+                        "Location: /pages/auth-util/recuperar-senha-form.php?"
                     );
                     exit();
 
                 }
-                header("Location: /jogodobicho/pages/erro/erro.php?500");
+                header("Location: /pages/erro/erro.php?500");
                 break;
             case "new-password-form":
                 if (isset($_POST["reset"]) && isset($_POST["password"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/Credential.php";
+                        "/controllers/Credential.php";
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/User.php";
+                        "/controllers/User.php";
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/passwordEncrypt/encrypt.php";
+                        "/controllers/passwordEncrypt/encrypt.php";
                     $newPassword = $_POST["password"];
                     echo $newPassword;
 
@@ -332,23 +332,23 @@ class Route_requests
                     session_commit();
                     if (!$updated_password) {
                         header(
-                            "Location: /jogodobicho/pages/auth-util/recuperar-senha-form.php?error=passwordReset"
+                            "Location: /pages/auth-util/recuperar-senha-form.php?error=passwordReset"
                         );
                         exit();
                     } else {
                         header(
-                            "Location: /jogodobicho/pages/login/login.php?success=passwordReset"
+                            "Location: /pages/login/login.php?success=passwordReset"
                         );
                         exit();
                     }
 
                 }
-                header("Location: /jogodobicho/pages/erro/erro.php?500");
+                header("Location: /pages/erro/erro.php?500");
                 break;
             case "delete-user":
                 if (isset($_POST["delete_user"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
-                        "/jogodobicho/controllers/User.php";
+                        "/controllers/User.php";
 
                     $user_id = $_POST["delete_user"];
                     if (session_status() === PHP_SESSION_NONE) {
@@ -356,7 +356,7 @@ class Route_requests
                     }
                     if ($_SESSION["user_id"] == $user_id) {
                         header(
-                            "Location: /jogodobicho/pages/private/consulta_usuarios.php?error=deleteSelf"
+                            "Location: /pages/private/consulta_usuarios.php?error=deleteSelf"
                         );
 
                         exit();
@@ -366,23 +366,23 @@ class Route_requests
                     );
                     if (!$user_was_deleted) {
                         header(
-                            "Location: /jogodobicho/pages/private/consulta_usuarios.php?error=delete"
+                            "Location: /pages/private/consulta_usuarios.php?error=delete"
                         );
 
                         exit();
                     } else {
                         header(
-                            "Location: /jogodobicho/pages/private/consulta_usuarios.php?success=delete"
+                            "Location: /pages/private/consulta_usuarios.php?success=delete"
                         );
 
                         exit();
                     }
                 }
-                header("Location: /jogodobicho/pages/erro/erro.php?500");
+                header("Location: /pages/erro/erro.php?500");
                 break;
 
             default:
-                header("Location: /jogodobicho/pages/erro/erro.php?404");
+                header("Location: /pages/erro/erro.php?404");
                 exit();
         }
         exit();
@@ -396,7 +396,7 @@ $router->route();
 function logNewSuccessfulAuth($username, $twoFaAnswer, $session_id): void
 {
     include_once $_SERVER["DOCUMENT_ROOT"] .
-        "/jogodobicho/controllers/UserLog.php";
+        "/controllers/UserLog.php";
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }

@@ -138,13 +138,13 @@
     </h1>
     <h2><?= get_error_message(code: get_status_code(status: $status))[1] ?></h2>
     <p>Pedimos desculpas pelo inconveniente</p>
-    <a href="/jogodobicho/">Voltar ao início do site.</a>
+    <a href="/index.php">Voltar ao início do site.</a>
     <br>
 
     <div style="padding:4rem">
 
         <p>more info about the issue:</p>
-        <img src="/jogodobicho/public/assets/gifs/sad_crying.webp" alt="">
+        <img src="/public/assets/gifs/sad_crying.webp" alt="">
         <p>
 
             <?php

@@ -5,7 +5,7 @@ if (isset($_SESSION['rootuser'])) {
 	switch (($_SESSION['rootuser'])) {
 		case 0:
 			// redirect and set the statuscode on the url to 403
-			header(header: "Location: /jogodobicho/pages/erro/erro.php?403", replace: true);
+			header(header: "Location: /pages/erro/erro.php?403", replace: true);
 			exit();
 		case 1:
 			// no need to redirect the user is admin and can access the page
@@ -13,7 +13,7 @@ if (isset($_SESSION['rootuser'])) {
 	}
 } else {
 	// redirect and set the statuscode on the url to 403
-	header(header: "Location: /jogodobicho/pages/erro/erro.php?403", replace: true);
+	header(header: "Location: /pages/erro/erro.php?403", replace: true);
 	exit();
 }
 session_commit();
@@ -26,17 +26,17 @@ session_commit();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Consulta de usuários</title>
 	<link rel="stylesheet" href="console.css" />
-	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
+	<link rel="stylesheet" href="/components/navbar/navbar.css">
 	<!-- <script src="https://unpkg.com/lucide@latest"></script> -->
 </head>
 
-<?php include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/navbar/navbar.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/acessibilidade/acessibilidade.php' ?>
+<?php include_once $_SERVER["DOCUMENT_ROOT"] . "/components/navbar/navbar.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . '/components/acessibilidade/acessibilidade.php' ?>
 
 <body>
 	<?php
 	if (isset($_GET['command']) && !empty($_GET['command'])) {
-		include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/UserLog.php";
+		include_once $_SERVER["DOCUMENT_ROOT"] . "/controllers/UserLog.php";
 
 		
 		$command = $_GET['command'];

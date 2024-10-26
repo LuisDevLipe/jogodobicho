@@ -11,7 +11,7 @@ function validarNome($name)
 {
     $name = sanitize($name);
     if (strlen($name) < 15 || strlen($name) > 80) {
-        header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=nome");
+        header("Location: /pages/cadastro/cadastro.php?error=nome");
         exit();
     }
 }
@@ -22,7 +22,7 @@ function validarCPF($cpf)
 
 
     if (!checkIfHasErrors($cpf)) {
-        header("Location: /jogodobicho/pages/cadastro/cadastro.php?error=cpf");
+        header("Location: /pages/cadastro/cadastro.php?error=cpf");
         exit();
     }
 

@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function high_constrast_stylesheet() {
 	let link = document.createElement("link");
-	link.href = "/jogodobicho/public/css/high-contrast.css";
+	link.href = "/public/css/high-contrast.css";
 	link.rel = "stylesheet";
 	link.type = "text/css";
 

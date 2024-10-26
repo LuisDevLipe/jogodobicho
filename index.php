@@ -5,7 +5,7 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Jogo do Bicho</title>
-	<!-- <link rel="stylesheet" href="/jogodobicho/components/acessibilidade/acessibilidade.css"> -->
+	<!-- <link rel="stylesheet" href="/components/acessibilidade/acessibilidade.css"> -->
 	<link rel="stylesheet" href="styles.css" />
 
 </head>
@@ -13,9 +13,9 @@
 <body>
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] .
-	"/jogodobicho/components/navbar/navbar.php";
+	"/components/navbar/navbar.php";
 include_once $_SERVER["DOCUMENT_ROOT"] .
-	"/jogodobicho/components/acessibilidade/acessibilidade.php";
+	"/components/acessibilidade/acessibilidade.php";
 ?>
 
 	<main class="index-content">

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/jogodobicho/components/acessibilidade/acessibilidade.css">
+<link rel="stylesheet" href="/components/acessibilidade/acessibilidade.css">
 <div id="acessibilidade" tabindex="1">
     <div class="wrapper" name="wrapper">
 
@@ -16,5 +16,5 @@
     <div class="icon">
         <i data-lucide="accessibility"></i>
     </div>
-    <script type="text/javascript" src="/jogodobicho/components/acessibilidade/acessibilidade.js"></script>
+    <script type="text/javascript" src="/components/acessibilidade/acessibilidade.js"></script>
 </div>

@@ -1,6 +1,6 @@
 <?php
 namespace controllers;
-include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/models/User.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/models/User.php";
 use models\User;
 class UserController extends User
 {

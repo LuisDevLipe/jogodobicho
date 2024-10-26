@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar senha</title>
-    <link rel="stylesheet" href="/jogodobicho/pages/auth-util/RecuperarSenha.css">
+    <link rel="stylesheet" href="/pages/auth-util/RecuperarSenha.css">
 </head>
 
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/acessibilidade/acessibilidade.php' ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/components/navbar/navbar.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/components/acessibilidade/acessibilidade.php' ?>
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -22,7 +22,7 @@ $_SESSION['useremail'] = $_POST['useremail'];
 <body>
     <main id="AlterarSenha">
 
-        <form action='/jogodobicho/proxy/route_requests.php' method='POST' name="recuperar-senha-form">
+        <form action='/proxy/route_requests.php' method='POST' name="recuperar-senha-form">
             <div>
                 <h1>Recuperar senha</h1>
             </div>

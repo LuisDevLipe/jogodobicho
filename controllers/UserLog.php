@@ -1,6 +1,6 @@
 <?php
 namespace controllers;
-include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/models/UserLog.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/models/UserLog.php";
 use models\UserLog;
 
 class UserLogController extends UserLog

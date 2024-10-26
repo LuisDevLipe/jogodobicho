@@ -11,11 +11,11 @@
 
 <body>
 <?php include_once $_SERVER["DOCUMENT_ROOT"] .
-    "/jogodobicho/components/navbar/navbar.php";
-	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/acessibilidade/acessibilidade.php" ?>
+    "/components/navbar/navbar.php";
+	include_once $_SERVER["DOCUMENT_ROOT"] . "/components/acessibilidade/acessibilidade.php" ?>
 
 	<main>
-		<form action="/jogodobicho/proxy/route_requests.php" method="post" name='cadastro' enctype='application/x-www-form-urlencoded'>
+		<form action="/proxy/route_requests.php" method="post" name='cadastro' enctype='application/x-www-form-urlencoded'>
 			<h1>Cadastro</h1>
 			<div class="fields-wrapper">
 
@@ -107,14 +107,14 @@
 					<br>
 					<a href="#">Termos de serviços e condições</a></label>
 			</fieldset>
-			<a href="/jogodobicho/pages/login/login.php">Login</a>
+			<a href="/pages/login/login.php">Login</a>
 			<input type="text" name="url" hidden value="<?= urlencode(
        string: basename(path: __FILE__)
    ) ?>">
 		</form>
 
 	</main>
-	<script src="/jogodobicho/public/js/cadastro.js"></script>
+	<script src="/public/js/cadastro.js"></script>
 	<script>lucide.createIcons()</script>
 </body>
 

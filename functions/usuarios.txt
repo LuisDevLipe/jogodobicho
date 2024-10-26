@@ -1,5 +1,0 @@
-name,cpf,email,telefone,created_at
-John Doe,12345678900,johndoe@example.com,555-1234,2023-10-01
-Jane Smith,98765432100,janesmith@example.com,555-5678,2023-10-02
-Alice Johnson,11122233344,alicej@example.com,555-8765,2023-10-03
-Bob Brown,44455566677,bobb@example.com,555-4321,2023-10-04
