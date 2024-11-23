@@ -2,7 +2,8 @@
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
-if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated']) {
+if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true) {
+	session_commit();
 	header('Location: /index.php?warning=logado');
 	exit();
 }

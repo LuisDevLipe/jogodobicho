@@ -111,22 +111,24 @@ class Route_requests
                         );
                         exit();
                     }
-                }
 
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start();
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+
+                    $username = $_SESSION["username"];
+                    $session_id = session_id();
+                    logNewSuccessfulAuth(
+                        username: $username,
+                        twoFaAnswer: $twoFaAnswer,
+                        session_id: $session_id
+                    );
+
+                    session_commit();
+
+                    header("Location: /?success=auth");
+                    die();
                 }
-                $username = $_SESSION["username"];
-                $session_id = session_id();
-                logNewSuccessfulAuth(
-                    username: $username,
-                    twoFaAnswer: $twoFaAnswer,
-                    session_id: $session_id
-                );
-                
-                session_commit();
-                
-                header("Location: /?success=auth");
 
                 break;
 

@@ -12,6 +12,13 @@
 
 <body>
 <?php
+ session_start();
+ echo '<pre>';
+ var_dump($_SESSION);
+ echo '</pre>';
+ session_commit();
+ ?>
+<?php
 include_once $_SERVER["DOCUMENT_ROOT"] .
 	"/components/navbar/navbar.php";
 include_once $_SERVER["DOCUMENT_ROOT"] .

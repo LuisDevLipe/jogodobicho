@@ -23,7 +23,7 @@ class ConnectionMariaDB
         $host = "localhost",
         $user = "root",
         $password = "",
-        $database = "db_jogodobicho",
+        $database = "db_jogodobicho_legacy",
         $port = 3306
     ) {
         $this->host = $host;

@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema db_jogodobicho
+-- Schema db_jogodobicho_legacy
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema db_jogodobicho
+-- Schema db_jogodobicho_legacy
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `db_jogodobicho` DEFAULT CHARACTER SET utf8 ;
-USE `db_jogodobicho` ;
+CREATE SCHEMA IF NOT EXISTS `db_jogodobicho_legacy` DEFAULT CHARACTER SET utf8 ;
+USE `db_jogodobicho_legacy` ;
 
 -- -----------------------------------------------------
--- Table `db_jogodobicho`.`address`
+-- Table `db_jogodobicho_legacy`.`address`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_jogodobicho`.`address` (
+CREATE TABLE IF NOT EXISTS `db_jogodobicho_legacy`.`address` (
   `ID` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `cep` VARCHAR(8) NULL,
   `logradouro` VARCHAR(255) NULL,
@@ -37,9 +37,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_jogodobicho`.`users`
+-- Table `db_jogodobicho_legacy`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_jogodobicho`.`users` (
+CREATE TABLE IF NOT EXISTS `db_jogodobicho_legacy`.`users` (
   `ID` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `fullname` VARCHAR(255) NULL,
   `dob` DATE NULL,
@@ -57,16 +57,16 @@ CREATE TABLE IF NOT EXISTS `db_jogodobicho`.`users` (
   INDEX `fk_users_adress1_idx` (`address_id` ASC),
   CONSTRAINT `fk_users_adress1`
     FOREIGN KEY (`address_id`)
-    REFERENCES `db_jogodobicho`.`address` (`ID`)
+    REFERENCES `db_jogodobicho_legacy`.`address` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_jogodobicho`.`credentials`
+-- Table `db_jogodobicho_legacy`.`credentials`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_jogodobicho`.`credentials` (
+CREATE TABLE IF NOT EXISTS `db_jogodobicho_legacy`.`credentials` (
   `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `rootuser` TINYINT(1) NOT NULL DEFAULT 0,
@@ -79,16 +79,16 @@ CREATE TABLE IF NOT EXISTS `db_jogodobicho`.`credentials` (
   INDEX `fk_Credentials_users1_idx` (`user_id` ASC),
   CONSTRAINT `fk_Credentials_users1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `db_jogodobicho`.`users` (`ID`)
+    REFERENCES `db_jogodobicho_legacy`.`users` (`ID`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_jogodobicho`.`userLogs`
+-- Table `db_jogodobicho_legacy`.`userLogs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_jogodobicho`.`userLogs` (
+CREATE TABLE IF NOT EXISTS `db_jogodobicho_legacy`.`userLogs` (
   `ID` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `session_id` VARCHAR(255) NOT NULL,
   `login_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `db_jogodobicho`.`userLogs` (
   INDEX `fk_userLogs_Credentials1_idx` (`username` ASC),
   CONSTRAINT `fk_userLogs_Credentials1`
     FOREIGN KEY (`username`)
-    REFERENCES `db_jogodobicho`.`credentials` (`username`)
+    REFERENCES `db_jogodobicho_legacy`.`credentials` (`username`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
