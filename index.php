@@ -5,13 +5,19 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Jogo do Bicho</title>
-	<link rel="stylesheet" href="/jogodobicho/components/acessibilidade/acessibilidade.css">
+	<!-- <link rel="stylesheet" href="/components/acessibilidade/acessibilidade.css"> -->
 	<link rel="stylesheet" href="styles.css" />
-	
+
 </head>
 
 <body>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
+<?php
+include_once $_SERVER["DOCUMENT_ROOT"] .
+	"/components/navbar/navbar.php";
+include_once $_SERVER["DOCUMENT_ROOT"] .
+	"/components/acessibilidade/acessibilidade.php";
+?>
+
 	<main class="index-content">
 		<section class="hero" id="inicio">
 			<div class="about-the-game">
@@ -260,22 +266,8 @@
 		<a href="#">2024</a>
 		<a href="pages/db-model/index.html">Veja o Modelo do Banco de Dados desse site.</a>
 	</footer>
-	<div id="acessibilidade">
-		<div class="wrapper">
-			<div id="change-contrast">
-				<button type="button">Tema Claro</button>
-				<button type="button">Tema Escuro</button>
-			</div>
-			<div id="change-font">
-				<button type="button">Aumentar Fonte</button>
-				<button type="button">Diminuir Fonte</button>
-			</div>
-		</div>
-		<div class="icon">
-			<i data-lucide="person-standing"></i>
-		</div>
-	</div>
-	<script src="components/acessibilidade/acessibilidade.js" defer></script>
+	
+	<!-- <script src="components/acessibilidade/acessibilidade.js" defer></script> -->
 	<script>
 		lucide.createIcons();
 	</script>

@@ -52,7 +52,7 @@ main.TwoFacAuth > section#form-section {
 	box-shadow: 0 2px 4px black;
 	background-color: var(--text-color);
     aspect-ratio: 4/5;
-    width: min-content;
+    width: 450px;
 
 	
 

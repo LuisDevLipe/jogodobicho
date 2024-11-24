@@ -64,6 +64,9 @@
                 color: var(--primary-color);
                 padding: 0.25rem;
             }
+            img {
+                width: 450px;
+            }
         }
     </style>
 </head>
@@ -87,12 +90,12 @@
     function get_error_message(Status_code $code): string|array
     {
         return match ($code) {
-            Status_code::NOT_FOUND => ["not found", "The requested resource was not found on this server."],
-            Status_code::FORBIDDEN => ["forbidden", "You don't have permission to access this resource."],
-            Status_code::INTERNAL_SERVER_ERROR => ["internal server error", "The server encountered an internal error and was unable to complete your request."],
-            Status_code::BAD_GATEWAY => ["bad gateway", "The server received an invalid response from an upstream server."],
-            Status_code::SERVICE_UNAVAILABLE => ["service unavailable", "The server is temporarily unable to service your request due to maintenance downtime or capacity problems."],
-            Status_code::GATEWAY_TIMEOUT => ["gateway timeout", "The server did not receive a timely response from an upstream server."],
+            Status_code::NOT_FOUND => ["não encontrado", "O recurso solicitado não foi encontrado neste servidor."],
+            Status_code::FORBIDDEN => ["proibido", "Você não tem permissão para acessar este recurso."],
+            Status_code::INTERNAL_SERVER_ERROR => ["erro interno do servidor", "O servidor encontrou um erro interno e não conseguiu completar sua solicitação."],
+            Status_code::BAD_GATEWAY => ["gateway inválido", "O servidor recebeu uma resposta inválida de um servidor upstream."],
+            Status_code::SERVICE_UNAVAILABLE => ["serviço indisponível", "O servidor está temporariamente incapaz de atender à sua solicitação devido a manutenção ou problemas de capacidade."],
+            Status_code::GATEWAY_TIMEOUT => ["tempo de resposta do gateway esgotado", "O servidor não recebeu uma resposta oportuna de um servidor upstream."],
             default => Status_code::INTERNAL_SERVER_ERROR
         };
     }
@@ -112,17 +115,20 @@
         };
     }
 
-    if (isset($_SERVER['REDIRECT_STATUS'])) {
+    if (isset($_SERVER['REDIRECT_STATUS']) || isset($_SERVER['STATUS'])) {
 
-        $status = $_SERVER['REDIRECT_STATUS'];
+        $status = isset($_SERVER['REDIRECT_STATUS']) ? $_SERVER['REDIRECT_STATUS'] : (isset($_SERVER['STATUS']) ? $_SERVER['STATUS'] : 500);
+    } else if (strlen($status) < 3) {
+        $status = 500;
     } else {
 
-        $status = $_SERVER['QUERY_STRING'];
+        $status = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
     }
 
-    if (strlen($status) > 3) {
-        $status = 500;
-    }
+    // echo $status;
+    // echo $_SERVER['QUERY_STRING'];
+    // echo $_SERVER['REQUEST_URI'];
+    // echo parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
 
 
     ?>
@@ -132,12 +138,13 @@
     </h1>
     <h2><?= get_error_message(code: get_status_code(status: $status))[1] ?></h2>
     <p>Pedimos desculpas pelo inconveniente</p>
-    <a href="/jogodobicho/">Voltar ao início do site.</a>
+    <a href="/index.php">Voltar ao início do site.</a>
     <br>
 
     <div style="padding:4rem">
 
         <p>more info about the issue:</p>
+        <img src="/public/assets/gifs/sad_crying.webp" alt="">
         <p>
 
             <?php
@@ -145,7 +152,7 @@
             $query_string = 'no query string was found';
             if (isset($_SERVER["REDIRECT_QUERY_STRING"])) {
                 $query_string = $_SERVER["REDIRECT_QUERY_STRING"] . PHP_EOL;
-
+            
             }
             echo '<br>';
             echo 'QUERY_STRING: ' . $query_string;

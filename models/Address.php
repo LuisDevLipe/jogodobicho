@@ -1,6 +1,6 @@
 <?php
 namespace models;
-require_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/connection/config.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/connection/config.php";
 use Connection\ConnectionMariaDB;
 
 class Address

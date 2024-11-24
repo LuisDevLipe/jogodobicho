@@ -1,8 +1,8 @@
-ErrorDocument 404 /jogodobicho/pages/erro/erro.php
-ErrorDocument 403 /jogodobicho/pages/erro/erro.php
-ErrorDocument 500 /jogodobicho/pages/erro/erro.php
-ErrorDocument 502 /jogodobicho/pages/erro/erro.php
-ErrorDocument 503 /jogodobicho/pages/erro/erro.php
-ErrorDocument 504 /jogodobicho/pages/erro/erro.php
+ErrorDocument 404 /pages/erro/erro.php?404
+ErrorDocument 403 /pages/erro/erro.php?403
+ErrorDocument 500 /pages/erro/erro.php?500
+ErrorDocument 502 /pages/erro/erro.php?502
+ErrorDocument 503 /pages/erro/erro.php?503
+ErrorDocument 504 /pages/erro/erro.php?504
 
 Options -Indexes

@@ -1,8 +1,8 @@
 <?php
 namespace controllers;
-include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/models/Credential.php";
-include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/models/UserLog.php";
-include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/passwordEncrypt/encrypt.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/models/Credential.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/models/UserLog.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/controllers/passwordEncrypt/encrypt.php";
 
 
 use models\Credential;
@@ -137,10 +137,9 @@ class CredentialController extends Credential
 
     public function update_password():bool{
         $updated_password = $this->update();
-        if($updated_password <> null && $updated_password){
-            return true;
-            
+        if ($updated_password === null) {
+            return false;
         }
-        return false;
+        return $updated_password;
     }
 }

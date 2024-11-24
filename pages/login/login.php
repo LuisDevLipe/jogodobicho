@@ -17,7 +17,7 @@
 session_start();
 if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true):?>
     <script>confirm('you are already logged in'); </script>
-    <script>window.location.href = '/jogodobicho/'</script>
+    <script>window.location.href = '/index.php?warning=logado'</script>
     
 <?php endif; session_commit();?>
 <html lang="pt-BR">
@@ -25,14 +25,16 @@ if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Jogo do Bicho Online</title>
-    <link rel="stylesheet" href="/jogodobicho/pages/login/login.css">
+    <link rel="stylesheet" href="/pages/login/login.css">
     
 </head>
 <body>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/components/navbar/navbar.php';
+include_once $_SERVER["DOCUMENT_ROOT"] .
+    "/components/acessibilidade/acessibilidade.php"; ?>
 
     <main>
-        <form action="/jogodobicho/proxy/route_requests.php" method="post" name='login'>
+        <form action="/proxy/route_requests.php" method="post" name='login'>
             <h1>Login</h1>
             <fieldset>
                 <label for="username">Usuário</label>
@@ -52,8 +54,8 @@ if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true
                 <button type="submit">Entrar</button>
             </fieldset>
            
-                <a href="/jogodobicho/pages/auth-util/recuperar-senha.php">Esqueci minha senha</a>
-            <a href="/jogodobicho/pages/cadastro/cadastro.php">Cadastrar</a>
+                <a href="/pages/auth-util/recuperar-senha.php">Esqueci minha senha</a>
+            <a href="/pages/cadastro/cadastro.php">Cadastrar</a>
 <input type="text" name="url" hidden value="<?= urlencode(string: basename(path: __FILE__))?>">
         </form>
         

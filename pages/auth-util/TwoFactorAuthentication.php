@@ -1,5 +1,14 @@
-<?php 
-	function isAccountLocked(): bool {
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
+if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true) {
+	session_commit();
+	header('Location: /index.php?warning=logado');
+	exit();
+}
+function isAccountLocked(): bool
+{
 		if(session_status() == PHP_SESSION_NONE) {
 			session_start();
 		}
@@ -18,21 +27,24 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Autenticação de 2 Fatores</title>
-	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css" />
+	<link rel="stylesheet" href="/components/navbar/navbar.css" />
 	<link rel="stylesheet" href="TwoFacAuth.css">
 	<script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
-	<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
+	<?php
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/components/navbar/navbar.php';
+	include_once $_SERVER["DOCUMENT_ROOT"] . "/components/acessibilidade/acessibilidade.php"
+		?>
 	<main class="TwoFacAuth">
-		<section id="form-section">
+		<section id="form-section" name="a2f-wrapper">
 
 			<div>
 				<h1>Autenticação de 2 Fatores</h1>
 				<p>Responda a esta pergunta para garantirmos a sua segurança</p>
 			</div>
-			<form action="/jogodobicho/proxy/route_requests.php" method="post">
+			<form action="/proxy/route_requests.php" method="post" >
 
 
 				<?php {

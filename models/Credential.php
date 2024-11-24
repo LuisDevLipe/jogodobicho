@@ -1,8 +1,8 @@
 <?php
 namespace models;
-include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/connection/config.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/connection/config.php";
 include_once $_SERVER["DOCUMENT_ROOT"] .
-    "/jogodobicho/exceptions/exceptions.php";
+    "/exceptions/exceptions.php";
 use Connection\ConnectionMariaDB;
 use exceptions\UserAlreadyExistsException;
 

@@ -5,7 +5,7 @@ if (isset($_SESSION['rootuser'])) {
 	switch (($_SESSION['rootuser'])) {
 		case 0:
 			// redirect and set the statuscode on the url to 403
-			header(header: "Location: /jogodobicho/pages/erro/erro.php?403", replace: true);
+			header(header: "Location: /pages/erro/erro.php?403", replace: true);
 			exit();
 		case 1:
 			// no need to redirect the user is admin and can access the page
@@ -13,11 +13,24 @@ if (isset($_SESSION['rootuser'])) {
 	}
 } else {
 	// redirect and set the statuscode on the url to 403
-	header(header: "Location: /jogodobicho/pages/erro/erro.php?403", replace: true);
+	header(header: "Location: /pages/erro/erro.php?403", replace: true);
 	exit();
 }
 session_commit();
-?>
+
+	include_once $_SERVER["DOCUMENT_ROOT"] . "/controllers/User.php";
+	$UserControllerInstance = new controllers\UserController(fullname: '', dob: '', gender: '', mothername: '', cpf: '', email: '', celular: '', fixo: '', address_id: '');
+
+	if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar"])) {
+
+		$users = $UserControllerInstance->findUsers(queryParam: $_GET["query_string"]);
+	$query = $_GET["query_string"];
+
+	} else {
+		$users = $UserControllerInstance->findUsers();
+	$query = 'all';
+}
+	?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -26,28 +39,13 @@ session_commit();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Consulta de usuários</title>
 	<link rel="stylesheet" href="style.css" />
-	<link rel="stylesheet" href="/jogodobicho/components/navbar/navbar.css">
+	<link rel="stylesheet" href="/components/navbar/navbar.css">
 	<script src="https://unpkg.com/lucide@latest"></script>
-	<?php
-	include_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/controllers/User.php";
-	$UserControllerInstance = new controllers\UserController(fullname: '', dob: '', gender: '', mothername: '', cpf: '', email: '', celular: '', fixo: '', address_id: '');
-
-	if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar"])) {
-
-		$users = $UserControllerInstance->findUsers(queryParam: $_GET["query_string"]);
-
-	} else if( $_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["buscar_todos"])) {
-
-		$UserControllerInstance->findUsers();
-		$users = $UserControllerInstance->findUsers();
-	} else {
-		$users = $UserControllerInstance->findUsers();
-	}
-	?>
 </head>
 
 <body>
-	<?php include $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/components/navbar/navbar.php"; ?>
+	<?php include $_SERVER["DOCUMENT_ROOT"] . "/components/navbar/navbar.php";
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/components/acessibilidade/acessibilidade.php' ?>
 
 
 	<main class="consulta-usuario">
@@ -64,9 +62,17 @@ session_commit();
 						<button type="submit" name="buscar">Buscar <i data-lucide="search"></i></button>
 					</fieldset>
 					<fieldset>
-						<button type="submit" name="buscar_todos">Buscar Todos <i data-lucide="text-search"></i></button>
+						<button type="submit" name="buscar_todos">Buscar Todos <i
+								data-lucide="text-search"></i></button>
+					</fieldset>
+					<fieldset class="m-l-auto">
+						<button type="submit" name="gerar-pdf" id="gerar-pdf" value="<?= $query ?>"
+							formaction="/functions/gerar_pdf.php">Exportar busca como PDF <i
+								data-lucide="file"></i></button>
 					</fieldset>
 				</div>
+				
+
 			</form>
 		</section>
 		<section class="usuarios">
@@ -91,7 +97,7 @@ session_commit();
 							echo "<td>{$user['celular']}</td>";
 							echo "<td>{$user['created_at']}</td>";
 							echo "<td>
-									<form action='/jogodobicho/proxy/route_requests.php' method='POST' enctype='application/x-www-form-urlencoded'
+									<form action='/proxy/route_requests.php' method='POST' enctype='application/x-www-form-urlencoded'
 										onsubmit='return confirm(\"Tem certeza que deseja excluir o usuário?\")'
 									>
 										<button type='submit' name='delete_user' value={$user['ID']}><i data-lucide='trash'></i></button>
@@ -100,6 +106,9 @@ session_commit();
 								</td>";
 							echo "</tr>";
 						}
+					} else {
+						echo "<tr><td colspan='6'>Nenhum usuário encontrado</td></tr>";
+						echo "<script>jsToastMessage('A pesquisa não retornou resultados.','error')</script>";
 					}
 
 

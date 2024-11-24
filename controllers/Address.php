@@ -1,6 +1,6 @@
 <?php
 namespace controllers;
-require_once $_SERVER["DOCUMENT_ROOT"] . "/jogodobicho/models/Address.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/models/Address.php";
 use models\Address;
 
 

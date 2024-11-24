@@ -10,10 +10,12 @@
 </head>
 
 <body>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/jogodobicho/components/navbar/navbar.php' ?>
+<?php include_once $_SERVER["DOCUMENT_ROOT"] .
+    "/components/navbar/navbar.php";
+	include_once $_SERVER["DOCUMENT_ROOT"] . "/components/acessibilidade/acessibilidade.php" ?>
 
 	<main>
-		<form action="/jogodobicho/proxy/route_requests.php" method="post" name='cadastro' enctype='application/x-www-form-urlencoded'>
+		<form action="/proxy/route_requests.php" method="post" name='cadastro' enctype='application/x-www-form-urlencoded'>
 			<h1>Cadastro</h1>
 			<div class="fields-wrapper">
 
@@ -21,7 +23,10 @@
 
 					<fieldset>
 						<label for="name">Nome</label>
-						<input required type="text" name="name" minlength="15" maxlength="80">
+						<input required type="text" name="name"
+						minlength="15" maxlength="80"
+						onchange="validarNome(this)"
+						>
 					</fieldset>
 					<fieldset><label for="dob">Data de Nascimento</label><input required type="date" name="dob">
 					</fieldset>
@@ -38,7 +43,7 @@
 							name="filiation-name">
 					</fieldset>
 					<fieldset><label for="cpf">CPF</label><input required type="text" name="cpf"
-							onchange="validarCPF(this.value)"
+							onchange="validarCPF(this.value, this)"
 							>
 					</fieldset>
 					<fieldset>
@@ -46,10 +51,16 @@
 						<input required type="email" name="email" id="email" />
 					</fieldset>
 					<fieldset><label for="celular">Celular</label><input required type="cel" name="celular"
-					(+55)XX-XXXXXXXX.
-							pattern="\(\+[0-9]{2}\)[0-9]{2}-[0-9]{9}" placeholder="(+55)21-999999999"></fieldset>
+
+							pattern="\(\+[0-9]{2}\)[0-9]{2}-[0-9]{9}" placeholder="(+55)21-999999999"
+							oninput="formatarCelular(this.value,this,celular)"
+							onchange="validarTelefone(this.value,this)"
+					></fieldset>
 					<fieldset><label for="fixo">Fixo</label><input required type="tel" name="fixo"
-							pattern="\(\+[0-9]{2}\)[0-9]{2}-[0-9]{9}" placeholder="(+55)21-999999999"></fieldset>
+							pattern="\(\+[0-9]{2}\)[0-9]{2}-[0-9]{8}" placeholder="(+55)21-999999999"
+							oninput="formatarFixo(this.value,this,'fixo')"
+							onchange="validarTelefone(this.value,this,true)"
+					></fieldset>
 				</div>
 				<div class="field-wrapper">
 
@@ -67,17 +78,19 @@
 					</fieldset>
 					<fieldset>
 						<label for="username">Nome de Usuário</label>
-						<input required type="text" name="username" id="username" maxlength="6" minlength="6"/>
+						<input required type="text" name="username" id="username" maxlength="6" minlength="6" onchange="validarUsername(this.value,this)"/>
 					</fieldset>
 					<fieldset>
 
 						<label for="password">Senha</label>
-						<input required type="password" name="password" id="password" minlength="8" maxlength="8"/>
+						<input required type="password" name="password" id="password" minlength="8" maxlength="8"
+						onchange="validarSenha(this.value,this)"/>
 					</fieldset>
 					<fieldset>
 
 						<label for="passwordConfirm">Confirmar Senha</label>
-						<input required type="password" name="passwordConfirm" id="passwordConfirm" minlength="8" maxlength="8" />
+						<input required type="password" name="passwordConfirm" id="passwordConfirm" minlength="8" maxlength="8"
+					   onchange="validarSenhaConfirmacao(this.value,this)"/>
 					</fieldset>
 				</div>
 			</div>
@@ -85,7 +98,7 @@
 
 				<button type="submit" name='cadastrar'>Cadastrar</button>
 			</fieldset>
-			<fieldset> 
+			<fieldset>
 				<input type="reset" value="Limpar"/>
 			</fieldset>
 			<fieldset>
@@ -94,12 +107,14 @@
 					<br>
 					<a href="#">Termos de serviços e condições</a></label>
 			</fieldset>
-			<a href="/jogodobicho/pages/login/login.php">Login</a>
-			<input type="text" name="url" hidden value="<?= urlencode(string: basename(path: __FILE__))?>">
+			<a href="/pages/login/login.php">Login</a>
+			<input type="text" name="url" hidden value="<?= urlencode(
+       string: basename(path: __FILE__)
+   ) ?>">
 		</form>
-		
+
 	</main>
-	<script src="/jogodobicho/public/js/cadastro.js"></script>
+	<script src="/public/js/cadastro.js"></script>
 	<script>lucide.createIcons()</script>
 </body>
 
