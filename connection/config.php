@@ -21,8 +21,8 @@ class ConnectionMariaDB
 
     public function __construct(
         $host = "localhost",
-        $user = "root",
-        $password = "",
+        $user = "luis",
+        $password = "admin",
         $database = "db_jogodobicho_legacy",
         $port = 3306
     ) {
@@ -37,6 +37,7 @@ class ConnectionMariaDB
      */
     public function connect()
     {
+
         try {
             $this->con = new mysqli(
                 $this->host,
@@ -45,12 +46,14 @@ class ConnectionMariaDB
                 $this->database,
                 $this->port
             );
+
             if ($this->con->connect_error) {
                 throw new \Exception("Connection failed: " . $this->con->connect_error);
             }
+ 
             return $this->con;
         } catch (\Exception $e) {
-            // echo $e->getMessage();
+            echo $e->getMessage();
             header("Location: /pages/erro/erro.php?500");
             die();
         }

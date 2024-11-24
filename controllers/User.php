@@ -37,7 +37,7 @@ class UserController extends User
     public function registerUser(): bool
     {
         $user = $this->read();
-
+        
         if ($user->num_rows > 0) {
             // user exists
             return false;
@@ -45,6 +45,7 @@ class UserController extends User
         
         // create user
         $query_result = $this->create();
+   
 
 
         // returns the result of the query ( true or false on failure)

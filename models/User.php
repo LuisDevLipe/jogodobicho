@@ -70,10 +70,7 @@ class User
 
     protected function create(): bool
     {
-        $sql = "INSERT INTO users
-                (fullname,dob,gender,mothername,cpf,email,celular,fixo,address_id)
-            VALUES
-                (?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO users (fullname,dob,gender,mothername,cpf,email,celular,fixo,address_id) VALUES (?,?,?,?,?,?,?,?,?)";
 
         $result = self::$con->execute_query(
             query: $sql,
@@ -89,7 +86,15 @@ class User
                 $this->address_id,
             ]
         );
+        // check if the query was executed or failed
+        // dd($result);
+
+
         // print error if any
+        if ($result === false) {
+            echo 'erro ao inserir';
+            echo self::$con->error;
+        }
 
         return $result;
     }
