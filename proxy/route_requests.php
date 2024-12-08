@@ -17,36 +17,33 @@ class Route_requests
                 if (session_status() === PHP_SESSION_NONE) {
                     session_start();
                 }
-                
+
                 if (isset($_SESSION["user_id"])) {
                     header("Location: /index.php?success=auth");
                     exit();
                 }
                 include_once $_SERVER["DOCUMENT_ROOT"] .
-                "/controllers/Credential.php";
-                
+                    "/controllers/Credential.php";
+
                 if (
                     $_SERVER["REQUEST_METHOD"] === "POST" &&
                     isset($_POST["username"]) &&
                     isset($_POST["password"])
-                    ) {
-                        $username = $_POST["username"];
+                ) {
+                    $username = $_POST["username"];
                     $password = $_POST["password"];
-                    
+
                     $credential = new \controllers\CredentialController(
                         username: $username,
                         password: $password
                     );
                     $user = $credential->login();
-                
+
                     $_POST = [];
                     if (!$user) {
-                        header(
-                            "Location: /pages/login/login.php?error=auth"
-                        );
+                        header("Location: /pages/login/login.php?error=auth");
                         exit();
                     }
-                  
 
                     header(
                         "Location: /pages/auth-util/TwoFactorAuthentication.php"
@@ -57,7 +54,6 @@ class Route_requests
                 break;
 
             case "TwoFactorAuthentication":
-
                 include_once $_SERVER["DOCUMENT_ROOT"] .
                     "/controllers/TwoFactorAuth.php";
                 if (
@@ -87,8 +83,13 @@ class Route_requests
                             break;
                     }
                     session_start();
-                    $user_id = $_SESSION["user_id"];
+                    $user_id = $_SESSION["user_id"] ?? null;
                     session_commit();
+
+                    if (!$user_id) {
+                        header("Location: /pages/login/login.php?error=auth");
+                        exit();
+                    }
 
                     $newTwoFAInstance = new \controllers\TwoFactorAuthController(
                         user_id: $user_id,
@@ -139,7 +140,7 @@ class Route_requests
 
                     \controllers\CredentialController::logout();
 
-                    header("Location: ?success=logout");
+                    header("Location: /?success=logout");
                     exit();
                 }
                 break;
@@ -150,13 +151,18 @@ class Route_requests
                     $_POST[$key] = filter_var($value, FILTER_SANITIZE_STRING);
                 }
 
-                require_once $_SERVER["DOCUMENT_ROOT"] . "/functions/validations.php";
-                
+                require_once $_SERVER["DOCUMENT_ROOT"] .
+                    "/functions/validations.php";
+
                 // remover caracteres especiais do celular
-                $_POST["celular"] = preg_replace("/[^0-9]/", "", $_POST["celular"]);
+                $_POST["celular"] = preg_replace(
+                    "/[^0-9]/",
+                    "",
+                    $_POST["celular"]
+                );
                 $_POST["fixo"] = preg_replace("/[^0-9]/", "", $_POST["fixo"]);
-                
-                // remover caracteres especiais do cep 
+
+                // remover caracteres especiais do cep
                 $_POST["cep"] = preg_replace("/[^0-9]/", "", $_POST["cep"]);
                 // remover caracteres especiais do cpf
                 $_POST["cpf"] = preg_replace("/[^0-9]/", "", $_POST["cpf"]);
@@ -167,28 +173,36 @@ class Route_requests
                 }
                 // username deve conter exatos 6 caracteres alfabeticos
                 if (!validarUsername($_POST["username"])) {
-                    header("Location: /pages/cadastro/cadastro.php?error=username");
+                    header(
+                        "Location: /pages/cadastro/cadastro.php?error=username"
+                    );
                     exit();
                 }
-                
+
                 // senha deve conter exatos 8 caracteres alfabeticos
                 if (!validarSenha($_POST["password"])) {
-                    header("Location: /pages/cadastro/cadastro.php?error=password");
+                    header(
+                        "Location: /pages/cadastro/cadastro.php?error=password"
+                    );
                     exit();
                 }
 
                 // senhas conferem
                 if ($_POST["password"] !== $_POST["passwordConfirm"]) {
-                    header("Location: /pages/cadastro/cadastro.php?error=passwordConfirmation");
+                    header(
+                        "Location: /pages/cadastro/cadastro.php?error=passwordConfirmation"
+                    );
                     exit();
                 }
 
                 // validar se aceitou os termos
                 if (!isset($_POST["termos"])) {
-                    header("Location: /pages/cadastro/cadastro.php?error=termos");
+                    header(
+                        "Location: /pages/cadastro/cadastro.php?error=termos"
+                    );
                     exit();
                 }
-                
+
                 if (isset($_POST["cadastrar"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
                         "/controllers/Credential.php";
@@ -215,9 +229,7 @@ class Route_requests
                     );
 
                     $address_id = $new_address->createAddressAndReturn_id();
-                    
-                    
-                    
+
                     $newUser = new \controllers\UserController(
                         fullname: $_POST["name"],
                         dob: $_POST["dob"],
@@ -250,7 +262,7 @@ class Route_requests
                         );
                         exit();
                     }
-                    
+
                     if (!$userExists && !$credentialExists) {
                         $newUser->registerUser();
                         $newUserCredentials->setUserId(
@@ -258,15 +270,12 @@ class Route_requests
                         );
                         $newUserCredentials->registerCredential();
                     }
-                    header(
-                        "Location: /pages/login/login.php?success=register"
-                    );
+                    header("Location: /pages/login/login.php?success=register");
                     exit();
                 }
                 break;
 
             case "recuperar-senha":
-
                 if (isset($_POST["username"]) && isset($_POST["useremail"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
                         "/controllers/Credential.php";
@@ -293,13 +302,12 @@ class Route_requests
                     if (session_status() === PHP_SESSION_NONE) {
                         session_start();
                     }
-                    $_SESSION['username'] = $_POST['username'];
+                    $_SESSION["username"] = $_POST["username"];
                     session_commit();
                     header(
                         "Location: /pages/auth-util/recuperar-senha-form.php?"
                     );
                     exit();
-
                 }
                 header("Location: /pages/erro/erro.php?500");
                 break;
@@ -335,17 +343,21 @@ class Route_requests
                         );
                         exit();
                     }
-
                 }
                 header("Location: /pages/erro/erro.php?500");
                 break;
             case "delete-user":
+                error_reporting(E_ALL);
+                ini_set("display_errors", 1);
                 if (isset($_POST["delete_user"])) {
                     include_once $_SERVER["DOCUMENT_ROOT"] .
                         "/controllers/User.php";
 
                     $user_id = $_POST["delete_user"];
                     if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+                    if (session_status() == "PHP_SESSION_NONE") {
                         session_start();
                     }
                     if ($_SESSION["user_id"] == $user_id) {
@@ -389,8 +401,7 @@ $router->route();
 
 function logNewSuccessfulAuth($username, $twoFaAnswer, $session_id): void
 {
-    include_once $_SERVER["DOCUMENT_ROOT"] .
-        "/controllers/UserLog.php";
+    include_once $_SERVER["DOCUMENT_ROOT"] . "/controllers/UserLog.php";
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }

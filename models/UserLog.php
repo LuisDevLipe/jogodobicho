@@ -13,7 +13,7 @@ class UserLog
     protected $login_at;
     protected $logout_at;
     protected $con;
-    public function __construct($username,$twoFaAnswer,$session_id)
+    public function __construct($username, $twoFaAnswer, $session_id)
     {
         $this->username = $username;
         $this->TwoFaAnswer = $twoFaAnswer;
@@ -34,42 +34,41 @@ class UserLog
     public function readAll(): mysqli_result|bool
     {
         $sql = "SELECT * FROM userLogs";
-        $result = $this->con->execute_query(
-            query: $sql
-        );
+        $result = $this->con->execute_query(query: $sql);
         return $result;
     }
 
-    public static function queryUserLogs($queryOption, $queryParam): mysqli_result|bool
-    {
+    public static function queryUserLogs(
+        $queryOption,
+        $queryParam
+    ): mysqli_result|bool {
         $con = new ConnectionMariaDB();
         $con = $con->connect();
         $queryParam = filter_var($queryParam, FILTER_SANITIZE_STRING);
         $queryParam = filter_var($queryParam, FILTER_SANITIZE_SPECIAL_CHARS);
-        if ($queryOption === '--nome') {
-            $sql = "SELECT u.fullname, ul.TwoFaAnswer,ul.login_at FROM userLogs ul, credentials c, users u where ul.username = c.username AND c.user_id = u.id AND u.fullname LIKE ? ORDER BY ul.login_at DESC";
+        if ($queryOption === "--nome") {
+            $sql =
+                "SELECT u.fullname, ul.TwoFaAnswer,ul.login_at FROM userLogs ul, credentials c, users u where ul.username = c.username AND c.user_id = u.id AND u.fullname LIKE ? ORDER BY ul.login_at DESC";
             $queryParam = "%$queryParam%";
-        } else if ($queryOption === '--cpf') {
-            $sql = "SELECT u.fullname, ul.TwoFaAnswer,ul.login_at FROM userLogs ul, credentials c, users u where ul.username = c.username AND c.user_id = u.id AND u.cpf = ? ORDER BY ul.login_at DESC";
-        } else if ($queryOption === '--all') {
-            $sql = "SELECT u.fullname, ul.TwoFaAnswer,ul.login_at FROM userLogs ul, credentials c, users u where ul.username = c.username AND c.user_id = u.id ORDER BY ul.login_at DESC;";
+        } elseif ($queryOption === "--cpf") {
+            $sql =
+                "SELECT u.fullname, ul.TwoFaAnswer,ul.login_at FROM userLogs ul, credentials c, users u where ul.username = c.username AND c.user_id = u.id AND u.cpf = ? ORDER BY ul.login_at DESC";
+        } elseif ($queryOption === "--all") {
+            $sql =
+                "SELECT u.fullname, ul.TwoFaAnswer,ul.login_at FROM userLogs ul, credentials c, users u where ul.username = c.username AND c.user_id = u.id ORDER BY ul.login_at DESC;";
 
             $result = $con->execute_query(query: $sql);
 
             return $result;
         }
 
-
-
-        $result = $con->execute_query(
-            query: $sql,
-            params: [$queryParam]
-        );
+        $result = $con->execute_query(query: $sql, params: [$queryParam]);
         return $result;
     }
     public function create(): bool
     {
-        $sql = "INSERT INTO userLogs (username, session_id,TwoFaAnswer) VALUES (?,?,?)";
+        $sql =
+            "INSERT INTO userLogs (username, session_id,TwoFaAnswer) VALUES (?,?,?)";
         $result = $this->con->execute_query(
             query: $sql,
             params: [$this->username, session_id(), $this->TwoFaAnswer]
@@ -79,7 +78,8 @@ class UserLog
 
     public function update(): bool
     {
-        $sql = "UPDATE userLogs SET logout_at = NOW() WHERE username = ? AND session_id = ?";
+        $sql =
+            "UPDATE userLogs SET logout_at = NOW() WHERE username = ? AND session_id = ?";
         $result = $this->con->execute_query(
             query: $sql,
             params: [$this->username, session_id()]

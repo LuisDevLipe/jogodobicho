@@ -70,7 +70,8 @@ class User
 
     protected function create(): bool
     {
-        $sql = "INSERT INTO users (fullname,dob,gender,mothername,cpf,email,celular,fixo,address_id) VALUES (?,?,?,?,?,?,?,?,?)";
+        $sql =
+            "INSERT INTO users (fullname,dob,gender,mothername,cpf,email,celular,fixo,address_id) VALUES (?,?,?,?,?,?,?,?,?)";
 
         $result = self::$con->execute_query(
             query: $sql,
@@ -89,10 +90,9 @@ class User
         // check if the query was executed or failed
         // dd($result);
 
-
         // print error if any
         if ($result === false) {
-            echo 'erro ao inserir';
+            echo "erro ao inserir";
             echo self::$con->error;
         }
 
@@ -114,9 +114,16 @@ class User
     protected static function delete($ID): bool
     {
         self::static_connection();
-        $sql = "DELETE FROM users WHERE ID = ?";
+        $sql = "DELETE u,c FROM users AS u
+            LEFT JOIN credentials AS c
+                ON u.ID = c.user_id
+            WHERE u.ID = ?";
         $result = self::$con->execute_query(query: $sql, params: [$ID]);
-        return $result;
+        if (self::$con->affected_rows > 0) {
+            return true;
+        } elseif (self::$con->affected_rows <= 0) {
+            return false;
+        }
     }
 
     protected function readAll(): mysqli_result
