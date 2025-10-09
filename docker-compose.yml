@@ -1,0 +1,33 @@
+services:
+  php-server:
+    image: php:8.1-apache
+    container_name: php-server
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - database
+    networks:
+      - default
+  database:
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    configs:
+      - source: db_init
+        target: /docker-entrypoint-initdb.d/init.sql
+    networks:
+      - default
+    environment: 
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: db_jogodobicho_legacy
+      MYSQL_USER: luis
+      MYSQL_PASSWORD: admin
+configs:
+  db_init:
+    file: ./connection/script_schema.sql
+
+networks:
+  default:
+    driver: bridge
