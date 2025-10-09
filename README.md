@@ -9,6 +9,18 @@
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
 # Como executar localmente
+
+Se você tiver o Docker instalado, clone o repositório e execute o comando
+```sh
+docker compose up -d
+```
+A aplicação estará rodando na porta 8080. Ao final execute o comando.
+```sh
+docker compose down
+```
+
+Caso não queira executar através do Docker siga os passos abaixo.
+
 Para executar localmente serão necessários alguns itens como pré-requisitos.
 
 - apache2
