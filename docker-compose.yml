@@ -1,11 +1,17 @@
 services:
   php-server:
-    image: php:8.1-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: php-server
+    entrypoint: ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+    develop:
+      watch:
+        - path: ./src
+          action: rebuild
+          
     ports:
       - "8080:80"
-    volumes:
-      - ./:/var/www/html
     depends_on:
       - database
     networks:
@@ -26,7 +32,7 @@ services:
       MYSQL_PASSWORD: admin
 configs:
   db_init:
-    file: ./connection/script_schema.sql
+    file: ./script_schema.sql
 
 networks:
   default:

@@ -1,4 +1,3 @@
-# Projeto segundo semestre ( backend  <?PHP)
 ![Apache](https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&logo=apache&logoColor=white)
 ![mysql](https://img.shields.io/badge/mysql-4479a1.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![apache](https://img.shields.io/badge/mariadb-003545.svg?style=for-the-badge&logo=mariadb&logoColor=white)

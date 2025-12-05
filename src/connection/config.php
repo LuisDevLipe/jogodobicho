@@ -20,7 +20,7 @@ class ConnectionMariaDB
      */
 
     public function __construct(
-        $host = "localhost",
+        $host = "database",
         $user = "luis",
         $password = "admin",
         $database = "db_jogodobicho_legacy",

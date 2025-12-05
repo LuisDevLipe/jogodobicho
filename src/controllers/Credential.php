@@ -22,6 +22,7 @@ class CredentialController extends Credential
             throw new \Exception(message: "Error hashing password");
         }
         parent::__construct(username: $username, password: $this->hashPassword);
+        // session_start();
     }
 
     public function login(): bool|array
@@ -38,13 +39,11 @@ class CredentialController extends Credential
             return false;
         }
         $this->unlock_account();
-        session_start();
         $_SESSION["username"] = $user["username"];
         $_SESSION['rootuser'] = $user['rootuser'];
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['isAuthenticated'] = false;
-        session_commit();
-        
+
         // LOG USER LOGIN IN UserLog
         // $userLog = new UserLog(username: $user["username"]);
         // $userLog->create();
@@ -52,32 +51,30 @@ class CredentialController extends Credential
         return $user;
     }
 
-    public function unlock_account(): bool{
+    public function unlock_account(): bool
+    {
         $unlocked = $this->update_unlock_account();
-        session_start();
         $_SESSION['account_is_locked'] = false;
-        session_commit();
         return $unlocked;
 
     }
 
     public static function logout(): void
     {
-        
+
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         // LOG USER LOGOUT IN UserLog
         if (isset($_SESSION["username"])) {
-            session_start();
             $username = $_SESSION["username"];
-            $userLog = new UserLog(username: $username, twoFaAnswer:'', session_id: session_id());
+            $userLog = new UserLog(username: $username, twoFaAnswer: '', session_id: session_id());
             $userLog->update();
 
-            
-            
+
+
         }
-        
+
         // destroy session
         session_unset();
         session_destroy();
@@ -120,7 +117,7 @@ class CredentialController extends Credential
     }
 
 
-    public static function check_if_username_exists($username): string | bool
+    public static function check_if_username_exists($username): string|bool
     {
         $credential = new Credential(username: $username, password: '');
         $user = $credential->read();
@@ -132,10 +129,11 @@ class CredentialController extends Credential
         $user = $user->fetch_assoc();
         $user_email = $user["username"];
         return $user_email;
-        
+
     }
 
-    public function update_password():bool{
+    public function update_password(): bool
+    {
         $updated_password = $this->update();
         if ($updated_password === null) {
             return false;

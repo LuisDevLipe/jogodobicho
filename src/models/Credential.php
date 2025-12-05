@@ -1,8 +1,7 @@
 <?php
 namespace models;
 include_once $_SERVER["DOCUMENT_ROOT"] . "/connection/config.php";
-include_once $_SERVER["DOCUMENT_ROOT"] .
-    "/exceptions/exceptions.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/exceptions/exceptions.php";
 use Connection\ConnectionMariaDB;
 use exceptions\UserAlreadyExistsException;
 
@@ -41,8 +40,7 @@ class Credential
     protected function create(): mysqli_result|bool
     {
 
-        $sql =
-            "INSERT INTO credentials (username, password,user_id) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO credentials (username, password,user_id) VALUES (?, ?, ?)";
 
         $result = self::$con->execute_query(
             query: $sql,
@@ -55,7 +53,8 @@ class Credential
 
         return $result;
     }
-    protected function update (): bool{
+    protected function update(): bool
+    {
         $sql = "UPDATE credentials SET password = ? WHERE username = ?";
         $result = self::$con->execute_query(
             query: $sql,
@@ -64,7 +63,7 @@ class Credential
         return $result;
     }
 
-    protected function update_unlock_account():bool
+    protected function update_unlock_account(): bool
     {
         $sql = "UPDATE credentials SET locked_account = 0, login_attempts = 0 WHERE username = ?";
         $result = self::$con->execute_query(

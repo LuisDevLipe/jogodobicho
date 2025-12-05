@@ -11,12 +11,16 @@
 </head>
 
 <body>
-<?php
-include_once $_SERVER["DOCUMENT_ROOT"] .
-	"/components/navbar/navbar.php";
-include_once $_SERVER["DOCUMENT_ROOT"] .
-	"/components/acessibilidade/acessibilidade.php";
-?>
+	<?php
+	include_once $_SERVER["DOCUMENT_ROOT"] .
+		"/components/navbar/navbar.php";
+	include_once $_SERVER["DOCUMENT_ROOT"] .
+		"/components/acessibilidade/acessibilidade.php";
+	if (!isset($_SESSION)) {
+		ob_start();
+		session_start();
+	}
+	?>
 
 	<main class="index-content">
 		<section class="hero" id="inicio">
@@ -266,7 +270,7 @@ include_once $_SERVER["DOCUMENT_ROOT"] .
 		<a href="#">2024</a>
 		<a href="pages/db-model/index.html">Veja o Modelo do Banco de Dados desse site.</a>
 	</footer>
-	
+
 	<!-- <script src="components/acessibilidade/acessibilidade.js" defer></script> -->
 	<script>
 		lucide.createIcons();
@@ -274,3 +278,8 @@ include_once $_SERVER["DOCUMENT_ROOT"] .
 </body>
 
 </html>
+
+<?php 
+session_commit();
+ob_end_flush();
+?>

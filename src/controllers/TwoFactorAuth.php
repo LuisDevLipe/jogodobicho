@@ -32,7 +32,9 @@ class TwoFactorAuthController
     {
         $this->account_is_locked = $this->getLockedAccount();
         if ($this->account_is_locked) {
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
             $_SESSION["account_is_locked"] = true;
             session_commit();
             return false;
@@ -41,7 +43,7 @@ class TwoFactorAuthController
         $twoFAFieldName = self::getTwoFAFieldName(
             twoFaAnswerId: $this->twoFaAnswerId
         );
-        
+
         $user_id = $this->user_id;
 
         if ($twoFAFieldName === "cep") {
@@ -66,7 +68,9 @@ class TwoFactorAuthController
             return false;
         }
         if ($twoFaAnswer === $this->twoFaAnswer) {
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
             $_SESSION["isAuthenticated"] = true;
             $_SESSION["account_is_locked"] = false;
             session_commit();

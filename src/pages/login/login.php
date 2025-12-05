@@ -1,37 +1,36 @@
-<?php 
-    function credentialError():bool {
-        if(session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
-        }
-        if (isset($_SESSION['not_found_user']) && $_SESSION['not_found_user'] === true) {
-            session_commit();
-            return true;
-        }
-        session_commit();
-        return false;
-
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+function credentialError(): bool
+{
+    if (isset($_SESSION['not_found_user']) && $_SESSION['not_found_user'] === true) {
+        return true;
     }
+    return false;
+}
 ?>
 <!DOCTYPE html>
 <?php
-session_start();
-if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true):?>
+if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true): ?>
     <script>confirm('you are already logged in'); </script>
     <script>window.location.href = '/index.php?warning=logado'</script>
-    
-<?php endif; session_commit();?>
+
+<?php endif; ?>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Jogo do Bicho Online</title>
     <link rel="stylesheet" href="/pages/login/login.css">
-    
+
 </head>
+
 <body>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/components/navbar/navbar.php';
-include_once $_SERVER["DOCUMENT_ROOT"] .
-    "/components/acessibilidade/acessibilidade.php"; ?>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/components/navbar/navbar.php';
+    include_once $_SERVER["DOCUMENT_ROOT"] .
+        "/components/acessibilidade/acessibilidade.php"; ?>
 
     <main>
         <form action="/proxy/route_requests.php" method="post" name='login'>
@@ -45,7 +44,7 @@ include_once $_SERVER["DOCUMENT_ROOT"] .
 
                 <label for="password">Senha</label>
                 <input type="password" name="password" id="password" required>
-                <?php if(credentialError()): ?>
+                <?php if (credentialError()): ?>
                     <span class="error">Usuário ou senha incorretos</span>
                 <?php endif; ?>
             </fieldset>
@@ -53,13 +52,16 @@ include_once $_SERVER["DOCUMENT_ROOT"] .
 
                 <button type="submit">Entrar</button>
             </fieldset>
-           
-                <a href="/pages/auth-util/recuperar-senha.php">Esqueci minha senha</a>
+
+            <a href="/pages/auth-util/recuperar-senha.php">Esqueci minha senha</a>
             <a href="/pages/cadastro/cadastro.php">Cadastrar</a>
-<input type="text" name="url" hidden value="<?= urlencode(string: basename(path: __FILE__))?>">
+            <input type="text" name="url" hidden value="<?= urlencode(string: basename(path: __FILE__)) ?>">
         </form>
-        
+
     </main>
     <script>lucide.createIcons()</script>
 </body>
+
 </html>
+
+<?php session_commit(); ?>

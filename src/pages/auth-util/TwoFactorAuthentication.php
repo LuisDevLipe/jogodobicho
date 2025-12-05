@@ -3,20 +3,14 @@ if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
 if (isset($_SESSION['isAuthenticated']) && $_SESSION['isAuthenticated'] === true) {
-	session_commit();
 	header('Location: /index.php?warning=logado');
 	exit();
 }
 function isAccountLocked(): bool
-{
-		if(session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
+{	
 		if(isset($_SESSION['account_is_locked']) && $_SESSION['account_is_locked'] === true) {
-			session_commit();
 			return true;
 		}
-		session_commit();
 		return false;
 	}
 ?>
@@ -105,3 +99,5 @@ e redirecionar para a página de login -->
 </body>
 
 </html>
+
+<?php session_commit(); ?>

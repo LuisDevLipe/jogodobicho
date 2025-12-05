@@ -148,7 +148,7 @@ class Route_requests
             case "cadastro":
                 // sanitize every inupt from the $_POST variable, to prevent SQL injection
                 foreach ($_POST as $key => $value) {
-                    $_POST[$key] = filter_var($value, FILTER_SANITIZE_STRING);
+                    $_POST[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
                 }
 
                 require_once $_SERVER["DOCUMENT_ROOT"] .

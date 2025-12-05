@@ -55,7 +55,7 @@ function arrayCPF($cpf)
 function calculoDigito($cpf, $pesos)
 {
     $somatoria = array_reduce(array_map(function ($num, $i) use ($pesos) {
-        return (int)$num * (int)$pesos[$i];
+        return (int) $num * (int) $pesos[$i];
     }, $cpf, array_keys($cpf)), function ($acc, $total) {
         return $acc + $total;
     }) % 11;
@@ -100,7 +100,7 @@ function checkIfHasErrors($cpf)
     return true;
 }
 
-echo validarCPF("12345678909");
+// echo validarCPF("12345678909");
 
 function validarUsername($username)
 {
